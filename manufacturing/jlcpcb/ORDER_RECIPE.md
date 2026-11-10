@@ -1,24 +1,25 @@
-# JLCPCB order recipe for v0.10
+# JLCPCB order recipe for v0.11
 
-This is how the quote of **$294.18 before shipping** was produced on
+This is how the quote of **$305.40 before shipping** was produced on
 10 November 2026: five boards, two of them assembled. Prices and stock move;
-treat the figures as a dated snapshot. The board is **on hold** over an open
-question about inductor voltage ratings (see the top-level README), so this
-records how to reproduce the quote, not a recommendation to order.
+treat the figures as a dated snapshot. The board has **open review questions**
+(see the top-level README), so this records how to reproduce the quote, not a
+recommendation to order. The v0.10 quote ($294.18, larger board, cheaper Thor
+inductor) is recorded in `outputs/v10-order-preparation/`.
 
 ## Files
 
 | File | Use |
 |---|---|
-| `Robot_PDB_v10_Gerbers.zip` | Upload on the quote page |
+| `Robot_PDB_v11_Gerbers.zip` | Upload on the quote page |
 | `BOM_JLCPCB.csv` | Assembly step, "Add BOM File" |
 | `CPL_JLCPCB.csv` | Assembly step, "Add CPL File" |
 | `hand-fit-and-harness.csv` | Parts the factory does not fit |
 | `quote-2026-11-10.png` | The charge breakdown as quoted |
-| `placement-preview.png` | The factory's placement preview of this upload |
+| `placement-preview.png` | The factory's placement preview of the re-laid-out corner |
 
 The same files, with checksums, are in
-`outputs/v10-order-preparation/package-1b3bcccac46a/`.
+`outputs/v11-order-preparation/package-1c351a03d3f0/`.
 
 Known inconsistency: the KiCad board file and the Gerber job file inside the
 zip still say ENIG finish and impedance controlled, left over from v0.9.
@@ -27,7 +28,7 @@ control.
 
 ## Board options
 
-After upload the site should detect a 4-layer board of 195 × 228 mm.
+After upload the site should detect a 4-layer board of 155 × 228 mm.
 
 | Option | Setting |
 |---|---|
@@ -59,12 +60,13 @@ J14, J101, J501, J301, J302, J401, J402.
 
 Remarks used:
 
-- Assembly: "Engineering prototype v0.10. U9903 is intentionally OMITTED;
+- Assembly: "Engineering prototype v0.11. U9903 is intentionally OMITTED;
   owner fits exact TLV3011BIDBVR. All 304 fitted parts are TOP. Verify IC
   pin1, diode/electrolytic polarity and connector orientations against pads;
-  send corrected placement for owner approval. Do not auto-confirm. L1
-  FEXL1510A-100M uses the XAL1510 land pattern. Firmware not included."
-- PCB: "Stackup JLC04161H-7628, 1oz outer / 0.5oz inner. All vias 0.3mm hole
+  send corrected placement for owner approval. Do not auto-confirm. Firmware
+  not included."
+- PCB (the form cuts this field at 200 characters): "Engineering prototype
+  v0.11. Stackup JLC04161H-7628, 1oz outer / 0.5oz inner. All vias 0.3mm hole
   or larger. USB pair 0.275mm width / 0.19mm gap. Production-file changes
   need owner approval; do not auto-confirm."
 
@@ -73,11 +75,11 @@ Remarks used:
 | Item | USD |
 |---|---:|
 | Engineering fee | 25.00 |
-| Board | 27.50 |
-| Surface finish | 6.10 |
+| Board | 21.80 |
+| Surface finish | 5.90 |
 | Confirm production file | 1.05 |
-| **Bare boards** | **59.65** |
-| Components (76 part numbers) | 113.40 |
+| **Bare boards** | **53.75** |
+| Components (76 part numbers) | 130.52 |
 | Extended components fee | 101.97 |
 | Setup | 8.24 |
 | Hand-soldering labor | 3.61 |
@@ -86,8 +88,8 @@ Remarks used:
 | Manual assembly | 1.01 |
 | Nitrogen reflow | 0.86 |
 | Confirm parts placement | 0.45 |
-| **Assembly** | **234.53** |
-| **Total before shipping** | **294.18** |
+| **Assembly** | **251.65** |
+| **Total before shipping** | **305.40** |
 
 ## Things that cost time to find
 
@@ -111,6 +113,9 @@ Remarks used:
   checked one by one.
 - **A missing 3D model is not a missing part.** One electrolytic capacitor
   shows as an empty outline in the preview but is on the BOM.
+- **Board area is cheap; parts are not.** Cutting the board from 195 to
+  155 mm tall saved $5.90. One inductor choice (60 V Coilcraft instead of a
+  30 V alternative) cost $17.12.
 - **Low stock.** On the day, STM32F072CBT6 showed 30 in stock and
   SN74AHCT125QPWRQ1 showed 52.
 

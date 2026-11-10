@@ -1,5 +1,7 @@
 # v0.10 value-engineered candidate: handoff for independent vetting
 
+> **Superseded by v0.11** (compact 228 x 155 mm layout, Coilcraft L1, $305.40). See [HANDOFF_V11_COMPACT_LAYOUT.md](HANDOFF_V11_COMPACT_LAYOUT.md). This document remains the reference for everything v0.11 did not change.
+
 > **About this document.** It is a working brief written by one AI agent (Claude) for the next reviewing
 > agent and for the owner, published as-is for transparency. "I" is that agent; "the owner" is Logan.
 > References to cart entries describe the owner's unpaid JLCPCB cart on 10 November 2026. The board is

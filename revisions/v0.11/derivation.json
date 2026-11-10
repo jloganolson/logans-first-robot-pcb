@@ -1,0 +1,640 @@
+{
+ "source_board_sha256": "1b3bcccac46a0f5773c472aa492ede3c1351764b9f63c53f64ded7864630e90c",
+ "outline_mm": [
+  228.0,
+  155.0
+ ],
+ "removed": {
+  "GND stitching outside sub-circuits": 59,
+  "IO_PWM2_OUT": 16,
+  "IO_PWM_NRST": 29,
+  "IO_PWM1_MCU": 9,
+  "PWM_VIN": 11,
+  "IO_PWM_SWDIO": 20,
+  "IO_PWM_SWCLK": 17,
+  "IO_PWM3_MCU": 2,
+  "IO_PWM2_MCU": 2,
+  "IO_PWM1_OUT": 19,
+  "IO_SERVO_ARM": 15,
+  "zone GND F.Cu": 1,
+  "zone PWM_VIN In2.Cu": 2,
+  "zone IO_V3_PWM In2.Cu": 1,
+  "zone VIN In2 feed to old fuse position": 1,
+  "zone PWM_5V In2.Cu": 3,
+  "zone PWM_VIN B.Cu": 1,
+  "zone GND B.Cu": 1
+ },
+ "loose_parts": [
+  "F7000",
+  "H7001",
+  "H7002",
+  "H7003",
+  "H7004",
+  "J7004",
+  "J7005",
+  "J7006",
+  "J7008"
+ ],
+ "placed": {
+  "A servo buck": {
+   "from_bbox": [
+    8.0,
+    117.6,
+    41.5,
+    161.9
+   ],
+   "rotated_deg": 90,
+   "to_bbox": [
+    8.3,
+    114.3,
+    52.6,
+    147.5
+   ]
+  },
+  "F fuse": {
+   "from_bbox": [
+    122.75,
+    123.75,
+    167.25,
+    132.25
+   ],
+   "rotated_deg": 180,
+   "to_bbox": [
+    55.0,
+    121.6,
+    99.5,
+    130.1
+   ]
+  },
+  "IN input capacitor": {
+   "from_bbox": [
+    4.1,
+    163.6,
+    18.25,
+    174.4
+   ],
+   "rotated_deg": 0,
+   "to_bbox": [
+    54.6,
+    131.4,
+    68.75,
+    142.2
+   ]
+  },
+  "TV input TVS": {
+   "from_bbox": [
+    13.65,
+    175.1,
+    20.35,
+    184.9
+   ],
+   "rotated_deg": 0,
+   "to_bbox": [
+    72.6,
+    131.6,
+    79.3,
+    141.4
+   ]
+  },
+  "B servo controller": {
+   "from_bbox": [
+    76.67,
+    128.27,
+    114.18,
+    164.27
+   ],
+   "rotated_deg": 0,
+   "to_bbox": [
+    127.67,
+    116.27,
+    165.18,
+    152.27
+   ]
+  },
+  "C output buffer": {
+   "from_bbox": [
+    52.99,
+    164.42,
+    77.1,
+    191.48
+   ],
+   "rotated_deg": 0,
+   "to_bbox": [
+    101.07,
+    118.4,
+    125.18,
+    145.46
+   ]
+  },
+  "J servo headers": {
+   "pin1_mm": [
+    [
+     61.6,
+     150.6
+    ],
+    [
+     76.6,
+     150.6
+    ],
+    [
+     91.6,
+     150.6
+    ]
+   ]
+  },
+  "S SWD header": {
+   "pin1_mm": [
+    112.17,
+    151.0
+   ]
+  },
+  "mounting holes": {
+   "H7002": [
+    105.17,
+    151.3
+   ],
+   "H7003": [
+    3.5,
+    151.5
+   ],
+   "H7004": [
+    176.0,
+    151.5
+   ]
+  }
+ },
+ "usb_and_5v_shortened": [
+  [
+   "V5_USB",
+   [
+    165.525,
+    130.75,
+    113.925,
+    130.75
+   ],
+   [
+    165.525,
+    130.75,
+    164.925,
+    130.75
+   ]
+  ],
+  [
+   "V5_USB",
+   "new jog",
+   [
+    164.925,
+    130.75,
+    164.925,
+    118.75
+   ]
+  ],
+  [
+   "P4_DM",
+   [
+    167.596,
+    115.232,
+    114.096,
+    115.232
+   ],
+   [
+    167.596,
+    115.232,
+    165.096,
+    115.232
+   ]
+  ],
+  [
+   "P4_DM",
+   [
+    112.733,
+    116.596,
+    112.733,
+    145.596
+   ],
+   [
+    163.733,
+    116.596,
+    163.733,
+    133.596
+   ]
+  ],
+  [
+   "P4_DM",
+   [
+    114.096,
+    115.232,
+    112.733,
+    116.596
+   ],
+   [
+    165.096,
+    115.232,
+    163.733,
+    116.596
+   ]
+  ],
+  [
+   "P4_DP",
+   [
+    167.404,
+    114.767,
+    113.904,
+    114.767
+   ],
+   [
+    167.404,
+    114.767,
+    164.904,
+    114.767
+   ]
+  ],
+  [
+   "P4_DP",
+   [
+    113.904,
+    114.767,
+    112.267,
+    116.404
+   ],
+   [
+    164.904,
+    114.767,
+    163.267,
+    116.404
+   ]
+  ],
+  [
+   "P4_DP",
+   [
+    112.267,
+    116.404,
+    112.267,
+    145.404
+   ],
+   [
+    163.267,
+    116.404,
+    163.267,
+    133.404
+   ]
+  ]
+ ],
+ "routes": [
+  {
+   "net": "IO_PWM1_MCU",
+   "what": "MCU to buffer",
+   "frm": [
+    133.5,
+    145.463
+   ],
+   "to": [
+    115.08,
+    121.802
+   ],
+   "width_mm": 0.2,
+   "routed": true,
+   "length_mm": 31.7,
+   "vias": 2
+  },
+  {
+   "net": "IO_PWM2_MCU",
+   "what": "MCU to buffer",
+   "frm": [
+    135.1,
+    149.812
+   ],
+   "to": [
+    119.08,
+    121.802
+   ],
+   "width_mm": 0.2,
+   "routed": true,
+   "length_mm": 38.93,
+   "vias": 0
+  },
+  {
+   "net": "IO_PWM3_MCU",
+   "what": "MCU to buffer",
+   "frm": [
+    141.2,
+    145.463
+   ],
+   "to": [
+    123.08,
+    121.802
+   ],
+   "width_mm": 0.2,
+   "routed": true,
+   "length_mm": 33.03,
+   "vias": 2
+  },
+  {
+   "net": "IO_SERVO_ARM",
+   "what": "MCU to buffer",
+   "frm": [
+    133.275,
+    145.012
+   ],
+   "to": [
+    105.255,
+    126.978
+   ],
+   "width_mm": 0.2,
+   "routed": true,
+   "length_mm": 39.19,
+   "vias": 2
+  },
+  {
+   "net": "IO_PWM1_OUT",
+   "what": "buffer to servo header",
+   "frm": [
+    115.08,
+    138.153
+   ],
+   "to": [
+    66.68,
+    150.6
+   ],
+   "width_mm": 0.25,
+   "routed": true,
+   "length_mm": 56.08,
+   "vias": 0
+  },
+  {
+   "net": "IO_PWM2_OUT",
+   "what": "buffer to servo header",
+   "frm": [
+    119.08,
+    138.153
+   ],
+   "to": [
+    81.68,
+    150.6
+   ],
+   "width_mm": 0.25,
+   "routed": true,
+   "length_mm": 45.08,
+   "vias": 0
+  },
+  {
+   "net": "IO_PWM3_OUT",
+   "what": "buffer to servo header",
+   "frm": [
+    123.08,
+    138.153
+   ],
+   "to": [
+    96.68,
+    150.6
+   ],
+   "width_mm": 0.25,
+   "routed": true,
+   "length_mm": 34.08,
+   "vias": 1
+  },
+  {
+   "net": "IO_PWM_SWDIO",
+   "what": "MCU to SWD header",
+   "frm": [
+    142.88,
+    148.25
+   ],
+   "to": [
+    117.25,
+    151.0
+   ],
+   "width_mm": 0.2,
+   "routed": true,
+   "length_mm": 28.5,
+   "vias": 0
+  },
+  {
+   "net": "IO_PWM_SWCLK",
+   "what": "MCU to SWD header",
+   "frm": [
+    142.42,
+    148.088
+   ],
+   "to": [
+    119.79,
+    151.0
+   ],
+   "width_mm": 0.2,
+   "routed": true,
+   "length_mm": 24.82,
+   "vias": 1
+  },
+  {
+   "net": "IO_PWM_NRST",
+   "what": "MCU to SWD header",
+   "frm": [
+    138.85,
+    152.175
+   ],
+   "to": [
+    122.33,
+    151.0
+   ],
+   "width_mm": 0.2,
+   "routed": true,
+   "length_mm": 18.34,
+   "vias": 0
+  },
+  {
+   "net": "IO_V3_PWM",
+   "what": "MCU to SWD header",
+   "frm": [
+    156.0,
+    150.0
+   ],
+   "to": [
+    112.17,
+    151.0
+   ],
+   "width_mm": 0.2,
+   "routed": true,
+   "length_mm": 45.98,
+   "vias": 0
+  }
+ ],
+ "pruned_stubs": {
+  "IO_PWM1_MCU": 17,
+  "IO_PWM2_MCU": 12,
+  "IO_SERVO_ARM": 33,
+  "IO_PWM1_OUT": 1,
+  "IO_PWM2_OUT": 4,
+  "IO_PWM3_OUT": 26
+ },
+ "planes": [
+  {
+   "net": "PWM_5V",
+   "layer": "In2.Cu",
+   "outline": [
+    [
+     6.0,
+     112.6
+    ],
+    [
+     126.47,
+     112.6
+    ],
+    [
+     126.47,
+     154.4
+    ],
+    [
+     6.0,
+     154.4
+    ]
+   ],
+   "purpose": "servo 5 V from the buck to the buffer and the three headers"
+  },
+  {
+   "net": "VIN",
+   "layer": "In2.Cu",
+   "outline": [
+    [
+     93.25,
+     108.0
+    ],
+    [
+     100.25,
+     108.0
+    ],
+    [
+     100.25,
+     128.849999
+    ],
+    [
+     93.25,
+     128.849999
+    ]
+   ],
+   "purpose": "battery bus down to the fuse"
+  },
+  {
+   "net": "PWM_VIN",
+   "layer": "B.Cu",
+   "outline": [
+    [
+     35.1,
+     120.0
+    ],
+    [
+     84.6,
+     120.0
+    ],
+    [
+     84.6,
+     145.5
+    ],
+    [
+     45.6,
+     145.5
+    ],
+    [
+     45.6,
+     148.2
+    ],
+    [
+     35.1,
+     148.2
+    ]
+   ],
+   "purpose": "fused input: fuse, bulk capacitor, TVS and buck input"
+  },
+  {
+   "net": "PWM_VIN",
+   "layer": "F.Cu",
+   "outline": [
+    [
+     54.4,
+     135.10000000000002
+    ],
+    [
+     60.1,
+     135.10000000000002
+    ],
+    [
+     60.1,
+     138.5
+    ],
+    [
+     54.4,
+     138.5
+    ]
+   ],
+   "purpose": "ties the bulk capacitor pad to its three vias"
+  },
+  {
+   "net": "IO_V3_PWM",
+   "layer": "In2.Cu",
+   "outline": [
+    [
+     127.07000000000001,
+     112.6
+    ],
+    [
+     167.18,
+     112.6
+    ],
+    [
+     167.18,
+     154.4
+    ],
+    [
+     127.07000000000001,
+     154.4
+    ]
+   ],
+   "purpose": "3.3 V under the servo controller"
+  },
+  {
+   "net": "GND",
+   "layer": "F.Cu and B.Cu",
+   "outline": [
+    [
+     0.5,
+     110.5
+    ],
+    [
+     178.0,
+     110.5
+    ],
+    [
+     178.0,
+     112.3
+    ],
+    [
+     227.5,
+     112.3
+    ],
+    [
+     227.5,
+     154.5
+    ],
+    [
+     0.5,
+     154.5
+    ]
+   ],
+   "purpose": "ground pour across the whole lower strip, including the corner v0.10 left bare"
+  }
+ ],
+ "part_changes": {
+  "L1": {
+   "value": "10uH 22A 60V",
+   "lcsc": "C3911782",
+   "mpn": "Coilcraft XAL1510-103MED",
+   "old": {
+    "value": "10uH FEXL1510A-100M",
+    "lcsc": "C5378597",
+    "mpn": "cjiang FEXL1510A-100M"
+   }
+  }
+ },
+ "board_sha256": "1c351a03d3f0b3f11d9e3ada8f00d47ceda0ed84d05fd2d542ebe165c876a0f5",
+ "schematic_sha256": "5cdf018eaf3e45a5f9319f1914842c4b8be63afcc5b0805b9588d4d8761835ac",
+ "generator_sha256": "cdee101f56b918355a5abbf7cc8f5e7409e815d2ac94d25a0ac2a3124cc9b5c2"
+}

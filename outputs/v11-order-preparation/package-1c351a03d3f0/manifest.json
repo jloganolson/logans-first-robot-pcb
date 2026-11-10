@@ -1,0 +1,25 @@
+{
+ "status": "PROTOTYPE QUOTE PACKAGE; NOT A PURCHASE OR PRODUCTION APPROVAL",
+ "board_sha256": "1c351a03d3f0b3f11d9e3ada8f00d47ceda0ed84d05fd2d542ebe165c876a0f5",
+ "schematic_sha256": "5cdf018eaf3e45a5f9319f1914842c4b8be63afcc5b0805b9588d4d8761835ac",
+ "source_v10_board_sha256": "1b3bcccac46a0f5773c472aa492ede3c1351764b9f63c53f64ded7864630e90c",
+ "audit": "PASS",
+ "bom_lines": 81,
+ "fitted_references": 304,
+ "supplier_codes": 76,
+ "files": {
+  "BOM_JLCPCB.csv": "25cbcf1fb1b286dcc1a1724b02c3cf4334cca7d3de2859610173228b1644f1dc",
+  "CPL_JLCPCB.csv": "5975ad75c4d26c8ecf06a933bb0895fa654f79670fc788b4f49ae49c68c875f5",
+  "Robot_PDB_v11_Gerbers.zip": "073687201d10e102bd8d4f4685c814c9eeb941154dd01823a92aad3981597cb4",
+  "STACKUP_REQUIREMENTS.txt": "0b8bdbfd483ad540654f02e396789d0f09c0f943e252e47ae0065f822e02f7fd",
+  "assembly-top.svg": "29f31ed3605db9854aff8fd898a158378c8e3a9d06e00c25c29c33c701a10124",
+  "board-bottom.svg": "bed16a1f060132fe91448d898d087a2edd7be798b700ac803e517158725a8050",
+  "board-top.svg": "4477fb075e050bf94a533e3ac6f8e8b2470cd8d4f211ccced4d38062232d7f9c",
+  "export.log": "3ae62ccef95861027eee4aa8d4b53ecc8946b3d00946732f9f1f0822742cb97a",
+  "hand-fit-and-harness.csv": "c32adb7dd3edcf1627a5cd75c4f3abdca930016c6f34004deb5ad50c2e19be76",
+  "manufacturing-requirements.json": "9a1620c990d8d248181e0625c087147b3527aadf1cfc318c241d0931ce8a1964",
+  "raw-positions.csv": "41e2b56d425bbb1a05b9eb1247cc91a69f01f0d6fb7bef9bb4d6f55c20cb06c7"
+ },
+ "moved_fitted_parts": 58,
+ "placement_rotations": "v0.10 values (v0.9 starting values plus {\"J101\": 180, \"J501\": 180, \"U9902\": 270} found in the factory preview); moved servo-block parts turned with their footprints; factory orientation review still required"
+}

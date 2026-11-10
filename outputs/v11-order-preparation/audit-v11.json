@@ -1,0 +1,152 @@
+{
+ "status": "PASS",
+ "board_sha256": "1c351a03d3f0b3f11d9e3ada8f00d47ceda0ed84d05fd2d542ebe165c876a0f5",
+ "source_board_sha256": "1b3bcccac46a0f5773c472aa492ede3c1351764b9f63c53f64ded7864630e90c",
+ "outline_mm": [
+  228.0,
+  155.0
+ ],
+ "facts": {
+  "footprints": 366,
+  "parts_not_moved": 291,
+  "parts_moved": 75,
+  "value_changes": {
+   "L1": [
+    "10uH FEXL1510A-100M",
+    "10uH 22A 60V"
+   ]
+  },
+  "copper_items_outside_block": 3268,
+  "followed_net_length_mm_v10_v11": {
+   "P4_DP": [
+    172.84,
+    109.84
+   ],
+   "P4_DM": [
+    173.41,
+    110.41
+   ],
+   "V5_USB": [
+    276.6,
+    237.6
+   ]
+  },
+  "zones": {
+   "v10": 80,
+   "v11": 77,
+   "removed": 15,
+   "added": 12
+  },
+  "smallest_hole_to_edge_wall_mm": [
+   [
+    1.4,
+    "H7001"
+   ],
+   [
+    1.9,
+    "H1"
+   ],
+   [
+    1.9,
+    "H3"
+   ],
+   [
+    1.9,
+    "H6"
+   ]
+  ],
+  "outline_bbox_mm": [
+   -0.05,
+   -0.05,
+   228.1,
+   155.1
+  ],
+  "native_drc": {
+   "categories": {
+    "lib_footprint_mismatch": 2,
+    "track_dangling": 9,
+    "via_dangling": 2
+   },
+   "v10_categories": {
+    "lib_footprint_mismatch": 2,
+    "track_dangling": 10,
+    "via_dangling": 1
+   },
+   "unconnected_pads": 0
+  },
+  "routes": [
+   {
+    "net": "IO_PWM1_MCU",
+    "length_mm": 31.7,
+    "vias": 2,
+    "routed": true
+   },
+   {
+    "net": "IO_PWM2_MCU",
+    "length_mm": 38.93,
+    "vias": 0,
+    "routed": true
+   },
+   {
+    "net": "IO_PWM3_MCU",
+    "length_mm": 33.03,
+    "vias": 2,
+    "routed": true
+   },
+   {
+    "net": "IO_SERVO_ARM",
+    "length_mm": 39.19,
+    "vias": 2,
+    "routed": true
+   },
+   {
+    "net": "IO_PWM1_OUT",
+    "length_mm": 56.08,
+    "vias": 0,
+    "routed": true
+   },
+   {
+    "net": "IO_PWM2_OUT",
+    "length_mm": 45.08,
+    "vias": 0,
+    "routed": true
+   },
+   {
+    "net": "IO_PWM3_OUT",
+    "length_mm": 34.08,
+    "vias": 1,
+    "routed": true
+   },
+   {
+    "net": "IO_PWM_SWDIO",
+    "length_mm": 28.5,
+    "vias": 0,
+    "routed": true
+   },
+   {
+    "net": "IO_PWM_SWCLK",
+    "length_mm": 24.82,
+    "vias": 1,
+    "routed": true
+   },
+   {
+    "net": "IO_PWM_NRST",
+    "length_mm": 18.34,
+    "vias": 0,
+    "routed": true
+   },
+   {
+    "net": "IO_V3_PWM",
+    "length_mm": 45.98,
+    "vias": 0,
+    "routed": true
+   }
+  ],
+  "schematic": {
+   "components": 366,
+   "sha256": "5cdf018eaf3e45a5f9319f1914842c4b8be63afcc5b0805b9588d4d8761835ac"
+  }
+ },
+ "findings": [],
+ "scope": "Delta against v0.10 outside the servo block, part and net identity inside it, native DRC, via tier, outline containment, schematic/board identity. Not covered: electrical behaviour of the re-routed servo block (current density, noise), thermal behaviour, factory DFM."
+}

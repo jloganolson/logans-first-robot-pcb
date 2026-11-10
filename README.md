@@ -5,12 +5,18 @@ Thor, Dynamixel servos and two 8S battery packs. It is my first real board,
 it was designed with heavy help from AI coding agents, and **it has not been
 built yet**. I'm publishing it to get it reviewed before I spend money on it.
 
-> **Status (10 November 2026): on hold, not ordered.** An unpaid JLCPCB quote
-> exists at $294.18 for five boards with two assembled. A late review raised
-> a question about inductor voltage ratings (see [Open questions](#open-questions)),
-> so I have not paid. Nothing here has been measured on hardware.
+> **Status (10 November 2026): not ordered.** The current revision is
+> **v0.11**, a more compact layout of v0.10 (228 × 155 mm instead of
+> 228 × 195 mm). An unpaid JLCPCB quote exists at $305.40 for five boards with
+> two assembled. The re-laid-out corner has not been independently reviewed,
+> and a question about inductor voltage ratings is still open (see
+> [Open questions](#open-questions)). Nothing here has been measured on hardware.
 
-![Top copper and silkscreen of the board. The lower-right quarter is empty.](renders/board-top.png)
+![Top copper and silkscreen of the v0.11 board.](renders/board-top.png)
+
+v0.10 had an empty quarter; v0.11 re-floorplans the hobby-servo block to use it:
+
+![v0.10 and v0.11 side by side](docs/v11-assets/before-after.png)
 
 ## What it does
 
@@ -24,32 +30,33 @@ built yet**. I'm publishing it to get it reviewed before I spend money on it.
 | Audio | CM108B USB codec and TPA3118 stereo amplifier |
 | USB | One USB-C to the Jetson; CH334F hub to audio, a CH342F dual UART for Dynamixel, and an STM32F072 that generates three servo PWM signals |
 
-Four layers, 228 × 195 mm, 1 oz outer / 0.5 oz inner copper. 366 footprints, of which 304 are fitted by the factory.
+Four layers, 228 × 155 mm, 1 oz outer / 0.5 oz inner copper. 366 footprints, of which 304 are fitted by the factory.
 
 ## Look at it without installing anything
 
 - **[Plain-language walkthrough](https://jloganolson.github.io/logans-first-robot-pcb/)**: what plugs in where, what it costs, what the risks are
 - **[Schematic (PDF)](renders/schematic.pdf)**. See the caveat about its style below.
 - Copper layers: [top](renders/top-copper.png), [inner 1, ground](renders/inner1-ground.png), [inner 2, power](renders/inner2-power.png), [bottom](renders/bottom-copper.png), and the [assembly drawing](renders/assembly-top.png)
-- Open the real board in your browser with KiCanvas: [board](https://kicanvas.org/?github=https://github.com/jloganolson/logans-first-robot-pcb/blob/main/revisions/v0.10/kicad/robot_pdb.kicad_pcb), [schematic](https://kicanvas.org/?github=https://github.com/jloganolson/logans-first-robot-pcb/blob/main/revisions/v0.10/kicad/robot_pdb.kicad_sch). The board file is about 6 MB, so it may be slow.
-- KiCad 7 project: [`revisions/v0.10/kicad/`](revisions/v0.10/kicad/)
+- Open the real board in your browser with KiCanvas: [board](https://kicanvas.org/?github=https://github.com/jloganolson/logans-first-robot-pcb/blob/main/revisions/v0.11/kicad/robot_pdb.kicad_pcb), [schematic](https://kicanvas.org/?github=https://github.com/jloganolson/logans-first-robot-pcb/blob/main/revisions/v0.11/kicad/robot_pdb.kicad_sch). The board file is about 6 MB, so it may be slow.
+- KiCad 7 project: [`revisions/v0.11/kicad/`](revisions/v0.11/kicad/)
 
 ## Open questions
 
 These are what I most want a second opinion on. Short answers are welcome;
 "that's fine, everyone does it" is as useful to me as "don't".
 
-1. **Inductor voltage ratings.** The molded inductors in every buck converter
-   here are rated 30 V by their makers (Sunlord MWSA1004S on six rails;
-   Cjiang FEXL1510A on the Thor rail, whose datasheet says "absolute maximum
-   voltage: DC 30V"). The packs reach 33.6 V. At start-up, or into a shorted
-   output, the full input voltage sits across the inductor for each on-time.
-   Is that a real reliability problem, or a rating that only matters in
-   steady state? Would you pay about $15–30 more for 60–75 V parts?
+1. **Inductor voltage ratings.** The molded inductors on six of the seven
+   buck converters (Sunlord MWSA1004S) are reported as rated 30 V by their
+   maker. The packs reach 33.6 V. At start-up, or into a shorted output, the
+   full input voltage sits across the inductor for each on-time. Is that a
+   real reliability problem, or a rating that only matters in steady state?
+   Would you pay about $13 more for 75 V parts? (The Thor rail had the same
+   issue in v0.10 with a 30 V Cjiang part; v0.11 went back to the 60 V
+   Coilcraft XAL1510-103.)
 2. **Thor buck current limit.** LM5146 with low-side RDS(on) sensing,
    R13 = 220 Ω, BSC034N06NS FETs. I calculate a typical valley limit near
    14 A (scaled from about 12 A at the earlier 180 Ω), a worst-case low near 8.5 A of load, and a worst-case inductor peak
-   near 26 A against a 29 A typical saturation figure. Two reviewers read the
+   near 26 A (that figure was worked out against the v0.10 inductor's 29 A typical saturation; v0.11's Coilcraft XAL1510-103 is the part the design originally used). Two reviewers read the
    comparator offset's sign differently. See the [review handoff](docs/HANDOFF_V10_VALUE_ENGINEERED.md).
 3. **USB 2.0 High-Speed pair.** 0.275 mm traces with a 0.19 mm gap over
    0.21 mm of 7628 prepreg (JLCPCB's calculator gives 90 Ω at 0.269 / 0.175).
@@ -62,7 +69,12 @@ These are what I most want a second opinion on. Short answers are welcome;
 5. **Assembly process.** JLCPCB's Economic line reflows at a fixed
    255 ± 5 °C. A reviewer reports a 250 °C case limit for the nine 10 × 10 mm
    electrolytic capacitors. Also: lead-free HASL under a 1.5 × 2 mm UQFN-10.
-6. **Anything alarming** in the input protection (ideal-diode controller,
+6. **The v0.11 servo corner.** The bottom strip (servo 5 V buck in the
+   bottom-left corner, its fuse, the output buffer, three servo headers and
+   the STM32) was re-placed by script and its eleven signal links were
+   auto-routed. It passes DRC, but nobody has reviewed it. Details in the
+   [v0.11 handoff](docs/HANDOFF_V11_COMPACT_LAYOUT.md).
+7. **Anything alarming** in the input protection (ideal-diode controller,
    TVS, fusing) or anywhere else.
 
 ## How to give feedback
@@ -87,15 +99,25 @@ are plenty; you don't need to propose a fix.
   a shorter outline, standard via sizes, wider USB traces for the standard
   stack-up, and four part substitutions. Every change is recorded in
   [`derivation.json`](revisions/v0.10/derivation.json).
+- **v0.11 is v0.10 with one area laid out again.** A second script
+  ([`build_v11.py`](source/generator/build_v11.py)) moves each sub-circuit of
+  the hobby-servo block as a rigid piece with its own copper, rebuilds the
+  connections between them (planes for power, a grid maze router for
+  signals), and trims the outline. Everything outside that block is
+  copper-identical to v0.10. Record: [`derivation.json`](revisions/v0.11/derivation.json).
 
 ## What has been checked
 
-- KiCad DRC: 0 errors, 0 unconnected pads, 13 warnings carried over from v0.9.
+- KiCad DRC on v0.11: 0 errors, 0 unconnected pads, 13 warnings (dangling
+  track ends and two library mismatches).
 - A [difference audit](source/fabrication/audit_v10.py) proving v0.10 differs
-  from v0.9 only in the recorded ways, and that schematic and board agree.
-- JLCPCB accepted the files, matched all 81 BOM lines and priced the order.
-- Three AI reviews. Their reports, including the places they were wrong, are
-  in [`red-team-findings/`](red-team-findings/2026-11-10/).
+  from v0.9 only in the recorded ways, and a [second one](source/fabrication/audit_v11.py)
+  proving v0.11 differs from v0.10 only inside the servo block, with no part
+  or net changed there, and that schematic and board agree.
+- JLCPCB accepted the v0.11 files, matched all 81 BOM lines and priced the order.
+- Three AI reviews of v0.10. Their reports, including the places they were
+  wrong, are in [`red-team-findings/`](red-team-findings/2026-11-10/).
+  **None of them has seen v0.11.**
 
 Not done: no board has been built, powered or measured. The thermal and
 impedance figures are calculations.
@@ -106,14 +128,14 @@ Everything specific to JLCPCB is in [`manufacturing/jlcpcb/`](manufacturing/jlcp
 Gerbers, BOM with their part numbers, placement file, the dated quote, and an
 [order recipe](manufacturing/jlcpcb/ORDER_RECIPE.md) listing every option and
 the mistakes that cost time to find. **Please don't order it as-is** while the
-inductor question is open.
+questions above are open.
 
 ## Repository map
 
 | Path | Contents |
 |---|---|
-| `revisions/v0.10/` | The current board: KiCad project, change record, DRC report |
-| `revisions/v0.9/` | The earlier board v0.10 is derived from |
+| `revisions/v0.11/` | The current board: KiCad project, change record, DRC report |
+| `revisions/v0.10/`, `revisions/v0.9/` | The earlier boards it is derived from |
 | `renders/` | Schematic PDF, layer images, thermal map |
 | `manufacturing/jlcpcb/` | Order files and recipe |
 | `docs/` | Walkthrough, review handoff, bring-up checklist, design notes |
