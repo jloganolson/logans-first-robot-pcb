@@ -1,5 +1,5 @@
 {
- "directory": "outputs/v11-order-preparation/package-1c351a03d3f0",
- "board_sha256": "1c351a03d3f0b3f11d9e3ada8f00d47ceda0ed84d05fd2d542ebe165c876a0f5",
- "gerber_zip_sha256": "073687201d10e102bd8d4f4685c814c9eeb941154dd01823a92aad3981597cb4"
+ "directory": "outputs/v11-order-preparation/package-1dabdd8f35dc",
+ "board_sha256": "1dabdd8f35dca5d13a01a024d0310674ded7bb68d099827eadc257e1fcf39a4b",
+ "gerber_zip_sha256": "ac96cb7bfffc677e80e0bddb94923d604c977303a16b0f3b4d850ad1556d30a0"
 }

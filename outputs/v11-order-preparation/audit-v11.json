@@ -1,6 +1,6 @@
 {
  "status": "PASS",
- "board_sha256": "1c351a03d3f0b3f11d9e3ada8f00d47ceda0ed84d05fd2d542ebe165c876a0f5",
+ "board_sha256": "1dabdd8f35dca5d13a01a024d0310674ded7bb68d099827eadc257e1fcf39a4b",
  "source_board_sha256": "1b3bcccac46a0f5773c472aa492ede3c1351764b9f63c53f64ded7864630e90c",
  "outline_mm": [
   228.0,
@@ -8,15 +8,21 @@
  ],
  "facts": {
   "footprints": 366,
-  "parts_not_moved": 291,
-  "parts_moved": 75,
+  "parts_not_moved": 286,
+  "parts_moved": 80,
   "value_changes": {
    "L1": [
     "10uH FEXL1510A-100M",
     "10uH 22A 60V"
    ]
   },
-  "copper_items_outside_block": 3268,
+  "copper_items_changed_outside_block_on_extended_nets": {
+   "DXL330_DATA": 34,
+   "DXL430_DATA": 228,
+   "+24V": 20,
+   "+12V_SRV": 9
+  },
+  "copper_items_outside_block": 3445,
   "followed_net_length_mm_v10_v11": {
    "P4_DP": [
     172.84,
@@ -33,9 +39,9 @@
   },
   "zones": {
    "v10": 80,
-   "v11": 77,
+   "v11": 85,
    "removed": 15,
-   "added": 12
+   "added": 20
   },
   "smallest_hole_to_edge_wall_mm": [
    [
@@ -64,8 +70,7 @@
   "native_drc": {
    "categories": {
     "lib_footprint_mismatch": 2,
-    "track_dangling": 9,
-    "via_dangling": 2
+    "track_dangling": 9
    },
    "v10_categories": {
     "lib_footprint_mismatch": 2,
@@ -77,67 +82,91 @@
   "routes": [
    {
     "net": "IO_PWM1_MCU",
-    "length_mm": 31.7,
+    "length_mm": 33.3,
     "vias": 2,
     "routed": true
    },
    {
     "net": "IO_PWM2_MCU",
-    "length_mm": 38.93,
+    "length_mm": 39.59,
     "vias": 0,
     "routed": true
    },
    {
     "net": "IO_PWM3_MCU",
-    "length_mm": 33.03,
+    "length_mm": 34.33,
     "vias": 2,
     "routed": true
    },
    {
     "net": "IO_SERVO_ARM",
-    "length_mm": 39.19,
+    "length_mm": 39.85,
     "vias": 2,
     "routed": true
    },
    {
     "net": "IO_PWM1_OUT",
-    "length_mm": 56.08,
+    "length_mm": 56.74,
     "vias": 0,
     "routed": true
    },
    {
     "net": "IO_PWM2_OUT",
-    "length_mm": 45.08,
+    "length_mm": 49.74,
     "vias": 0,
     "routed": true
    },
    {
     "net": "IO_PWM3_OUT",
-    "length_mm": 34.08,
+    "length_mm": 42.74,
     "vias": 1,
     "routed": true
    },
    {
     "net": "IO_PWM_SWDIO",
-    "length_mm": 28.5,
+    "length_mm": 30.81,
     "vias": 0,
     "routed": true
    },
    {
     "net": "IO_PWM_SWCLK",
-    "length_mm": 24.82,
-    "vias": 1,
+    "length_mm": 35.11,
+    "vias": 0,
     "routed": true
    },
    {
     "net": "IO_PWM_NRST",
-    "length_mm": 18.34,
+    "length_mm": 39.7,
     "vias": 0,
     "routed": true
    },
    {
     "net": "IO_V3_PWM",
-    "length_mm": 45.98,
+    "length_mm": 11.9,
+    "vias": 0,
+    "routed": true
+   },
+   {
+    "net": "DXL330_DATA",
+    "length_mm": 53.35,
+    "vias": 2,
+    "routed": true
+   },
+   {
+    "net": "DXL330_DATA",
+    "length_mm": 14.49,
+    "vias": 0,
+    "routed": true
+   },
+   {
+    "net": "DXL430_DATA",
+    "length_mm": 55.85,
+    "vias": 1,
+    "routed": true
+   },
+   {
+    "net": "DXL430_DATA",
+    "length_mm": 14.49,
     "vias": 0,
     "routed": true
    }

@@ -1,18 +1,18 @@
-# Compact prototype v0.11
+# Compact, edge-connector prototype v0.11
 
-v0.10 with the hobby-servo block laid out again so the board is
-**228 x 155 mm** instead of 228 x 195 mm, and the Thor inductor (L1) back to
-the 60 V Coilcraft XAL1510-103MED. Same circuit, same parts list otherwise.
-Everything above the servo block, and the USB block, is copper-identical to
-v0.10.
+v0.10 with the hobby-servo block laid out again (228 x 155 mm instead of
+228 x 195 mm), every plug moved to a board edge, a full set of silkscreen
+labels, and the Thor inductor (L1) back to the 60 V Coilcraft XAL1510-103MED.
+Same circuit and parts list otherwise.
 
 - Start here as the owner: [walkthrough](../../docs/PROTOTYPE_v0.11_WALKTHROUGH.html)
 - Start here as a reviewer: [handoff](../../docs/HANDOFF_V11_COMPACT_LAYOUT.md)
 - Every change, machine-readable: [derivation.json](derivation.json)
 
-Board SHA-256 `1c351a03d3f0b3f11d9e3ada8f00d47ceda0ed84d05fd2d542ebe165c876a0f5`.
-Unpaid cart entry `Robot_PDB_v11_Gerbers_Y6`, $305.40 before shipping. No
-purchase made; no hardware built or measured.
+Board SHA-256 `1dabdd8f35dca5d13a01a024d0310674ded7bb68d099827eadc257e1fcf39a4b`.
+Unpaid cart entry `Robot_PDB_v11_Gerbers_Y7`, $307.92 before shipping. No
+purchase made; no hardware built or measured; the final build has not been
+independently reviewed.
 
 ```sh
 export PDB_KICAD_STATE=/tmp/pdb-kicad-red-team

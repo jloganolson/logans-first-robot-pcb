@@ -6,15 +6,16 @@ it was designed with heavy help from AI coding agents, and **it has not been
 built yet**. I'm publishing it to get it reviewed before I spend money on it.
 
 > **Status (10 November 2026): not ordered.** The current revision is
-> **v0.11**, a more compact layout of v0.10 (228 × 155 mm instead of
-> 228 × 195 mm). An unpaid JLCPCB quote exists at $305.40 for five boards with
-> two assembled. The re-laid-out corner has not been independently reviewed,
-> and a question about inductor voltage ratings is still open (see
-> [Open questions](#open-questions)). Nothing here has been measured on hardware.
+> **v0.11**: 228 × 155 mm, every plug on a board edge, fully labelled. An
+> unpaid JLCPCB quote exists at $307.92 for five boards with two assembled.
+> The final layout has not been independently reviewed, and a question about
+> inductor voltage ratings is still open (see [Open questions](#open-questions)).
+> Nothing here has been measured on hardware.
 
 ![Top copper and silkscreen of the v0.11 board.](renders/board-top.png)
 
-v0.10 had an empty quarter; v0.11 re-floorplans the hobby-servo block to use it:
+v0.10 had an empty quarter and plugs in the middle of the board. v0.11
+re-floorplans the hobby-servo block and moves the plugs to the edges:
 
 ![v0.10 and v0.11 side by side](docs/v11-assets/before-after.png)
 
@@ -24,7 +25,7 @@ v0.10 had an empty quarter; v0.11 re-floorplans the hobby-servo block to use it:
 |---|---|
 | Battery input | Two 8S packs (27–33.6 V), each fused at the pack, through an external mechanical DPST master switch |
 | Motor output | Fused battery-voltage passthrough to existing motor controllers (about 10 A in my use) |
-| Jetson Thor | 24.3 V at up to 8 A, LM5146 synchronous buck |
+| Jetson Thor | 24.3 V at up to 8 A, LM5146 synchronous buck, Micro-Fit plug on the left edge |
 | Servo rails | 5 V (XL330), 10.8 V (XL430) and a separate 5 V (three MG90S), each a TPS54560 buck |
 | Spare outputs | 5 V / 5 A and 11.7 V / 5 A on XT30 connectors |
 | Audio | CM108B USB codec and TPA3118 stereo amplifier |
@@ -36,6 +37,7 @@ Four layers, 228 × 155 mm, 1 oz outer / 0.5 oz inner copper. 366 footprints, of
 
 - **[Plain-language walkthrough](https://jloganolson.github.io/logans-first-robot-pcb/)**: what plugs in where, what it costs, what the risks are
 - **[Schematic (PDF)](renders/schematic.pdf)**. See the caveat about its style below.
+- [Silkscreen labels and pads](renders/board-labels.png)
 - Copper layers: [top](renders/top-copper.png), [inner 1, ground](renders/inner1-ground.png), [inner 2, power](renders/inner2-power.png), [bottom](renders/bottom-copper.png), and the [assembly drawing](renders/assembly-top.png)
 - Open the real board in your browser with KiCanvas: [board](https://kicanvas.org/?github=https://github.com/jloganolson/logans-first-robot-pcb/blob/main/revisions/v0.11/kicad/robot_pdb.kicad_pcb), [schematic](https://kicanvas.org/?github=https://github.com/jloganolson/logans-first-robot-pcb/blob/main/revisions/v0.11/kicad/robot_pdb.kicad_sch). The board file is about 6 MB, so it may be slow.
 - KiCad 7 project: [`revisions/v0.11/kicad/`](revisions/v0.11/kicad/)
@@ -69,10 +71,13 @@ These are what I most want a second opinion on. Short answers are welcome;
 5. **Assembly process.** JLCPCB's Economic line reflows at a fixed
    255 ± 5 °C. A reviewer reports a 250 °C case limit for the nine 10 × 10 mm
    electrolytic capacitors. Also: lead-free HASL under a 1.5 × 2 mm UQFN-10.
-6. **The v0.11 servo corner.** The bottom strip (servo 5 V buck in the
-   bottom-left corner, its fuse, the output buffer, three servo headers and
-   the STM32) was re-placed by script and its eleven signal links were
-   auto-routed. It passes DRC, but nobody has reviewed it. Details in the
+6. **The v0.11 changes.** The bottom strip (servo 5 V buck in the
+   bottom-left corner, its fuse, the output buffer, the STM32) was re-placed
+   by script, and fifteen signal links were auto-routed. The Thor plug moved
+   to the left edge on a new 45 mm copper strip (In2 and bottom layer in
+   parallel, about 2 mΩ by hand estimate), and the four Dynamixel plugs moved
+   to the bottom edge (10.8 V on about 78 mm of In2, about 6.5 mΩ). It passes
+   DRC, but nobody has reviewed the final build. Details in the
    [v0.11 handoff](docs/HANDOFF_V11_COMPACT_LAYOUT.md).
 7. **Anything alarming** in the input protection (ideal-diode controller,
    TVS, fusing) or anywhere else.
@@ -103,21 +108,28 @@ are plenty; you don't need to propose a fix.
   ([`build_v11.py`](source/generator/build_v11.py)) moves each sub-circuit of
   the hobby-servo block as a rigid piece with its own copper, rebuilds the
   connections between them (planes for power, a grid maze router for
-  signals), and trims the outline. Everything outside that block is
-  copper-identical to v0.10. Record: [`derivation.json`](revisions/v0.11/derivation.json).
+  signals), moves the Thor and Dynamixel plugs to the board edges, re-labels
+  the silkscreen ([`labels_v11.py`](source/generator/labels_v11.py)) and
+  trims the outline. The regulators, USB and audio circuitry did not move. Record: [`derivation.json`](revisions/v0.11/derivation.json).
 
 ## What has been checked
 
-- KiCad DRC on v0.11: 0 errors, 0 unconnected pads, 13 warnings (dangling
-  track ends and two library mismatches).
+- KiCad DRC on v0.11: 0 errors, 0 unconnected pads, 11 warnings (dangling
+  track ends and two library mismatches, all inherited).
 - A [difference audit](source/fabrication/audit_v10.py) proving v0.10 differs
   from v0.9 only in the recorded ways, and a [second one](source/fabrication/audit_v11.py)
-  proving v0.11 differs from v0.10 only inside the servo block, with no part
-  or net changed there, and that schematic and board agree.
+  proving v0.11 differs from v0.10 only in the servo block, the recorded plug
+  moves and their new copper, with no part or net changed, and that schematic
+  and board agree.
 - JLCPCB accepted the v0.11 files, matched all 81 BOM lines and priced the order.
-- Three AI reviews of v0.10. Their reports, including the places they were
-  wrong, are in [`red-team-findings/`](red-team-findings/2026-11-10/).
-  **None of them has seen v0.11.**
+- **Every oriented part was checked one at a time in JLCPCB's placement
+  viewer.** Thirteen were rotated wrongly in the placement file (including
+  all six TPS54560s and the LM5146) and were corrected. The v0.9 and v0.10
+  placement files in this repository still contain those errors.
+- Three AI reviews of v0.10 and one of an early v0.11. Their reports, and
+  [which of their findings held up](red-team-findings/2026-11-10/argon/DISPOSITION_v11.md),
+  are in [`red-team-findings/`](red-team-findings/2026-11-10/).
+  **None of them has seen the final v0.11.**
 
 Not done: no board has been built, powered or measured. The thermal and
 impedance figures are calculations.

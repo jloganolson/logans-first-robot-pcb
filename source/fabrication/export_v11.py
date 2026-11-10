@@ -20,6 +20,15 @@ OFFSETS=[(r'^SOT-23',-90),(r'^LQFP-',270),(r'^HTSSOP-',270),(r'^VSSOP-8_',180),(
 # U9902 (UQFN-10, the USB data switch) rendered 90 degrees off its pads with pin 1 at the wrong corner; the
 # v0.9 offset table gives QFN packages 270 but its pattern did not match this footprint name.
 ROTATION_FIXES={'J101':180,'J501':180,'U9902':270}
+# Found by opening every oriented part one at a time in the factory placement viewer for v0.11 (click the part's
+# row in the list; the view jumps to it). These were drawn off their pads; the same rows were wrong in the v0.9
+# and v0.10 placement files, which had only been spot-checked. Degrees are added to the v0.10 value.
+#   90 degrees off: Q7001 (SOT-23), U9900 and U9904 (SOT-23-6), U2 (VQFN-20), U14 (QFN-24), U7007 (TSSOP-14),
+#                   U3-U7 and U7003 (SO PowerPAD-8, the six TPS54560 regulators)
+#   180 degrees:    J3 (Micro-Fit header; latch side was facing the wrong way)
+# Checked and correct: all electrolytics, both crystals, LEDs, SS1060 diodes, FETs, U1, U10, U11, U12, U13, U15,
+# U16, U17, U7002, U7006, U7009, U9902, C9902, USB-C, XT30s, JST VH headers.
+V11_ROTATION_FIXES={'Q7001':270,'U9900':270,'U9904':270,'U2':270,'U14':90,'U7007':270,'U3':270,'U4':270,'U5':270,'U6':270,'U7':270,'U7003':270,'J3':180}
 def sha(q):return hashlib.sha256(Path(q).read_bytes()).hexdigest()
 def run(cmd,log):
  r=subprocess.run(list(map(str,cmd)),capture_output=True,text=True)
@@ -60,8 +69,9 @@ def main():
   rot=(rot+ROTATION_FIXES.get(ref,0))%360;q=oldraw[ref];turn=(float(r['Rot'])-float(q['Rot']))%360
   if abs(x-float(o['Mid X']))<1e-4 and abs(y-float(o['Mid Y']))<1e-4:assert abs(rot-float(o['Rotation']))<1e-4,('rotation changed on a part that did not move',ref)
   else:
-   moved+=1;assert re.search(r'(\d+)$',ref) and 7000<=int(re.search(r'(\d+)$',ref)[1])<9000,('a part outside the servo block moved',ref)
+   moved+=1;assert (re.search(r'(\d+)$',ref) and 7000<=int(re.search(r'(\d+)$',ref)[1])<9000) or ref in D['placed']['plugs moved to an edge'],('a part outside the servo block moved',ref)
    assert abs((rot-float(o['Rotation']))%360-turn)<1e-4,('factory rotation did not follow the footprint',ref,rot,o,turn)
+  rot=(rot+V11_ROTATION_FIXES.get(ref,0))%360
   cpl.append([ref,x,y,'Top',rot])
  assert {c[0] for c in cpl}==fitted==set(old);write(pkg/'CPL_JLCPCB.csv',['Designator','Mid X','Mid Y','Layer','Rotation'],cpl)
  req=dict(board_size_mm=D['outline_mm'],layers=4,thickness_mm=1.6,factory_stackup='JLC04161H-7628 (factory default; required for Economic assembly)',specify_stackup='Yes, JLC04161H-7628',impedance_control='No requirement (not purchased)',
@@ -78,7 +88,7 @@ def main():
   run(['kicad-cli','pcb','export','svg','--layers',layers,'--page-size-mode','2','--exclude-drawing-sheet','-o',pkg/name,BOARD],log)
  manifest=dict(status='PROTOTYPE QUOTE PACKAGE; NOT A PURCHASE OR PRODUCTION APPROVAL',board_sha256=h,schematic_sha256=D['schematic_sha256'],source_v10_board_sha256=D['source_board_sha256'],
   audit=json.loads((OUT/'audit-v11.json').read_text())['status'],bom_lines=len(bom),fitted_references=len(fitted),supplier_codes=len({r[3] for r in bom}),
-  files={f.name:sha(f) for f in sorted(pkg.iterdir()) if f.is_file()},moved_fitted_parts=moved,placement_rotations='v0.10 values (v0.9 starting values plus '+json.dumps(ROTATION_FIXES)+' found in the factory preview); moved servo-block parts turned with their footprints; factory orientation review still required')
+  files={f.name:sha(f) for f in sorted(pkg.iterdir()) if f.is_file()},moved_fitted_parts=moved,v11_rotation_fixes=V11_ROTATION_FIXES,placement_rotations='v0.10 values (v0.9 starting values plus '+json.dumps(ROTATION_FIXES)+' found in the factory preview); moved servo-block parts turned with their footprints; factory orientation review still required')
  (pkg/'manifest.json').write_text(json.dumps(manifest,indent=1)+'\n');(OUT/'current-package.json').write_text(json.dumps(dict(directory=str(pkg.relative_to(ROOT)),board_sha256=h,gerber_zip_sha256=sha(z)),indent=1)+'\n')
  print('package',pkg.relative_to(ROOT),'bom lines',len(bom),'fitted',len(fitted),'codes',manifest['supplier_codes'])
 if __name__=='__main__':main()

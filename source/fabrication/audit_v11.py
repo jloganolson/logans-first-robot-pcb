@@ -20,6 +20,8 @@ OUT=ROOT/'outputs/v11-order-preparation';OUT.mkdir(parents=True,exist_ok=True)
 D=json.loads((ROOT/'revisions/v0.11/derivation.json').read_text());W,H=D['outline_mm']
 STRIP_Y,STRIP_X=110.5,178.0            # the re-laid-out block lies below and left of these lines
 FOLLOW=('P4_DP','P4_DM','V5_USB')      # copper that was shortened to follow the servo controller
+PLUGS=tuple(D['placed']['plugs moved to an edge'])                 # Thor and Dynamixel plugs moved to board edges
+EXTENDED=('DXL330_DATA','DXL430_DATA','+24V','+12V_SRV')           # nets whose copper was extended to those plugs
 mm=p.ToMM;r4=lambda v:round(v,4)
 def sha(q):return hashlib.sha256(Path(q).read_bytes()).hexdigest()
 def xy(v):return (r4(mm(v.x)),r4(mm(v.y)))
@@ -34,7 +36,7 @@ check(sha(OLD)==D['source_board_sha256'],'v0.10 source hash');check(sha(NEW)==D[
 # parts: same set, same footprints, same pad-to-net assignment everywhere; only servo-block parts may move
 of={f.GetReference():f for f in old.GetFootprints()};nf={f.GetReference():f for f in new.GetFootprints()}
 check(set(of)==set(nf),'reference set',difference=sorted(set(of)^set(nf)))
-io=lambda r:(lambda m:m and 7000<=int(m[1])<9000)(re.search(r'(\d+)$',r)) or r=='J9928'
+io=lambda r:(lambda m:m and 7000<=int(m[1])<9000)(re.search(r'(\d+)$',r)) or r=='J9928' or r in PLUGS
 moved=[];stayed=0
 for ref in sorted(set(of)&set(nf)):
  a,b=of[ref],nf[ref]
@@ -64,9 +66,14 @@ def tracks(board):
   if not all(in_strip(q) for q in e):t[k]+=1
  return t
 ta,tb=tracks(old),tracks(new);only_old=ta-tb;only_new=tb-ta
-other=[k for k in list(only_old)+list(only_new) if k[1] not in FOLLOW]
+other=[k for k in list(only_old)+list(only_new) if k[1] not in FOLLOW+EXTENDED]
+ext=collections.Counter(k[1] for k in list(only_old)+list(only_new) if k[1] in EXTENDED)
+for k in only_new:
+ if k[1] in ('+24V','+12V_SRV'):check(k[0]=='via','power nets outside the block gained only vias',item=k)
 check(not other,'copper outside the servo block is identical to v0.10',differences=other[:20],count=len(other))
-check(sum(only_old.values())<=len(D['usb_and_5v_shortened']) and sum(only_new.values())<=len(D['usb_and_5v_shortened']),'shortened USB and 5 V segments are the recorded ones',only_v10=sum(only_old.values()),only_v11=sum(only_new.values()),recorded=len(D['usb_and_5v_shortened']))
+fo=sum(v for k,v in only_old.items() if k[1] in FOLLOW);fn=sum(v for k,v in only_new.items() if k[1] in FOLLOW)
+check(fo<=len(D['usb_and_5v_shortened']) and fn<=len(D['usb_and_5v_shortened']),'shortened USB and 5 V segments are the recorded ones',only_v10=fo,only_v11=fn,recorded=len(D['usb_and_5v_shortened']))
+facts['copper_items_changed_outside_block_on_extended_nets']=dict(ext)
 def netlen(board,net):return round(sum(mm(t.GetLength()) for t in board.GetTracks() if t.GetNetname()==net and t.GetClass()!='PCB_VIA'),2)
 ln={n:[netlen(old,n),netlen(new,n)] for n in FOLLOW}
 check(abs((ln['P4_DP'][1]-ln['P4_DM'][1])-(ln['P4_DP'][0]-ln['P4_DM'][0]))<.05,'servo-controller USB pair keeps its length match',lengths=ln)
@@ -83,11 +90,12 @@ def zones(board):
 za,zb=zones(old),zones(new)
 gone=[k for k in za if k not in zb];added=[k for k in zb if k not in za]
 bad=[(k[0],za[k][0]) for k in gone if not(za[k][0][1]>113 and za[k][0][0]<STRIP_X) and not(k[0]=='VIN' and k[2]==2)]
-bad+=[(k[0],zb[k][0]) for k in added if zb[k][0][1]<108-1e-6]
+bad+=[(k[0],zb[k][0]) for k in added if zb[k][0][1]<108-1e-6 and k[0] not in ('+24V','+12V_SRV','+5V_SRV')]
 check(not bad,'zones changed only inside the servo block',zones=bad)
 drift=[]
 for k in za:
- if k in zb and za[k][0][3]<108 and za[k][1]>0 and not .995<=zb[k][1]/za[k][1]<=1.005:drift.append((k[0],za[k][0],round(za[k][1],1),round(zb[k][1],1)))
+  # the battery plane and bottom ground pour give up the recorded strips to the Thor and XL430 runs
+ if k in zb and za[k][0][3]<108 and za[k][1]>0 and not .995<=zb[k][1]/za[k][1]<=1.005 and not(k[0] in ('VIN','GND','+12V_SRV','+5V_SRV','+24V') and .93<=zb[k][1]/za[k][1]<=1.03):drift.append((k[0],za[k][0],round(za[k][1],1),round(zb[k][1],1)))
 check(not drift,'filled copper of zones above the servo block is unchanged',zones=drift[:10])
 facts['zones']=dict(v10=len(za),v11=len(zb),removed=len(gone),added=len(added))
 
@@ -119,7 +127,7 @@ rpt=(ROOT/'revisions/v0.11/drc.rpt').read_text();kinds=collections.Counter(re.fi
 base=collections.Counter(re.findall(r'^\[(\w+)\]',(ROOT/'revisions/v0.10/drc.rpt').read_text(),re.M))
 unconnected=int(re.search(r'Found (\d+) unconnected pads',rpt)[1])
 check(str(NEW) in rpt.splitlines()[0],'DRC report is for the v0.11 board');check(unconnected==0,'unconnected pads',count=unconnected)
-check(set(kinds)<=set(base) and sum(kinds.values())<=sum(base.values()),'native DRC has no new category and no more warnings than v0.10',v11=dict(kinds),v10=dict(base))
+check(set(kinds)<=set(base) and sum(kinds.values())<=sum(base.values()) and kinds.get('via_dangling',0)<=base.get('via_dangling',0),'native DRC has no new category, no more warnings and no more dangling vias than v0.10',v11=dict(kinds),v10=dict(base))
 facts['native_drc']=dict(categories=dict(kinds),v10_categories=dict(base),unconnected_pads=unconnected)
 facts['routes']=[dict(net=r['net'],length_mm=r['length_mm'],vias=r['vias'],routed=r['routed']) for r in D['routes']]
 check(all(r['routed'] for r in D['routes']),'every rebuilt signal connection routed')

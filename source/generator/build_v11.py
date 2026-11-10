@@ -50,6 +50,8 @@ B_SHIFT=(51.0,-12.0)             # MCU block: pure translation; P4 and V5_USB co
 SIGNAL_NETS=('IO_PWM1_MCU','IO_PWM2_MCU','IO_PWM3_MCU','IO_SERVO_ARM','IO_PWM1_OUT','IO_PWM2_OUT','IO_PWM3_OUT',
              'IO_PWM_SWDIO','IO_PWM_SWCLK','IO_PWM_NRST','IO_V3_PWM')
 POWER_NETS=('PWM_VIN','PWM_5V')
+EDGE_PLUGS={'J3':(4.0,84.5),'J301':(102.6,148.6),'J302':(115.6,148.6),'J401':(186.5,148.6),'J402':(199.5,148.6)}
+DATA_NETS={'DXL330_DATA':('J301','J302'),'DXL430_DATA':('J401','J402')}
 PART_CHANGES={'L1':dict(value='10uH 22A 60V',lcsc='C3911782',mpn='Coilcraft XAL1510-103MED',
   old=dict(value='10uH FEXL1510A-100M',lcsc='C5378597',mpn='cjiang FEXL1510A-100M'))}
 
@@ -208,25 +210,20 @@ def main(stage='all'):
  put('TV input TVS',member['TV'],corner=(ax1+2.0+18.0,131.6))
  put('B servo controller',member['B'],shift=B_SHIFT)
  bx0=placed['B servo controller']['to_bbox'][0]
- put('C output buffer',member['C'],corner=(bx0-26.6,118.4))
+ bx1=placed['B servo controller']['to_bbox'][2]
+ put('C output buffer',member['C'],corner=(bx0-26.6,116.8))
  conn=[fps['J7004'],fps['J7005'],fps['J7006']]
- for k,f in enumerate(conn):f.SetPosition(V(ax1+9.0+15.0*k,150.6))
+ for k,f in enumerate(conn):f.SetPosition(V(ax1+9.0+11.0*k,150.6))
  placed['J servo headers']=dict(pin1_mm=[[round(v,2) for v in xy(f.GetPosition())] for f in conn])
- fps['J7008'].SetPosition(V(bx0-15.5,151.0));placed['S SWD header']=dict(pin1_mm=[round(v,2) for v in xy(fps['J7008'].GetPosition())])
- holes={'H7002':(bx0-22.5,151.3),'H7003':(3.5,151.5),'H7004':(176.0,151.5)}
+ fps['J7008'].SetPosition(V(bx1+2.3,151.0));placed['S SWD header']=dict(pin1_mm=[round(v,2) for v in xy(fps['J7008'].GetPosition())])
+ holes={'H7002':(95.2,151.3),'H7003':(3.5,151.5),'H7004':(214.5,151.3)}
  for r,q in holes.items():fps[r].SetPosition(V(*q))
  placed['mounting holes']=holes
- # labels
- for old in [t for t in texts if re.match(r'J700[456] ',t)]:rm(texts[old])
- def label(s,x,y,size=.9):
-  t=p.PCB_TEXT(b);t.SetText(s);t.SetPosition(V(x,y));t.SetTextSize(p.VECTOR2I(MM(size),MM(size)));t.SetTextThickness(MM(.14));t.SetLayer(p.F_SilkS);b.Add(t)
- for k,f in enumerate(conn):
-  q=xy(f.GetPosition());label('SERVO %d  1G 2+ 3S'%(k+1),q[0]+2.54,q[1]+2.9,.8)
- q=xy(fps['J7008'].GetPosition());texts['J7008 PWM SWD'].SetPosition(V(q[0]+5.1,q[1]+3.0))
- q=xy(fps['F7000'].GetPosition());texts['F7000 PWM 5A'].SetPosition(V(q[0]-20.0,q[1]-5.2))
- for k,(old,new) in enumerate([('ROBOT PDB v0.10 PASSTHROUGH','ROBOT PDB v0.11 PASSTHROUGH'),('STOP BEFORE MASTER OFF',None),('MOTOR OUTPUT: BATTERY VOLTAGE',None),('CAMERA / MIC: JETSON USB3',None)]):
-  t=texts[old];t.SetPosition(V(199.0,139.0+3.0*k))
-  if new:t.SetText(new)
+ # Plugs that sat in the middle of the board go to the nearest edge. The Dynamixel plugs drop straight down to the
+ # bottom edge; the Thor plug goes to the left edge. Positions are pin 1; orientation is unchanged.
+ old_plug={r:[xy(q.GetPosition()) for q in fps[r].Pads() if q.GetNumber()=='1'] for r in EDGE_PLUGS}
+ for r,q in EDGE_PLUGS.items():fps[r].SetPosition(V(*q))
+ placed['plugs moved to an edge']={r:dict(pin1_from_mm=[round(v,2) for v in old_plug[r][0]],pin1_to_mm=list(q)) for r,q in EDGE_PLUGS.items()}
  log['placed']=placed
 
  # ---- 3. shorten the copper that follows the MCU ----
@@ -296,10 +293,17 @@ def main(stage='all'):
   if cand:_,a,la=cand[0]
   else:a,la=padxy('TP7002' if net=='IO_V3_PWM' else 'U7002',net)
   connect(net,a,la,tgt,lt,what='MCU to SWD header')
+ # Dynamixel data: from where the old copper ended at the old plug position to the first moved plug, then on to the second
+ for net,(first,second) in DATA_NETS.items():
+  tgt,lt=padxy(first,net);cand=loose_ends(net,tgt)
+  if cand:_,a,la=cand[0]
+  else:a,la=padxy('R76' if net=='DXL330_DATA' else 'R77',net)
+  connect(net,a,la,tgt,lt,w=.25,win=14,what='to moved Dynamixel plug')
+  t2,l2=padxy(second,net);connect(net,tgt,lt,t2,l2,w=.25,win=8,what='plug to plug')
  log['routes']=routes
  # leftover ends of the old inter-block tracks: remove anything on these nets that leads nowhere
  pruned=collections.Counter()
- for net in SIGNAL_NETS[:-1]+('IO_PWM_EN',):
+ for net in SIGNAL_NETS[:-1]+('IO_PWM_EN',)+tuple(DATA_NETS):
   pads=[q for f in b.GetFootprints() for q in f.Pads() if q.GetNetname()==net]
   while True:
    items=[t for t in b.GetTracks() if t.GetNetname()==net];gone=0
@@ -313,7 +317,7 @@ def main(stage='all'):
       elif o.HitTest(V(*q)) and (t.GetClass()=='PCB_VIA' or o.GetLayer()==t.GetLayer()):return True
      return False
     n_held=[held(q) for q in ends(t)]
-    if (t.GetClass()=='PCB_VIA' and len({o.GetLayer() for o in others if o.GetClass()!='PCB_VIA' and o.HitTest(t.GetPosition())})<2 and not any(pad.HitTest(t.GetPosition()) for pad in pads)) or (t.GetClass()!='PCB_VIA' and not all(n_held)):
+    if (t.GetClass()=='PCB_VIA' and len({o.GetLayer() for o in others if o.GetClass()!='PCB_VIA' and o.HitTest(t.GetPosition())}|({p.F_Cu} if any(pad.HitTest(t.GetPosition()) for pad in pads) else set()))<2) or (t.GetClass()!='PCB_VIA' and not all(n_held)):
      rm(t);pruned[net]+=1;gone+=1;break
    if not gone:break
  log['pruned_stubs']=dict(pruned);rt._index=None
@@ -326,9 +330,22 @@ def main(stage='all'):
   z.SetIslandRemovalMode(p.ISLAND_REMOVAL_MODE_ALWAYS);b.Add(z);return z
  A=placed['A servo buck']['to_bbox'];Bb=placed['B servo controller']['to_bbox'];fuse=[xy(q.GetPosition()) for q in fps['F7000'].Pads()]
  vin_pin=next(xy(q.GetPosition()) for q in fps['F7000'].Pads() if q.GetNetname()=='VIN')
- planes=[]
- z5=[(6.0,112.6),(Bb[0]-1.2,112.6),(Bb[0]-1.2,H-.6),(6.0,H-.6)]
+ planes=[];added_vias=collections.Counter()
+ def via(net,x,y,size=(.6,.3)):
+  """one extra via if the spot is clear on both outer layers and of other holes"""
+  if not rt.hole_ok(x,y,size[1]):return False
+  for layer in (p.F_Cu,p.B_Cu):          # tracks, vias and pads of other nets; pours simply re-fill around a via
+   if any(it.HitTest(V(x,y),MM(size[0]/2+.25)) for it in rt._items(layer,net,x,y,size[0]/2+2.3)):return False
+  for f in b.GetFootprints():
+   for q in f.Pads():
+    if q.GetNetname()!=net and q.HitTest(V(x,y),MM(size[0]/2+.25)):return False
+  v=p.PCB_VIA(b);v.SetPosition(V(x,y));v.SetWidth(MM(size[0]));v.SetDrill(MM(size[1]));v.SetNet(b.FindNet(net));b.Add(v);rt._index=None;added_vias[net]+=1;return True
+ # servo 5 V: under the buck output, along the bottom edge to the three headers, and under the buffer. It no longer
+ # lies under the fused-input copper or the regulator's feedback parts.
+ z5=[(6.0,112.6),(33.5,112.6),(33.5,149.2),(86.5,149.2),(86.5,112.6),(Bb[0]-1.2,112.6),(Bb[0]-1.2,144.2),(99.5,144.2),(99.5,H-.6),(6.0,H-.6)]
  zone('PWM_5V',p.In2_Cu,z5,3);planes.append(dict(net='PWM_5V',layer='In2.Cu',outline=z5,purpose='servo 5 V from the buck to the buffer and the three headers'))
+ zs=[(34.3,112.6),(85.7,112.6),(85.7,148.4),(34.3,148.4)]
+ zone('GND',p.In2_Cu,zs,2);planes.append(dict(net='GND',layer='In2.Cu',outline=zs,purpose='ground under the servo regulator and its fused input'))
  zv=[(vin_pin[0]-4.0,108.0),(vin_pin[0]+3.0,108.0),(vin_pin[0]+3.0,vin_pin[1]+3.0),(vin_pin[0]-4.0,vin_pin[1]+3.0)]
  zone('VIN',p.In2_Cu,zv,5);planes.append(dict(net='VIN',layer='In2.Cu',outline=zv,purpose='battery bus down to the fuse'))
  zi=[(A[2]-17.5,120.0),(A[2]+32.0,120.0),(A[2]+32.0,145.5),(A[2]-7.0,145.5),(A[2]-7.0,148.2),(A[2]-17.5,148.2)]
@@ -336,8 +353,32 @@ def main(stage='all'):
  c1=next(xy(q.GetPosition()) for q in fps['C7111'].Pads() if q.GetNetname()=='PWM_VIN')
  zc=[(c1[0]-4.1,c1[1]-1.7),(c1[0]+1.6,c1[1]-1.7),(c1[0]+1.6,c1[1]+1.7),(c1[0]-4.1,c1[1]+1.7)]
  zone('PWM_VIN',p.F_Cu,zc,3);planes.append(dict(net='PWM_VIN',layer='F.Cu',outline=zc,purpose='ties the bulk capacitor pad to its three vias'))
- z3=[(Bb[0]-.6,112.6),(Bb[2]+2.0,112.6),(Bb[2]+2.0,H-.6),(Bb[0]-.6,H-.6)]
+ z3=[(Bb[0]-.6,116.0),(Bb[2]+.8,116.0),(Bb[2]+.8,H-.6),(Bb[0]-.6,H-.6)]
  zone('IO_V3_PWM',p.In2_Cu,z3,3);planes.append(dict(net='IO_V3_PWM',layer='In2.Cu',outline=z3,purpose='3.3 V under the servo controller'))
+ # heavier ties for the surge and bulk parts: a copper patch beside the pad with a column of vias
+ def beef(ref,net,dx):
+  q=next(q for q in fps[ref].Pads() if q.GetNetname()==net);bb=q.GetBoundingBox();x0,y0,x1,y1=mm(bb.GetX()),mm(bb.GetY()),mm(bb.GetRight()),mm(bb.GetBottom())
+  ext=(x1,x1+2.3) if dx>0 else (x0-2.3,x0);poly=[(min(x0,ext[0]),y0),(max(x1,ext[1]),y0),(max(x1,ext[1]),y1),(min(x0,ext[0]),y1)]
+  zone(net,p.F_Cu,poly,4,clear=.25,minw=.25);n=sum(via(net,(ext[0]+ext[1])/2+ox,y) for ox in (-.45,.55) for y in (y0+.45,(y0+y1)/2,y1-.45))
+  planes.append(dict(net=net,layer='F.Cu',outline=poly,purpose='%s pad tie with %d added vias'%(ref,n)))
+ beef('D7001','PWM_VIN',1);beef('D7001','GND',1);beef('C7111','GND',1)
+ # ground vias right beside the regulator's input capacitors
+ gq=[next(q for q in fps[r].Pads() if q.GetNetname()=='GND').GetBoundingBox() for r in ('C7103','C7101','C7102')]
+ n=sum(via('GND',mm(bb.GetX())-.75,y) for bb in gq for y in (mm(bb.GetY())+.5,mm(bb.GetBottom())-.5))
+ planes.append(dict(net='GND',layer='all',purpose='%d ground vias added beside C7101-C7103'%n))
+ # Thor 24 V out to the plug on the left edge: via field where the plug used to be, then In2 and B.Cu side by side
+ t24=old_plug['J3'][0];n=sum(via('+24V',t24[0]-3.4+1.4*i,t24[1]-4.8+1.45*j) for i in range(4) for j in range(5))
+ z24i=[(42.5,66.5),(50.0,66.5),(50.0,86.2),(34.6,86.2),(34.6,79.9),(28.4,79.9),(28.4,86.2),(2.2,86.2),(2.2,76.3),(42.5,76.3)]   # the notch keeps bulk capacitor C3's vias on the battery plane
+ z24b=[(43.0,67.2),(49.5,67.2),(49.5,84.5),(22.0,84.5),(22.0,87.5),(2.2,87.5),(2.2,77.2),(43.0,77.2)]
+ zone('+24V',p.In2_Cu,z24i,6);zone('+24V',p.B_Cu,z24b,7)
+ planes.append(dict(net='+24V',layer='In2.Cu and B.Cu',outline=[z24i,z24b],purpose='Thor output from the regulator to J3 on the left edge; %d vias at the old plug position'%n))
+ # XL330 5 V down to the bottom-edge plugs on B.Cu; XL430 10.8 V around the servo controller on In2
+ z5s=[(100.5,103.0),(126.8,103.0),(126.8,H-.6),(100.5,H-.6)]
+ zone('+5V_SRV',p.B_Cu,z5s,6);planes.append(dict(net='+5V_SRV',layer='B.Cu',outline=z5s,purpose='XL330 5 V to J301 and J302 on the bottom edge'))
+ n=sum(via('+12V_SRV',152.0+1.5*i,y) for i in range(9) for y in (103.2,108.6))
+ z12=[(150.0,102.0),(167.9,102.0),(167.9,110.9),(183.3,110.9),(183.3,139.5),(212.0,139.5),(212.0,H-.6),(168.9,H-.6),(168.9,115.4),(150.0,115.4)]
+ zone('+12V_SRV',p.In2_Cu,z12,6);planes.append(dict(net='+12V_SRV',layer='In2.Cu',outline=z12,purpose='XL430 10.8 V to J401 and J402 on the bottom edge; %d vias from the existing B.Cu pour'%n))
+ log['added_vias']=dict(added_vias)
  zg=[(.5,110.5),(178.0,110.5),(178.0,112.3),(W-.5,112.3),(W-.5,H-.5),(.5,H-.5)]   # meets the main pour; the USB block keeps its old edge
  for layer in (p.F_Cu,p.B_Cu):zone('GND',layer,zg,0,clear=.25,minw=.25)
  planes.append(dict(net='GND',layer='F.Cu and B.Cu',outline=zg,purpose='ground pour across the whole lower strip, including the corner v0.10 left bare'))
@@ -346,6 +387,9 @@ def main(stage='all'):
  # ---- 7. part change, save, fill, check ----
  for ref,c in PART_CHANGES.items():fps[ref].SetValue(c['value'])
  log['part_changes']=PART_CHANGES
+ import labels_v11
+ log['labels']=labels_v11.apply(b,W,H,rm)
+ if log['labels']['not_placed']:print(' labels NOT placed:',log['labels']['not_placed'])
  save()
  sch=DST/'robot_pdb.kicad_sch';s=sch.read_text()
  for ref,c in PART_CHANGES.items():

@@ -1,7 +1,7 @@
 ** Drc report for revisions/v0.11/kicad/robot_pdb.kicad_pcb **
-** Created on 2026-11-10 12:16:49 **
+** Created on 2026-11-10 14:25:43 **
 
-** Found 13 DRC violations **
+** Found 11 DRC violations **
 [lib_footprint_mismatch]: Footprint 'CP_Elec_10x10' does not match copy in library 'Capacitor_SMD'.
     Local override; Severity: warning
     @(35.5000 mm, 84.0000 mm): Footprint C3
@@ -35,12 +35,6 @@
 [track_dangling]: Track has unconnected end
     Local override; Severity: warning
     @(186.0500 mm, 126.9000 mm): Track [USB2_LIMITED_5V] on F.Cu, length 0.1118 mm
-[via_dangling]: Via is not connected or connected on only one layer
-    Local override; Severity: warning
-    @(118.8600 mm, 138.0775 mm): Via [IO_PWM2_OUT] on F.Cu - B.Cu
-[via_dangling]: Via is not connected or connected on only one layer
-    Local override; Severity: warning
-    @(122.8100 mm, 138.2275 mm): Via [IO_PWM3_OUT] on F.Cu - B.Cu
 
 ** Found 0 unconnected pads **
 

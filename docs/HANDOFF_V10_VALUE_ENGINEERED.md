@@ -1,6 +1,6 @@
 # v0.10 value-engineered candidate: handoff for independent vetting
 
-> **Superseded by v0.11** (compact 228 x 155 mm layout, Coilcraft L1, $305.40). See [HANDOFF_V11_COMPACT_LAYOUT.md](HANDOFF_V11_COMPACT_LAYOUT.md). This document remains the reference for everything v0.11 did not change.
+> **Superseded by v0.11** (compact 228 x 155 mm layout, plugs on the board edges, corrected part rotations, $307.92). See [HANDOFF_V11_COMPACT_LAYOUT.md](HANDOFF_V11_COMPACT_LAYOUT.md). **Do not order from the v0.10 files: their placement file has wrong part rotations.** This document remains the reference for everything v0.11 did not change.
 
 > **About this document.** It is a working brief written by one AI agent (Claude) for the next reviewing
 > agent and for the owner, published as-is for transparency. "I" is that agent; "the owner" is Logan.

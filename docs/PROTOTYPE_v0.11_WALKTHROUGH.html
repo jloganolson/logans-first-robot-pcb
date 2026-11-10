@@ -6,27 +6,33 @@ a{color:#135a7b}nav{display:flex;gap:14px;flex-wrap:wrap;padding:12px 0;border-b
 table{width:100%;border-collapse:collapse;font-size:14.5px;margin:10px 0}td,th{text-align:left;vertical-align:top;padding:8px;border-bottom:1px solid #d1d7da}th{background:#eef2f4}
 td.n,th.n{text-align:right;white-space:nowrap}
 .notice{border:2px solid #926326;padding:12px 16px;background:#fffaf0;margin:14px 0}
+.stop{border:2px solid #a12a2a;padding:12px 16px;background:#fff3f3;margin:14px 0}
 .ok{border:2px solid #2f6b46;padding:12px 16px;background:#f3faf5;margin:14px 0}
 img{max-width:100%;height:auto;border:1px solid #d1d7da}.small{font-size:13.5px;color:#48575e}
 li{margin:6px 0}code{overflow-wrap:anywhere;background:#eef2f4;padding:1px 4px;border-radius:3px}
-svg text{font:4.3px system-ui,sans-serif}
+.lab{font-family:ui-monospace,monospace;background:#fff8c9;padding:1px 5px;border:1px solid #d9cf8a;border-radius:3px;white-space:nowrap;font-size:13.5px}
+svg text{font:4.2px system-ui,sans-serif}
 @media print{nav{display:none}tr{break-inside:avoid}}
 </style><main>
 <h1>Robot power board v0.11: plain-language walkthrough</h1>
 <div class="notice"><strong>Reading this as a visitor?</strong> This page was written for the board's owner, so "you" means Logan, and the buying and bench instructions are his notes to himself. The board <strong>has not been ordered</strong>; please do not order it from these files. The public summary and the questions open for review are in the <a href="https://github.com/jloganolson/logans-first-robot-pcb#readme">README</a>.</div>
 <p class="small">Written 10 November 2026 for the owner. Engineering detail and evidence are in
-<a href="https://github.com/jloganolson/logans-first-robot-pcb/blob/main/docs/HANDOFF_V11_COMPACT_LAYOUT.md">the v0.11 handoff</a> and <a href="https://github.com/jloganolson/logans-first-robot-pcb/blob/main/docs/HANDOFF_V10_VALUE_ENGINEERED.md">the v0.10 handoff</a>. Bench procedures are in the <a href="https://github.com/jloganolson/logans-first-robot-pcb/blob/main/docs/V09_BRINGUP_CHECKLIST.md">bring-up checklist</a>, written for v0.9 and unchanged.</p>
+<a href="https://github.com/jloganolson/logans-first-robot-pcb/blob/main/docs/HANDOFF_V11_COMPACT_LAYOUT.md">the v0.11 handoff</a>. Text shown like <span class="lab">THIS</span> is printed on the board.</p>
 
-<div class="notice"><strong>Where things stand.</strong> The compact version of the board (v0.11, 228 &times; 155 mm) is saved in the JLCPCB cart,
-<strong>unpaid</strong>, at <strong>$305.40 before shipping</strong> for five bare boards with two of them assembled.
-That is $5.40 over the $300 target, which pays for the better Thor coil you approved. Nothing has been ordered. It has been checked by software, but
-<strong>no hardware exists yet and nothing has been measured</strong>, and the newly laid-out servo corner has not had an independent review yet.</div>
+<div class="notice"><strong>Where things stand.</strong> Version 0.11 of the board is saved in the JLCPCB cart, <strong>unpaid</strong>,
+as <strong>Robot_PDB_v11_Gerbers_Y7</strong> at <strong>$307.92 before shipping</strong>: five bare boards, two of them assembled.
+That is $7.92 over the $300 target, which pays for the better Thor coil you approved. Nothing has been ordered.
+<strong>No hardware exists yet and nothing has been measured.</strong></div>
 
-<div class="notice" style="border-color:#a12a2a;background:#fff3f3"><strong>Still open before paying.</strong> The Thor coil is back to the 60 V part, so that half of the earlier hold is closed.
-Two questions remain from the third review: the <strong>six smaller regulator coils</strong> are reported as rated 30 V while your packs reach 33.6 V (changing them was estimated at about $13 more),
-and whether the big round capacitors tolerate the cheaper assembly line's oven temperature (a question for JLCPCB).
-Details are in <a href="https://github.com/jloganolson/logans-first-robot-pcb/blob/main/docs/HANDOFF_V10_VALUE_ENGINEERED.md">the v0.10 handoff</a>.</div>
-<nav><a href="#does">What it does</a><a href="#plugs">What plugs in where</a><a href="#v11">New in v0.11</a><a href="#changed">v0.9 to v0.10</a>
+<div class="stop"><strong>Before you pay, three things are still open.</strong>
+<ol>
+<li><strong>Nobody independent has reviewed the final version.</strong> The second AI reviewer (Gemini Argon) saw an earlier v0.11 and then ran out of quota.
+Moving the plugs to the edges, the new labels and the placement corrections all came after its review.</li>
+<li><strong>Six smaller regulator coils are reported as rated 30 V</strong> while your packs reach 33.6 V. Swapping them was estimated at about $13. This is your call.</li>
+<li><strong>The big round capacitors and the cheaper assembly line's oven temperature</strong> have not been confirmed compatible. That is a question for JLCPCB.</li>
+</ol></div>
+
+<nav><a href="#does">What it does</a><a href="#plugs">What plugs in where</a><a href="#read">Reading the board</a><a href="#history">How it got here</a>
 <a href="#buy">What to buy</a><a href="#after">After you pay</a><a href="#arrive">When it arrives</a>
 <a href="#power">Powering your gear</a><a href="#heat">Heat</a><a href="#risks">Known risks</a><a href="#checked">How it was checked</a><a href="#words">Glossary</a></nav>
 
@@ -37,198 +43,228 @@ the Dynamixel servos and three small hobby servos.</p>
 <ul>
 <li><strong>Motors:</strong> battery voltage goes straight through a fuse to your existing motor controllers. The board does nothing clever here.</li>
 <li><strong>Jetson Thor:</strong> a 24.3 V supply good for the 8 A the Thor kit can draw.</li>
-<li><strong>Servos:</strong> 5 V for the XL330s, 10.8 V for the XL430s, and a separate 5 V for three MG90S servos.</li>
+<li><strong>Servos:</strong> 5 V for the XL330s, 10.8 V for the XL430s, and a separate 5 V for three MG90S hobby servos.</li>
 <li><strong>Sound:</strong> a USB sound chip and a stereo amplifier for two speakers.</li>
 <li><strong>Spare outputs:</strong> a 5 V / 5 A output and an 11.7 V / 5 A output ("AUX") for your own gear.</li>
-</ul></section>
+</ul>
+<h3>The two 30 A fuses</h3>
+<p>Right after your master switch the two packs join into one battery bus, and two fuses split that bus into two protected branches.
+<strong>F1</strong> feeds only the motor output. <strong>F2</strong> feeds everything else on the board. A short on one branch blows its fuse
+without taking the other down. Neither protects the wires between a pack and the board, so fit a fuse at each pack as well.</p></section>
 
 <section id="plugs"><h2>What plugs in where</h2>
-<p>The board is 228 mm wide and 155 mm tall. This sketch is to scale, seen from the top.</p>
-<svg viewBox="-4 -14 236 176" role="img" aria-label="Connector map of the v0.11 board" style="width:100%;max-width:900px;background:#f6f8f9;border:1px solid #d1d7da">
+<p>The board is 228 mm wide and 155 mm tall. Every plug is at an edge, so an enclosure needs openings on its sides, not its lid.
+The battery, switch and motor connections are soldered wires; they can leave through a grommet anywhere.</p>
+<svg viewBox="-6 -12 240 178" role="img" aria-label="Connector map of the v0.11 board" style="width:100%;max-width:920px;background:#f6f8f9;border:1px solid #d1d7da">
 <rect x="0" y="0" width="228" height="155" fill="#e3efe6" stroke="#2f6b46" stroke-width="1"/>
 <g fill="#c9772b" stroke="#6b3f14" stroke-width=".4">
-<rect x="2" y="7" width="7" height="14"/><rect x="50" y="93" width="10" height="8"/><rect x="71" y="93" width="10" height="8"/>
+<rect x="2" y="7" width="7" height="14"/><rect x="47" y="93" width="14" height="8"/><rect x="68" y="93" width="14" height="8"/>
 <rect x="12" y="69" width="26" height="5"/><rect x="12" y="104" width="26" height="5"/></g>
 <g fill="#b9c4cc" stroke="#4a5a63" stroke-width=".4"><rect x="11" y="10" width="6" height="40"/><rect x="24" y="10" width="6" height="40"/><rect x="56" y="123" width="42" height="6"/></g>
 <g fill="#3d78a8" stroke="#1d425f" stroke-width=".4">
-<rect x="93" y="3" width="14" height="12"/><rect x="161" y="3" width="14" height="12"/><rect x="45" y="68" width="8" height="8"/>
-<rect x="86" y="103" width="12" height="6"/><rect x="104" y="103" width="12" height="6"/><rect x="131" y="103" width="12" height="6"/><rect x="149" y="103" width="12" height="6"/>
-<rect x="60" y="148.5" width="6" height="4"/><rect x="75" y="148.5" width="6" height="4"/><rect x="90" y="148.5" width="6" height="4"/></g>
-<g fill="#7a5aa6" stroke="#3e2a5c" stroke-width=".4"><rect x="219" y="15" width="8" height="10"/><rect x="219" y="37" width="8" height="10"/><rect x="219" y="80" width="9" height="10"/><rect x="111" y="149" width="12" height="4"/></g>
+<rect x="93" y="3" width="14" height="12"/><rect x="161" y="3" width="14" height="12"/><rect x="1" y="77" width="10" height="12"/>
+<rect x="100" y="144" width="12.5" height="10"/><rect x="113" y="144" width="12.5" height="10"/><rect x="184" y="144" width="12.5" height="10"/><rect x="197" y="144" width="12.5" height="10"/>
+<rect x="60" y="148.5" width="7" height="4"/><rect x="71" y="148.5" width="7" height="4"/><rect x="82" y="148.5" width="7" height="4"/></g>
+<g fill="#7a5aa6" stroke="#3e2a5c" stroke-width=".4"><rect x="219" y="15" width="8" height="10"/><rect x="219" y="37" width="8" height="10"/><rect x="219" y="80" width="9" height="10"/><rect x="166" y="149" width="13" height="4"/></g>
 <g fill="#202b30">
-<text x="1" y="-3">J2 motors out</text><text x="11" y="55">F1</text><text x="24" y="55">F2 (fuses)</text>
-<text x="84" y="-3">J101 spare 5 V</text><text x="152" y="-3">J501 AUX 11.7 V</text>
-<text x="55" y="74">J3 Thor 24 V</text><text x="12" y="67">J5 to switch</text><text x="12" y="114">J5 from packs</text>
-<text x="44" y="90">J1 pack A</text><text x="70" y="90">J4 pack B</text>
-<text x="84" y="114">XL330 ×2 (5 V)</text><text x="130" y="114">XL430 ×2 (10.8 V)</text>
-<text x="58" y="135">F7000 servo fuse</text><text x="58" y="146">MG90S servos ×3</text><text x="126" y="153">J7008 programming</text>
-<text x="198" y="22">speaker R</text><text x="198" y="44">speaker L</text><text x="180" y="78">J10 USB-C to Jetson</text>
-</g>
-</svg>
-<p class="small">Orange: battery-side wiring you solder. Grey: fuses you fit. Blue: outputs. Purple: signal and audio.</p>
-<table><tr><th>Label</th><th>Connector</th><th>What it is</th><th>Who fits it</th></tr>
-<tr><td>J1, J4</td><td>XT60 pigtails</td><td>The two battery packs. Your packs' XT60 female plugs mate with these.</td><td>You solder the pigtails</td></tr>
-<tr><td>J5</td><td>Four wire pads</td><td>Out to your external master switch and back. The switch breaks both pack positives.</td><td>You</td></tr>
-<tr><td>F1, F2</td><td>30 A fuses</td><td>F1 protects the motor output, F2 protects all the electronics.</td><td>You</td></tr>
-<tr><td>J2</td><td>Pigtail</td><td>Fused battery voltage to your motor controllers.</td><td>You</td></tr>
-<tr><td>J3</td><td>Micro-Fit, 4 pin</td><td>24.3 V to the Jetson Thor, using the ready-made Molex cable.</td><td>Factory</td></tr>
-<tr><td>J101</td><td>XT30</td><td>5 V at up to 5 A. Originally for the Pi; now your spare 5 V output.</td><td>Factory</td></tr>
-<tr><td>J501</td><td>XT30</td><td>"AUX": 11.7 V at up to 5 A, shared with the amplifier.</td><td>Factory</td></tr>
-<tr><td>J301, J302</td><td>JST VH, 3 pin</td><td>XL330 servo chains: ground, 5 V, data.</td><td>Factory</td></tr>
-<tr><td>J401, J402</td><td>JST VH, 3 pin</td><td>XL430 servo chains: ground, 10.8 V, data.</td><td>Factory</td></tr>
-<tr><td>J13, J14</td><td>Screw terminals</td><td>Left and right speaker. Neither speaker wire is ground.</td><td>Factory</td></tr>
-<tr><td>J10</td><td>USB-C</td><td>One cable to the Jetson for sound, Dynamixel data and servo control.</td><td>Factory</td></tr>
-<tr><td>J7004–J7006</td><td>3-pin headers</td><td>MG90S hobby servos: ground, 5 V, signal.</td><td>You</td></tr>
-<tr><td>F7000</td><td>5 A fuse</td><td>Protects the MG90S servo supply.</td><td>You</td></tr>
-<tr><td>J7008</td><td>5-pin header</td><td>Programming port for the servo controller chip.</td><td>You</td></tr></table>
+<text x="1" y="-3">MOTOR OUT</text><text x="11" y="55">F1</text><text x="24" y="55">F2</text>
+<text x="84" y="-3">SPARE 5V 5A</text><text x="152" y="-3">AUX 11.7V 5A</text>
+<text x="13" y="85">THOR 24V 8A</text><text x="12" y="67">from switch</text><text x="12" y="114">to switch</text>
+<text x="44" y="90">PACK A IN</text><text x="69" y="90">PACK B IN</text>
+<text x="96" y="142">XL330 A, B</text><text x="180" y="142">XL430 A, B</text>
+<text x="60" y="121">F7000 SERVO FUSE 5A</text><text x="58" y="146">SERVO 1 2 3</text><text x="158" y="147">PROG</text>
+<text x="197" y="22">SPEAKER R</text><text x="197" y="44">SPEAKER L</text><text x="184" y="78">USB-C TO JETSON</text>
+</g></svg>
+<p class="small">Orange: battery-side wires you solder. Grey: fuses you fit. Blue: power outputs. Purple: signal and audio.</p>
+<table><tr><th>Printed on the board</th><th>Edge</th><th>Connector</th><th>What it is</th><th>Who fits it</th></tr>
+<tr><td><span class="lab">PACK A IN</span> <span class="lab">PACK B IN</span></td><td>inside, left</td><td>XT60 pigtails</td><td>The two battery packs. Each pad pair is marked <span class="lab">+</span> and <span class="lab">GND</span>.</td><td>You solder</td></tr>
+<tr><td><span class="lab">A+ TO SWITCH</span> <span class="lab">A+ FROM SWITCH</span> and the same for B</td><td>inside, left</td><td>Wire pads</td><td>Each pack's positive goes out to your master switch and comes back. The switch breaks both pack positives.</td><td>You solder</td></tr>
+<tr><td><span class="lab">F1 MOTOR FUSE 30A</span> <span class="lab">F2 ELECTRONICS FUSE 30A</span></td><td>inside, top left</td><td>Fuses</td><td>See above.</td><td>You solder</td></tr>
+<tr><td><span class="lab">MOTOR OUT</span> with <span class="lab">GND</span> and <span class="lab">BATT+</span></td><td>left, top corner</td><td>Wire pads</td><td>Fused battery voltage to your motor controllers. The upper pad is ground.</td><td>You solder</td></tr>
+<tr><td><span class="lab">THOR 24V 8A</span></td><td>left</td><td>Micro-Fit, 4 pin</td><td>24.3 V to the Jetson Thor with the ready-made Molex cable. <span class="lab">EDGE PINS +24V</span>, <span class="lab">INNER PINS GND</span>.</td><td>Factory</td></tr>
+<tr><td><span class="lab">SPARE 5V 5A</span></td><td>top</td><td>XT30</td><td>5 V for your own gear. Marked <span class="lab">+</span> and <span class="lab">-</span>.</td><td>Factory</td></tr>
+<tr><td><span class="lab">AUX 11.7V 5A</span></td><td>top</td><td>XT30</td><td>11.7 V, shared with the amplifier.</td><td>Factory</td></tr>
+<tr><td><span class="lab">SPEAKER R</span> <span class="lab">SPEAKER L</span></td><td>right</td><td>Screw terminals</td><td>Marked <span class="lab">R+</span> <span class="lab">R-</span> <span class="lab">L+</span> <span class="lab">L-</span>. Neither speaker wire is ground.</td><td>Factory</td></tr>
+<tr><td><span class="lab">USB-C TO JETSON</span></td><td>right</td><td>USB-C</td><td>One cable for sound, Dynamixel data and servo control.</td><td>Factory</td></tr>
+<tr><td><span class="lab">XL330 A: GND 5V DATA</span> and B</td><td>bottom, middle</td><td>JST VH, 3 pin</td><td>XL330 servo chains. The words are in the same left-to-right order as the pins.</td><td>Factory</td></tr>
+<tr><td><span class="lab">XL430 A: GND 10V8 DATA</span> and B</td><td>bottom, right</td><td>JST VH, 3 pin</td><td>XL430 servo chains.</td><td>Factory</td></tr>
+<tr><td><span class="lab">SERVO 1</span> <span class="lab">SERVO 2</span> <span class="lab">SERVO 3</span></td><td>bottom, left of middle</td><td>3-pin headers</td><td>MG90S hobby servos. <span class="lab">GND 5V SIG</span> is printed above each, in pin order.</td><td>You solder</td></tr>
+<tr><td><span class="lab">F7000 SERVO FUSE 5A</span></td><td>inside, bottom</td><td>Fuse</td><td>Protects the hobby-servo supply.</td><td>You solder</td></tr>
+<tr><td><span class="lab">PROG: 3V3 GND DIO CLK RST</span></td><td>bottom</td><td>5-pin header</td><td>Programming port for the hobby-servo controller chip.</td><td>You solder</td></tr></table>
 <h3>The actual board</h3>
 <img src="v11-assets/board-top.png" alt="Top copper and labels of the v0.11 board">
-<p class="small">Top copper layer of v0.11. The bottom strip holds the hobby-servo supply (left), its fuse, the three servo headers and programming header on the bottom edge, and the servo controller chip (right of centre).</p></section>
+<p class="small">Top copper layer with the printed labels.</p></section>
 
-<section id="v11"><h2>What changed in v0.11</h2>
-<img src="v11-assets/before-after.png" alt="v0.10 and v0.11 side by side; v0.11 is 40 mm shorter">
-<p>v0.10 had an empty quarter because the hobby-servo circuitry was still sitting where a much older version of the board had put it. In v0.11 that one area was laid out again; <strong>everything above it, and the USB area on the right, is copper-for-copper the same as v0.10</strong>.</p>
-<table><tr><th>Change</th><th>In plain words</th></tr>
-<tr><td>Board is 40 mm shorter</td><td>228 &times; 155 mm instead of 228 &times; 195 mm. The bare boards cost $5.90 less.</td></tr>
-<tr><td>Servo supply moved to the corner</td><td>The small 5 V regulator for the three hobby servos sits in the bottom-left corner, with its 5 A fuse, big capacitor and surge protector right beside it instead of half a board away.</td></tr>
-<tr><td>Servo plugs on the bottom edge</td><td>The three 3-pin servo headers are in a row on the bottom edge, labelled <code>SERVO 1&ndash;3</code> with <code>1G 2+ 3S</code> (ground, 5 V, signal). The 5-pin programming header is next to them. The "servo off" jumper J9928 is beside the regulator.</td></tr>
-<tr><td>Servo controller chip moved next to the USB hub</td><td>Its USB wiring is about 63 mm shorter.</td></tr>
-<tr><td>Three mounting holes moved</td><td>The bottom row is now at 151.5 mm from the top edge: 3.5 mm, 105.2 mm and 176 mm from the left. The other twelve holes did not move. <strong>Check your mounting.</strong></td></tr>
-<tr><td>Thor coil back to the good one</td><td>The 60 V Coilcraft part from v0.9 again, as you asked. Adds $17.12.</td></tr></table>
-<p class="small">The connections between the moved pieces were re-drawn by the project's routing program and passed the design-rule check, but no person or second AI has reviewed that corner yet.</p></section>
+<section id="read"><h2>Reading the board</h2>
+<img src="v11-assets/board-labels.png" alt="Everything printed on the v0.11 board, with the solder pads">
+<p class="small">Everything printed on the board (yellow) and every solder pad (pink).</p>
+<h3>The notes printed in the middle</h3>
+<table><tr><th>Printed</th><th>What it means</th></tr>
+<tr><td><span class="lab">BATTERY 27-33.6V. FUSE EACH PACK</span></td><td>The board is for 8-cell packs. The on-board fuses do not protect the pack leads.</td></tr>
+<tr><td><span class="lab">CHECK POLARITY BEFORE POWER</span></td><td>Meter every battery and output connection before the first power-up. Reversed packs will destroy parts.</td></tr>
+<tr><td><span class="lab">JUMPER FITTED = THAT SUPPLY OFF</span></td><td>See "OFF jumpers" below.</td></tr>
+<tr><td><span class="lab">MOTOR OUT = RAW BATTERY VOLTAGE</span></td><td>The motor output is not regulated. It is whatever the packs are at.</td></tr>
+<tr><td><span class="lab">STOP MOTORS BEFORE MASTER OFF</span></td><td>Bring the wheels to a stop before opening the master switch, so spinning motors do not push energy back into a disconnected board.</td></tr>
+<tr><td><span class="lab">CAMERA + MIC PLUG INTO JETSON</span></td><td>The board's USB is USB 2 only. Cameras and microphones go straight to the Jetson's own ports.</td></tr></table>
+<h3>Green lights</h3>
+<p>Each light shows that one supply is up. If a light is off, that supply is off, switched off by its jumper, or faulty.</p>
+<table><tr><th>Printed</th><th>Lit when</th></tr>
+<tr><td><span class="lab">LED BATTERY</span></td><td>Battery voltage has reached the electronics side (packs connected, master switch on, F2 good).</td></tr>
+<tr><td><span class="lab">LED 24V</span></td><td>Thor supply is up.</td></tr>
+<tr><td><span class="lab">LED SPARE 5V</span></td><td>Spare 5 V output is up.</td></tr>
+<tr><td><span class="lab">LED USB 5V</span></td><td>The 5 V that runs the board's own USB chips is up.</td></tr>
+<tr><td><span class="lab">LED XL330</span> <span class="lab">LED XL430</span></td><td>Dynamixel 5 V and 10.8 V supplies are up.</td></tr>
+<tr><td><span class="lab">LED AUX</span></td><td>AUX / amplifier 11.7 V is up.</td></tr>
+<tr><td><span class="lab">LED SERVO 5V</span></td><td>Hobby-servo 5 V is up (needs F7000 fitted).</td></tr>
+<tr><td><span class="lab">LED USB HUB</span></td><td>The USB hub is running and talking to the Jetson.</td></tr></table>
+<h3>OFF jumpers</h3>
+<p>Seven two-pin headers, each next to a solder bridge with the same job: <span class="lab">THOR OFF</span>, <span class="lab">SPARE 5V OFF</span>,
+<span class="lab">USB 5V OFF</span>, <span class="lab">XL330 OFF</span>, <span class="lab">XL430 OFF</span>, <span class="lab">AUX+AUDIO OFF</span>, <span class="lab">SERVO OFF</span>.
+Leave them empty for normal use. Push a jumper cap on one and that supply switches off, which lets you bring the board up one section at a time.</p>
+<h3>Test points</h3>
+<p>Round bare pads for a meter probe, black lead on <span class="lab">TP GND</span>:</p>
+<table><tr><th>Printed</th><th>Expect</th></tr>
+<tr><td><span class="lab">TP BATT</span></td><td>Battery voltage, 27-33.6 V</td></tr>
+<tr><td><span class="lab">TP 24V</span></td><td>24.3 V</td></tr>
+<tr><td><span class="lab">TP 5V</span> (three of them: by the spare output, by the XL330 regulator, by the hobby-servo regulator)</td><td>5 V</td></tr>
+<tr><td><span class="lab">TP USB5V</span></td><td>5 V</td></tr>
+<tr><td><span class="lab">TP 10V8</span></td><td>10.8 V</td></tr>
+<tr><td><span class="lab">TP 11V7</span></td><td>11.7 V</td></tr>
+<tr><td><span class="lab">TP 3V3</span></td><td>3.3 V (hobby-servo controller)</td></tr></table>
+<h3>Other marks</h3>
+<ul>
+<li><span class="lab">FIT U9903 BY HAND</span>: the one chip the factory could not supply. See <a href="#arrive">When it arrives</a>.</li>
+<li><span class="lab">BOOT</span> and <span class="lab">RESET</span>: solder bridges for the hobby-servo controller, left open. Only used if programming through USB instead of the <span class="lab">PROG</span> header.</li>
+<li>A small <span class="lab">+</span> beside a round capacitor or a plug marks its positive side.</li></ul></section>
 
-<section id="changed"><h2>What changed from v0.9 to v0.10, and why</h2>
-<p>v0.10 is <strong>not a new design</strong>. A script takes the reviewed v0.9 board and applies a short list of changes.
-Every part and every trace sits in the same place relative to everything else. The saved v0.9 order was $535.15; v0.10 was $294.18. (v0.11 then undid the Thor inductor line below.)</p>
-<table><tr><th>Change</th><th>In plain words</th><th class="n">Saves about</th></tr>
-<tr><td>Thinner copper</td><td>The copper layers are half as thick. Fine for the currents involved (about 10 A to the motors, 8 A to Thor), but it spreads heat less well. See <a href="#heat">Heat</a>.</td><td class="n">$63</td></tr>
-<tr><td>Smaller board</td><td>The empty strip along the top and the unused bottom were trimmed: 230 mm tall became 195 mm (and 155 mm in v0.11).</td><td class="n">$9</td></tr>
-<tr><td>Standard layer build, plain finish</td><td>The factory's default internal layer spacing instead of a special one, tin finish instead of gold, and no paid impedance test.</td><td class="n">$49</td></tr>
-<tr><td>Bigger small holes</td><td>70 of the tiny connecting holes ("vias") were at a size the factory charges extra for. They are now the standard size.</td><td class="n">avoids $46</td></tr>
-<tr><td>Wider USB traces</td><td>The thicker default layer spacing would have thrown off the Jetson USB pair, so those two traces were widened to match the factory's own calculator.</td><td class="n">—</td></tr>
-<tr><td>Cheaper assembly line</td><td>The factory's "Economic" service instead of "Standard". Same machines, lower setup fees, fewer extras.</td><td class="n">$35</td></tr>
-<tr><td>Thor inductor</td><td>The $12 Coilcraft coil became a $3.56 equivalent with the same current ratings and the same footprint. Its voltage rating is lower (30 V against 60 V), which is the reason for the hold above.</td><td class="n">$17</td></tr>
-<tr><td>Thor controller chip</td><td>The automotive-grade version became the ordinary version of the same chip.</td><td class="n">$9</td></tr>
-<tr><td>Thor current-limit resistor</td><td>180 Ω became 220 Ω so the Thor supply cannot cut out below 8 A even with unlucky part tolerances and a low battery.</td><td class="n">—</td></tr>
-<tr><td>One small filter part</td><td>Swapped for a no-fee equivalent.</td><td class="n">$3</td></tr>
-<tr><td>Part orientations</td><td>Three parts were shown rotated wrongly in the factory's preview (the two XT30s and the tiny USB switch chip). Corrected and re-checked.</td><td class="n">—</td></tr></table>
-<p class="small">Savings are approximate and overlap; the totals at top are the real quotes.</p></section>
+<section id="history"><h2>How it got here</h2>
+<img src="v11-assets/before-after.png" alt="v0.10 and v0.11 side by side">
+<table><tr><th>Version</th><th>What changed</th><th class="n">Quote</th></tr>
+<tr><td>v0.9</td><td>The reviewed design: thick copper, special layer build, gold finish.</td><td class="n">$535.15</td></tr>
+<tr><td>v0.10</td><td>Same layout made cheaper: thinner copper, factory-default layer build, tin finish, standard hole sizes, wider USB traces to suit, the cheaper assembly line, and a few part swaps. 230 mm tall became 195 mm.</td><td class="n">$294.18</td></tr>
+<tr><td>v0.11</td><td>The empty quarter is gone (195 mm became 155 mm), every plug is at an edge, the board is labelled, and the Thor coil is the 60 V Coilcraft part again.</td><td class="n">$307.92</td></tr></table>
+<h3>What v0.11 changed, in plain words</h3>
+<table><tr><th>Change</th><th>Detail</th></tr>
+<tr><td>Hobby-servo corner laid out again</td><td>Its 5 V regulator sits in the bottom-left corner with its fuse beside it; the controller chip moved next to the USB hub. Everything else on the board stayed where it was.</td></tr>
+<tr><td>Plugs moved to the edges</td><td>The Thor plug moved from the middle to the left edge. The four Dynamixel plugs moved down to the bottom edge. New copper carries their power there; the longest run (XL430) is about 78 mm and should lose about 0.03 V at full load, by hand estimate.</td></tr>
+<tr><td>Labels</td><td>76 printed labels replace the old terse ones. Part numbers are still not printed.</td></tr>
+<tr><td>Review fixes</td><td>Sturdier connections for the surge protector and bulk capacitor on the hobby-servo supply, and a tidier 5 V plane under it.</td></tr>
+<tr><td>Factory placement corrections</td><td>Thirteen parts were turned the wrong way in the file that tells the factory how to place them, including all six regulator chips and the Thor controller. This mistake was already in the v0.9 and v0.10 files. All are corrected and re-checked in the factory's viewer.</td></tr>
+<tr><td>Three mounting holes moved</td><td>Bottom row is now 3.5, 95.2 and 214.5 mm from the left edge, about 151.4 mm from the top. The other twelve did not move.</td></tr></table></section>
 
 <section id="buy"><h2>What to buy</h2>
-<div class="ok"><strong>Not yet; see the notice at the top.</strong> When you are ready, the entry in the cart is <strong>Robot_PDB_v11_Gerbers_Y6</strong>. It has two lines that go together:
-the boards (<strong>$53.75</strong>, quantity 5) and the assembly (<strong>$251.65</strong>, quantity 2). Tick the Y6 checkbox and both are selected.</div>
-<img src="v11-assets/factory-quote.png" alt="Factory charge breakdown for the Y6 entry, total 305.40 dollars">
+<div class="ok"><strong>Not yet; see the red box at the top.</strong> When you are ready, the entry is <strong>Robot_PDB_v11_Gerbers_Y7</strong>. It has two lines that go together:
+the boards (<strong>$53.75</strong>, quantity 5) and the assembly (<strong>$254.17</strong>, quantity 2). Tick the Y7 checkbox and both are selected.</div>
+<img src="v11-assets/factory-quote.png" alt="Factory charge breakdown for the Y7 entry, total 307.92 dollars">
 <table><tr><th>Cart entry</th><th>What it is</th><th class="n">Before shipping</th><th>Do</th></tr>
-<tr><td><strong>Robot_PDB_v11_Gerbers_Y6</strong></td><td>v0.11, compact board</td><td class="n">$305.40</td><td>The one to buy, once the open questions are settled</td></tr>
-<tr><td>Robot_PDB_v10_Gerbers_Y5</td><td>The final v0.10 (larger board, 30 V Thor coil)</td><td class="n">$294.18</td><td>Delete once you commit to v0.11</td></tr>
-<tr><td>Robot_PDB_v10_Gerbers_Y4</td><td>Earlier v0.10 build, before the resistor and USB-chip fixes</td><td class="n">$294.27</td><td>Delete</td></tr>
-<tr><td>Robot_PDB_v10_Gerbers_Y3</td><td>First v0.10 build, with a too-small inductor</td><td class="n">$289.41</td><td>Delete</td></tr>
-<tr><td>Robot_PDB_v09_Gerbers_Y2</td><td>The original v0.9, thick copper</td><td class="n">$535.15</td><td>Keep as a fallback, or delete once you commit to v0.11</td></tr></table>
-<p>Shipping, tax and any coupon are added at checkout. The factory's estimate for shipping the bare boards alone was about $32.</p>
-<h3>Three things to decide before you click pay</h3>
+<tr><td><strong>Robot_PDB_v11_Gerbers_Y7</strong></td><td>Final v0.11</td><td class="n">$307.92</td><td>The one to buy</td></tr>
+<tr><td>Robot_PDB_v11_Gerbers_Y6</td><td>First v0.11 build, plugs still in the middle, placement errors</td><td class="n">$305.40</td><td>Delete</td></tr>
+<tr><td>Robot_PDB_v10_Gerbers_Y5, Y4, Y3</td><td>v0.10 builds, placement errors</td><td class="n">$294.18 and below</td><td>Delete</td></tr>
+<tr><td>Robot_PDB_v09_Gerbers_Y2</td><td>The original v0.9; its placement file has the same errors</td><td class="n">$535.15</td><td>Delete, or keep only as a price reference</td></tr></table>
+<p>Shipping, tax and any coupon are added at checkout. The factory's estimate for shipping was about $32. Prices move: the same parts list cost $2.52 more in the afternoon than in the morning.</p>
+<h3>Decide before paying</h3>
 <ol>
-<li><strong>Mounting holes.</strong> The board is 75 mm shorter than v0.9 and the bottom row of holes moved (positions in <a href="#v11">New in v0.11</a>). Check that your robot's mounting can take the new pattern.</li>
-<li><strong>Finish.</strong> The order uses lead-free tin ("HASL"). A gold finish ("ENIG") is flatter and kinder to the tiniest chip on the board, for about $15.60 more (about $321 total). I left it off.</li>
-<li><strong>Stock.</strong> Two chips were low at the factory earlier today (30 and 52 pieces). If the cart flags a shortage at checkout, stop and ask rather than accepting a substitute.</li></ol>
+<li><strong>Mounting and enclosure.</strong> Check the hole pattern and plug positions against your robot. Ask if you want a dimensioned drawing.</li>
+<li><strong>The six 30 V coils.</strong> Accept them, or have them swapped (about $13).</li>
+<li><strong>Finish.</strong> The order uses lead-free tin. Gold is flatter and kinder to the tiniest chip on the board, for about $16 more.</li>
+<li><strong>Stock.</strong> Two chips were low at the factory today. If the cart flags a shortage, stop and ask rather than accepting a substitute.</li></ol>
 <h3>Also buy separately</h3>
 <ul>
-<li>One <strong>TLV3011BIDBVR</strong> chip per assembled board (about $2.78). The "B" matters. The factory had none, so you fit it by hand at position U9903.</li>
-<li>Fuses: two 30 A (Littelfuse 0505030.MXEP) and one 5 A (Schurter 8020.5075.PT) per board, plus fuses at each battery pack.</li>
-<li>The Thor cable (Molex 2147551042), XT60 pigtails, your master switch, pin headers, M3 standoffs.</li>
+<li>One <strong>TLV3011BIDBVR</strong> chip per assembled board (about $2.78). The "B" matters. You fit it by hand at <span class="lab">FIT U9903 BY HAND</span>.</li>
+<li>Fuses: two 30 A (Littelfuse 0505030.MXEP) and one 5 A (Schurter 8020.5075.PT) per board, plus a fuse at each battery pack.</li>
+<li>The Thor cable (Molex 2147551042), XT60 pigtails, your master switch, pin headers, jumper caps, M3 standoffs.</li>
 <li>Chargers for your own gear: see <a href="#power">Powering your gear</a>.</li></ul></section>
 
 <section id="after"><h2>After you pay</h2>
 <p>The order is set so the factory <strong>will not start on its own</strong>. Expect two emails asking for approval:</p>
 <ol>
 <li><strong>Production file.</strong> Their engineers show how they will build the bare board. Check that the layer build says <code>JLC04161H-7628</code> and that they have not changed hole sizes or trace widths.</li>
-<li><strong>Parts placement.</strong> A picture of every part on the board. The remark on the order asks them to check pin 1 and polarity on every chip, diode and capacitor. Look especially at the parts with a dot or stripe: they must line up with the board marking.</li></ol>
-<img src="v10-assets/factory-preview.png" alt="Factory placement preview of the final build">
-<p class="small">The factory's own preview of the final upload. The yellow XT30s and the USB switch chip were corrected against this view.
-One capacitor (C20, below the big coil) shows as an empty outline because the factory has no 3D picture of it; it is on the parts list.</p></section>
+<li><strong>Parts placement.</strong> A picture of every part on the board. Look at the parts with a dot or stripe: the dot must sit at the little white triangle printed by the chip, and each round capacitor's "+" must sit at the printed <span class="lab">+</span>. One capacitor (C20, by the big Thor coil) has no picture at the factory; ask them to confirm its "+" faces the printed <span class="lab">+</span>.</li></ol>
+<p>If either picture looks wrong, do not approve it. Send it over and ask.</p></section>
 
 <section id="arrive"><h2>When the boards arrive</h2>
-<p>You get five bare boards; two have the surface parts and most connectors fitted. They are <strong>not ready to run</strong>.</p>
+<p>You get five bare boards; two have the surface parts and most plugs fitted. They are <strong>not ready to run</strong>.</p>
 <h3>Soldering you must do on each assembled board</h3>
 <ol>
-<li>Fit the <strong>TLV3011BIDBVR</strong> at U9903. It is a small six-leg chip; this is the fiddliest job.</li>
-<li>Solder the three fuses (F1, F2, F7000).</li>
-<li>Solder the battery pigtails (J1, J4), the motor pigtail (J2) and the four switch wires (J5). Use 12 AWG and add strain relief; the board must not carry cable weight.</li>
-<li>Fit the three servo headers and the 5-pin programming header.</li>
-<li>Optional: seven small two-pin "OFF" headers. Putting a jumper on one switches that supply off, which is handy for testing one section at a time.</li></ol>
+<li>Fit the <strong>TLV3011BIDBVR</strong> at <span class="lab">FIT U9903 BY HAND</span>. It is a small six-leg chip; this is the fiddliest job.</li>
+<li>Solder the three fuses: <span class="lab">F1 MOTOR FUSE 30A</span>, <span class="lab">F2 ELECTRONICS FUSE 30A</span>, <span class="lab">F7000 SERVO FUSE 5A</span>.</li>
+<li>Solder the pack pigtails at <span class="lab">PACK A IN</span> and <span class="lab">PACK B IN</span> (red to <span class="lab">+</span>), the motor wires at <span class="lab">MOTOR OUT</span>, and the four switch wires. Use 12 AWG and add strain relief; the board must not carry cable weight.</li>
+<li>Fit the three <span class="lab">SERVO</span> headers and the <span class="lab">PROG</span> header.</li>
+<li>Optional: the seven two-pin OFF headers.</li></ol>
 <h3>Programming</h3>
-<p>The chip that drives the three MG90S servos arrives blank. It needs its firmware loaded once through J7008 before those servos will do anything. Everything else works without programming.</p>
+<p>The chip that drives the three hobby servos arrives blank. It needs its firmware loaded once through <span class="lab">PROG</span> before those servos will do anything. Everything else works without programming.</p>
 <h3>First power-up, in order</h3>
-<p>The full procedure is the <a href="https://github.com/jloganolson/logans-first-robot-pcb/blob/main/docs/V09_BRINGUP_CHECKLIST.md">bring-up checklist</a>; it applies unchanged. The short version:</p>
+<p>The full procedure is the <a href="https://github.com/jloganolson/logans-first-robot-pcb/blob/main/docs/V09_BRINGUP_CHECKLIST.md">bring-up checklist</a>, written for v0.9; the steps are the same. The short version:</p>
 <ol>
 <li>Look over the board for solder bridges, then check with a meter that no output is shorted to ground.</li>
-<li>Use a <strong>current-limited bench supply</strong> at 27–33 V on one pack input, not a battery. Nothing plugged into the outputs.</li>
-<li>Bring up one supply at a time (use the OFF jumpers) and measure each: 24.3 V, 5 V, 5 V, 10.8 V, 11.7 V, 5 V.</li>
-<li>Load the Thor supply with a dummy load up to 8 A <strong>before</strong> connecting the Jetson. Meter the Thor cable's polarity first.</li>
+<li>Fit jumper caps on all seven OFF headers. Nothing plugged into the outputs.</li>
+<li>Use a <strong>current-limited bench supply</strong> at 27-33 V on one pack input, not a battery. <span class="lab">LED BATTERY</span> should light; <span class="lab">TP BATT</span> should read the supply voltage.</li>
+<li>Pull one jumper at a time and check its light and test point: <span class="lab">TP 24V</span>, the three <span class="lab">TP 5V</span>, <span class="lab">TP USB5V</span>, <span class="lab">TP 10V8</span>, <span class="lab">TP 11V7</span>.</li>
+<li>Load the Thor supply with a dummy load up to 8 A <strong>before</strong> connecting the Jetson. Meter the Thor cable's polarity at the far end first.</li>
+<li>Run each supply at its real load for 15 minutes and check for heat (see <a href="#heat">Heat</a>).</li>
 <li>Then USB: plug into the Jetson and confirm the sound card, both serial ports and the servo controller appear. Try the USB-C plug both ways up.</li>
 <li>Only then batteries, then servos, then motors.</li></ol></section>
 
 <section id="power"><h2>Powering your own gear</h2>
-<p>"AUX" is just the name of the 11.7 V output. The connector is an XT30, the small yellow two-pin plug. Both spare outputs use it, so each lead you plug in needs an XT30 on the end.</p>
+<p>"AUX" is just the name of the 11.7 V output. Both spare outputs use the small yellow XT30 plug, so each lead you plug in needs an XT30 on the end.</p>
 <p>A Pi 5, a tablet and two small monitors add up to more than AUX can supply on its own (about 58 W, shared with the amplifier). Spread them out:</p>
 <table><tr><th>Device</th><th>Plug it into</th><th>Why</th></tr>
-<tr><td>Raspberry Pi 5</td><td>J101, the spare 5 V / 5 A output, with an XT30-to-USB-C lead</td><td>That supply was built for the Pi and is otherwise idle. No extra converter.</td></tr>
+<tr><td>Raspberry Pi 5</td><td><span class="lab">SPARE 5V 5A</span>, with an XT30-to-USB-C lead</td><td>That supply is otherwise idle. No extra converter.</td></tr>
 <tr><td>Tablet</td><td>A USB-C charger module wired to the battery side through its own small fuse</td><td>It is the biggest load and the least essential. This keeps it off the board entirely.</td></tr>
-<tr><td>Two monitors, plus the amplifier</td><td>AUX, through a 12 V USB charger module</td><td>About 2 A, comfortably inside the 5 A limit.</td></tr></table>
+<tr><td>Two monitors, plus the amplifier</td><td><span class="lab">AUX 11.7V 5A</span>, through a 12 V USB charger module</td><td>About 2 A, comfortably inside the 5 A limit.</td></tr></table>
 <ul>
 <li>The Pi 5 only takes its full 5 A after negotiating with a smart supply. From a plain 5 V source it runs, but limits its own USB ports to 0.6 A unless you add <code>usb_max_current_enable=1</code> to its config file.</li>
-<li>A battery-side charger module must be rated well above 33.6 V input (look for 40 V or more). Ordinary "12–24 V" car chargers are not safe on the battery.</li>
-<li>If you would rather run the Pi from an AUX charger module with a plain USB cord, that works too; AUX then runs warmer. Move the tablet to the battery-side module in that case.</li>
-<li>Building USB charge ports into the board is possible in a later revision, but would add roughly $20–30 and new layout to this one.</li></ul></section>
+<li>A battery-side charger module must be rated well above 33.6 V input (look for 40 V or more). Ordinary "12-24 V" car chargers are not safe on the battery.</li></ul></section>
 
 <section id="heat"><h2>Heat</h2>
-<p>Thinner copper is the main thing given up to hit the price. I modelled how warm the board gets from its real copper shapes, in still air, with Thor drawing 8 A and typical loads elsewhere (about 12 W of waste heat in total).</p>
+<p>Thinner copper is the main thing given up to hit the price. The heat model below was run on v0.10. The hot parts it covers did not move in v0.11, so the numbers still apply to them; the moved hobby-servo regulator and the new power runs were not re-modelled.</p>
 <img src="v10-assets/thermal-map.png" alt="Modelled board temperature rise for three copper options">
-<table><tr><th>Spot</th><th class="n">v0.9 thick copper</th><th class="n">v0.10 as ordered</th><th class="n">v0.10 with thicker inner layers (+$18)</th></tr>
+<table><tr><th>Spot</th><th class="n">v0.9 thick copper</th><th class="n">As ordered</th><th class="n">With thicker inner layers (+$18)</th></tr>
 <tr><td>AUX 11.7 V regulator at 4 A (hottest)</td><td class="n">+33 °C</td><td class="n">+45 °C</td><td class="n">+40 °C</td></tr>
-<tr><td>Thor supply</td><td class="n">+25 °C</td><td class="n">+31–33 °C</td><td class="n">+28–30 °C</td></tr>
+<tr><td>Thor supply</td><td class="n">+25 °C</td><td class="n">+31-33 °C</td><td class="n">+28-30 °C</td></tr>
 <tr><td>XL330 regulator at 2 A</td><td class="n">+24 °C</td><td class="n">+29 °C</td><td class="n">+26 °C</td></tr>
 <tr><td>Amplifier</td><td class="n">+25 °C</td><td class="n">+30 °C</td><td class="n">+27 °C</td></tr></table>
-<p>These are rises above the surrounding air. In a 25 °C room the hottest spot would be about 70 °C; in a closed, warm robot body it would be higher. The chips themselves run hotter than the board under them.</p>
+<p>These are rises above the surrounding air, in still air. In a 25 °C room the hottest spot would be about 70 °C; <strong>inside an enclosure it will be higher</strong>, so plan vents or a small fan.</p>
 <ul>
-<li><strong>This is an estimate, good to roughly ±30%.</strong> With pessimistic airflow the worst spot is +59 °C.</li>
-<li>The hottest spot is AUX because the model loaded it at 4 A. Following the split in <a href="#power">Powering your gear</a> brings it down to about 2 A.</li>
-<li><strong>On the bench:</strong> run each supply at its real load for 15 minutes and check the regulators with a thermometer or a fingertip-near test. If something is too hot to keep a finger near, add airflow or a stick-on heatsink before trusting it.</li></ul></section>
+<li>This is an estimate, good to roughly ±30%.</li>
+<li>On the bench, run each supply at its real load for 15 minutes. If something is too hot to keep a finger near, add airflow or a stick-on heatsink before trusting it.</li></ul></section>
 
 <section id="risks"><h2>Known risks, plainly</h2>
 <table><tr><th>Risk</th><th>What could happen</th><th>What to do</th></tr>
-<tr><td>USB to the servos and sound</td><td>Two of the internal USB routes were inherited from an older layout with known shortcomings. They may work fine, or may give errors.</td><td>Test with sustained traffic. Fallback is an external USB-to-Dynamixel adapter.</td></tr>
-<tr><td>Jetson USB pair</td><td>Re-sized for the new layer build by calculation; not measured.</td><td>Test both plug orientations and unplug/replug.</td></tr>
-<tr><td>Tin finish on the tiniest chip</td><td>The USB switch chip (U9902) has very small pads; an uneven joint there stops all USB.</td><td>Inspect it under magnification on arrival. Or pay $15.60 for the gold finish.</td></tr>
-<tr><td>Newly laid-out servo corner</td><td>The hobby-servo supply, its fuse and the wiring to the servo plugs were moved and re-drawn by program in v0.11. It passes the automatic checks but has had no independent review.</td><td>Have it reviewed before paying. On the bench, check that supply reads 5 V and runs cool before plugging in servos.</td></tr>
-<tr><td>Six smaller regulator coils</td><td>Reported as rated 30 V; the packs reach 33.6 V.</td><td>Decide before paying: accept, or swap to higher-voltage coils (about $13).</td></tr>
-<tr><td>Heat</td><td>Modelled, not measured.</td><td>See <a href="#heat">Heat</a>.</td></tr>
-<tr><td>Part orientation</td><td>Three were caught and fixed; others have not been checked one by one.</td><td>Check the factory's placement picture before approving.</td></tr>
-<tr><td>Mounting holes</td><td>The pattern changed.</td><td>Confirm fit before paying.</td></tr></table>
+<tr><td>Final version not independently reviewed</td><td>A mistake in the moved plugs, the new power copper or the re-drawn servo corner could have slipped past the automatic checks.</td><td>Get a review before paying. On the bench, check every plug's voltage and polarity with a meter before connecting anything to it.</td></tr>
+<tr><td>Six smaller regulator coils rated 30 V</td><td>Possible shortened life on 33.6 V packs.</td><td>Decide before paying.</td></tr>
+<tr><td>Capacitors and oven temperature</td><td>The cheaper line's oven may run hotter than the round capacitors are rated for.</td><td>Ask JLCPCB, or pay about $35 for the Standard line.</td></tr>
+<tr><td>USB to the servos and sound</td><td>Two internal USB routes were inherited from an older layout with known shortcomings.</td><td>Test with sustained traffic. Fallback is an external USB-to-Dynamixel adapter.</td></tr>
+<tr><td>Jetson USB pair</td><td>Sized for the layer build by calculation; not measured.</td><td>Test both plug orientations and unplug/replug.</td></tr>
+<tr><td>Dynamixel data wiring now longer</td><td>About 55 mm added to each data line to reach the bottom edge.</td><td>Test at your real baud rate with all servos chained.</td></tr>
+<tr><td>Tin finish on the tiniest chip</td><td>An uneven joint on the USB switch chip stops all USB.</td><td>Inspect it under magnification on arrival, or pay for the gold finish.</td></tr>
+<tr><td>Heat</td><td>Modelled, not measured, and worse in an enclosure.</td><td>See <a href="#heat">Heat</a>.</td></tr>
+<tr><td>Mounting holes and plug positions</td><td>The pattern changed.</td><td>Confirm fit before paying.</td></tr></table>
 <p>The 30 A motor fuse is a fuse rating, not a promise that the board carries 30 A all day. The design assumes about 10 A to the motors.</p></section>
 
 <section id="checked"><h2>How it was checked</h2>
 <ul>
-<li><strong>Design-rule check:</strong> zero errors and zero unconnected pads. Thirteen cosmetic warnings, the same ones v0.9 has.</li>
-<li><strong>v0.11 difference audit:</strong> a second script compares v0.11 against v0.10 and passes only if nothing outside the servo corner changed (apart from the shortened USB run to the servo controller), no part or connection changed inside it, everything is connected, and the schematic still matches.</li>
-<li><strong>v0.10 difference audit:</strong> a script compares v0.10 against v0.9 and passes only if every difference is on the list above. It covers all 366 parts, 1,195 pads, 3,488 trace segments, every hole and every copper pour, and confirms the schematic and board agree.</li>
-<li><strong>Factory upload:</strong> for v0.11 the factory read the files as a 4-layer 155 × 228 mm board, matched all 81 lines of the parts list, and priced it on the cheaper assembly line. The moved parts sit on their pads in its preview.</li>
-<li><strong>Second opinion:</strong> Google's Gemini (Argon) reviewed it twice. Its first verdict was "do not order". The findings that held up were fixed: the first replacement inductor was too small, and three parts were rotated wrongly. Two of its "blockers" were its own mistakes, which it accepted on the second pass, when its verdict became "order with named changes". Those changes are in the final build. <strong>Argon has not seen v0.11.</strong></li>
-<li><strong>Not done:</strong> nothing has been built or measured. The heat figures and USB trace sizes are calculations.</li></ul>
-<p class="small">Files: board <code>revisions/v0.11/kicad/robot_pdb.kicad_pcb</code> (fingerprint starts <code>1c351a03d3f0</code>),
-factory package <code>outputs/v11-order-preparation/package-1c351a03d3f0/</code>, quote record <code>outputs/v11-order-preparation/factory-quote.json</code>.</p></section>
+<li><strong>Design-rule check:</strong> zero errors and zero unconnected pads. Eleven cosmetic warnings, all inherited.</li>
+<li><strong>Difference audit:</strong> a script compares v0.11 against v0.10 and passes only if nothing changed outside the hobby-servo corner apart from the recorded plug moves and their new copper, no part or connection changed anywhere, and the schematic still matches the board.</li>
+<li><strong>Factory upload:</strong> the factory read the files as a 4-layer 155 × 228 mm board, matched all 81 lines of the parts list, and priced it.</li>
+<li><strong>Placement check:</strong> every part that has a right way round was opened on its own in the factory's viewer. Thirteen were wrong and were corrected.</li>
+<li><strong>Second opinion:</strong> Gemini Argon reviewed an earlier v0.11. Four of its findings held up and were fixed. Several did not: it said the diodes and lights were backwards (they are not) and that the regulator chips were placed correctly (they were not). <strong>It has not seen the final version.</strong></li>
+<li><strong>Not done:</strong> nothing has been built or measured. Heat, voltage-drop and USB figures are calculations or estimates.</li></ul>
+<p class="small">Files: board <code>revisions/v0.11/kicad/robot_pdb.kicad_pcb</code> (fingerprint starts <code>1dabdd8f35dc</code>),
+factory package <code>outputs/v11-order-preparation/package-1dabdd8f35dc/</code>, quote record <code>outputs/v11-order-preparation/factory-quote.json</code>.</p></section>
 
 <section id="words"><h2>Glossary</h2>
 <table>
 <tr><td>Bare board / assembled board</td><td>A bare board is just the printed circuit. An assembled board has the parts soldered on by the factory. You are buying five bare, two of them assembled.</td></tr>
-<tr><td>Copper weight (oz)</td><td>How thick the copper layers are. "2 oz" is twice as thick as "1 oz". Thicker carries more current and spreads heat better, and costs more.</td></tr>
+<tr><td>Copper weight (oz)</td><td>How thick the copper layers are. Thicker carries more current and spreads heat better, and costs more.</td></tr>
 <tr><td>Layer build ("stackup")</td><td>The sandwich of copper and fibreglass inside the board. The spacing between layers affects fast signals like USB.</td></tr>
-<tr><td>Via</td><td>A small plated hole that connects a trace on one layer to another layer.</td></tr>
+<tr><td>Via</td><td>A small plated hole that connects copper on one layer to another layer.</td></tr>
 <tr><td>HASL / ENIG</td><td>The coating on the bare pads before soldering. HASL is tin, cheap and slightly uneven. ENIG is gold, flat and dearer.</td></tr>
 <tr><td>Basic / Extended parts</td><td>The factory keeps "Basic" parts loaded on its machines. Each "Extended" part type costs about $3 extra to load for your order.</td></tr>
+<tr><td>Placement file</td><td>The list that tells the factory's machines where each part goes and which way round.</td></tr>
 <tr><td>Regulator ("buck")</td><td>A circuit that turns battery voltage into a lower, steady voltage. Each output on this board has its own.</td></tr>
-<tr><td>Inductor</td><td>A coil inside each regulator. If pushed past its "saturation" current it stops working properly, which is why the first cheap replacement was rejected.</td></tr>
-<tr><td>Current limit</td><td>The point where a regulator protects itself by cutting out.</td></tr>
+<tr><td>Inductor (coil)</td><td>A coil inside each regulator. It has a current limit ("saturation") and a voltage rating.</td></tr>
 <tr><td>XT30 / XT60</td><td>Yellow two-pin power plugs. XT60 is the bigger one on your batteries; XT30 is the smaller one on the 5 V and AUX outputs.</td></tr>
-<tr><td>Pin 1</td><td>The corner of a chip marked with a dot. It must match the mark on the board or the chip is in backwards.</td></tr>
+<tr><td>Pin 1</td><td>The corner of a chip marked with a dot. It must match the mark on the board or the chip is in the wrong way round.</td></tr>
 </table></section>
 </main></html>

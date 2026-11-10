@@ -1,0 +1,30 @@
+IMPORTANT TOOL RESTRICTION: you are running headless. Do NOT run shell or terminal commands of any kind; they will be denied and the whole review will be lost. Use only your file reading, directory listing, image viewing and text search tools. The .kicad_pcb file is about 6 MB of text: search it for specific references rather than reading it whole. Do all calculations yourself in your reasoning.
+
+You are an independent hardware reviewer. This is a READ-ONLY review: do not modify, create or delete any file, and do not touch any website or shopping cart.
+
+Subject: "v0.11" of a robot power distribution board (4 layers, JLC04161H-7628, 1 oz outer / 0.5 oz inner copper, two 8S packs, 27-33.6 V). v0.11 is the earlier v0.10 with ONE area laid out again by script to shrink the board from 228 x 195 mm to 228 x 155 mm: the hobby-servo block (references 7000-8999 and J9928). Each sub-circuit was moved as a rigid piece with its own copper, and the connections BETWEEN the pieces were rebuilt: eleven signal links by a grid maze router, power on new zones. Nobody has reviewed that re-laid block. An unpaid factory cart entry exists. Your job is to find reasons NOT to order it.
+
+You reviewed v0.10 twice already; do not re-review the unchanged main board, the Thor buck or the USB hub unless v0.11 changed something that affects them. Concentrate on what v0.11 changed.
+
+Start with docs/HANDOFF_V11_COMPACT_LAYOUT.md. Then use:
+- red-team-findings/2026-11-10/argon/v11-servo-block-geometry.txt : every footprint, pad, track, via and zone in the re-laid region, in mm, generated from the saved board. This is the practical way to check geometry.
+- red-team-findings/2026-11-10/argon/v11-servo-block-F_Cu-and-silk.png, -In1_Cu-ground.png, -In2_Cu-power.png, -B_Cu.png : renders of that region (x 0-182 mm, y 106-156 mm), if you can view images.
+- source/generator/build_v11.py : the script that did it (placement, router, zones).
+- revisions/v0.11/derivation.json : recorded moves, routes, zones.
+- source/fabrication/audit_v11.py and outputs/v11-order-preparation/audit-v11.json : what the audit proves and, more importantly, what it does not.
+- revisions/v0.11/drc.rpt : native KiCad DRC result.
+- revisions/v0.11/kicad/robot_pdb.kicad_sch and robot_pdb.kicad_pcb for circuit facts (the servo buck is a TPS54560 with L7002; U7002 is an STM32F072; U7003 region is the PWM output buffer).
+- source/fabrication/export_v11.py and outputs/v11-order-preparation/package-1c351a03d3f0/ (BOM_JLCPCB.csv, CPL_JLCPCB.csv) and outputs/v11-order-preparation/factory-quote.json.
+
+Questions to answer, each with evidence (file and coordinates or line):
+1. Power path of the servo 5 V supply: VIN plane -> fuse F7000 -> PWM_VIN (B.Cu zone) -> bulk capacitor C7111, TVS D7001, buck input capacitors and U7101/TPS54560 VIN -> L7002 -> PWM_5V (In2 zone) -> buffer and the three headers J7004-J7006. Is every step actually connected by enough copper and enough vias for about 3-5 A? Count the vias at each layer change. Flag any neck, any single-via link, any pad that reaches its net only through a thin track.
+2. Buck hot loop and switch node after the 90 degree rotation: did the rigid move keep the input capacitor, catch diode and IC loop intact? Does any new zone (PWM_VIN on B.Cu, PWM_5V on In2) sit where it couples switch-node noise into something sensitive, or cut the ground return (In1 is solid ground)?
+3. Ground: is the block's ground properly tied to the In1 plane after the old stitching was removed? Any ground island, any part whose only ground is a long thin track?
+4. The eleven routed signals (PWM to buffer, buffer to headers, SWD, IO_SERVO_ARM): any that runs under or beside the buck switch node or inductor, any acute problem with 0.2-0.25 mm tracks 18-56 mm long for 50 Hz servo PWM and SWD? Is the 3.3 V link to J7008 adequate?
+5. The STM32 block moved 51 mm right, 12 mm up, and its USB pair (P4_DP/P4_DM, Full-Speed) and V5_USB feed were shortened by sliding existing segments. Check the stretched segments in derivation.json for a broken corner, a changed pair gap, or a segment now running over a plane split (the new IO_V3_PWM In2 zone edge, the PWM_5V zone edge at x about 126.5).
+6. Mechanical and assembly: connectors J7004-J7006, J7008 and jumper J9928 near the board edge and near mounting holes H7002, H7003, H7004; fuse F7000 holder clearance to the buck and to holes H9910/H9911; silkscreen over pads; anything a hand-soldering person would hit.
+7. The export: does export_v11.py's rotation check actually guarantee correct factory rotations for the 58 moved fitted parts (group rotated 90 degrees), given the per-footprint offset table? Name any package where a rotated part could now be wrong (electrolytics C7111/C7112, diodes, U7101, SOT-23s).
+8. What the audit cannot catch. Name the most likely real defect that would pass DRC and audit_v11.py.
+9. BOM: L1 back to Coilcraft XAL1510-103MED (C3911782). Anything in the Thor buck that was retuned for the v0.10 inductor (for example R13 = 220 ohm current limit) that should be revisited now that the inductor is the original part again?
+
+Finish with: a verdict (order / order with named changes / do not order), a ranked list of findings each marked BLOCKER, SHOULD-FIX or NOTE, and for each one the exact check you performed. Say plainly where you could not verify something. Do not invent coordinates: quote them from the geometry file.

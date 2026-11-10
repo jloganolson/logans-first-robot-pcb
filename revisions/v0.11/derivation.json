@@ -121,9 +121,9 @@
    "rotated_deg": 0,
    "to_bbox": [
     101.07,
-    118.4,
+    116.8,
     125.18,
-    145.46
+    143.86
    ]
   },
   "J servo headers": {
@@ -133,24 +133,24 @@
      150.6
     ],
     [
-     76.6,
+     72.6,
      150.6
     ],
     [
-     91.6,
+     83.6,
      150.6
     ]
    ]
   },
   "S SWD header": {
    "pin1_mm": [
-    112.17,
+    167.48,
     151.0
    ]
   },
   "mounting holes": {
    "H7002": [
-    105.17,
+    95.2,
     151.3
    ],
    "H7003": [
@@ -158,9 +158,61 @@
     151.5
    ],
    "H7004": [
-    176.0,
-    151.5
+    214.5,
+    151.3
    ]
+  },
+  "plugs moved to an edge": {
+   "J3": {
+    "pin1_from_mm": [
+     48.0,
+     73.0
+    ],
+    "pin1_to_mm": [
+     4.0,
+     84.5
+    ]
+   },
+   "J301": {
+    "pin1_from_mm": [
+     91.6,
+     106.0
+    ],
+    "pin1_to_mm": [
+     102.6,
+     148.6
+    ]
+   },
+   "J302": {
+    "pin1_from_mm": [
+     110.0,
+     106.0
+    ],
+    "pin1_to_mm": [
+     115.6,
+     148.6
+    ]
+   },
+   "J401": {
+    "pin1_from_mm": [
+     136.6,
+     106.0
+    ],
+    "pin1_to_mm": [
+     186.5,
+     148.6
+    ]
+   },
+   "J402": {
+    "pin1_from_mm": [
+     154.5,
+     106.0
+    ],
+    "pin1_to_mm": [
+     199.5,
+     148.6
+    ]
+   }
   }
  },
  "usb_and_5v_shortened": [
@@ -290,11 +342,11 @@
    ],
    "to": [
     115.08,
-    121.802
+    120.203
    ],
    "width_mm": 0.2,
    "routed": true,
-   "length_mm": 31.7,
+   "length_mm": 33.3,
    "vias": 2
   },
   {
@@ -306,11 +358,11 @@
    ],
    "to": [
     119.08,
-    121.802
+    120.203
    ],
    "width_mm": 0.2,
    "routed": true,
-   "length_mm": 38.93,
+   "length_mm": 39.59,
    "vias": 0
   },
   {
@@ -322,11 +374,11 @@
    ],
    "to": [
     123.08,
-    121.802
+    120.203
    ],
    "width_mm": 0.2,
    "routed": true,
-   "length_mm": 33.03,
+   "length_mm": 34.33,
    "vias": 2
   },
   {
@@ -338,11 +390,11 @@
    ],
    "to": [
     105.255,
-    126.978
+    125.377
    ],
    "width_mm": 0.2,
    "routed": true,
-   "length_mm": 39.19,
+   "length_mm": 39.85,
    "vias": 2
   },
   {
@@ -350,7 +402,7 @@
    "what": "buffer to servo header",
    "frm": [
     115.08,
-    138.153
+    136.553
    ],
    "to": [
     66.68,
@@ -358,7 +410,7 @@
    ],
    "width_mm": 0.25,
    "routed": true,
-   "length_mm": 56.08,
+   "length_mm": 56.74,
    "vias": 0
   },
   {
@@ -366,15 +418,15 @@
    "what": "buffer to servo header",
    "frm": [
     119.08,
-    138.153
+    136.553
    ],
    "to": [
-    81.68,
+    77.68,
     150.6
    ],
    "width_mm": 0.25,
    "routed": true,
-   "length_mm": 45.08,
+   "length_mm": 49.74,
    "vias": 0
   },
   {
@@ -382,15 +434,15 @@
    "what": "buffer to servo header",
    "frm": [
     123.08,
-    138.153
+    136.553
    ],
    "to": [
-    96.68,
+    88.68,
     150.6
    ],
    "width_mm": 0.25,
    "routed": true,
-   "length_mm": 34.08,
+   "length_mm": 42.74,
    "vias": 1
   },
   {
@@ -401,12 +453,12 @@
     148.25
    ],
    "to": [
-    117.25,
+    172.56,
     151.0
    ],
    "width_mm": 0.2,
    "routed": true,
-   "length_mm": 28.5,
+   "length_mm": 30.81,
    "vias": 0
   },
   {
@@ -417,13 +469,13 @@
     148.088
    ],
    "to": [
-    119.79,
+    175.1,
     151.0
    ],
    "width_mm": 0.2,
    "routed": true,
-   "length_mm": 24.82,
-   "vias": 1
+   "length_mm": 35.11,
+   "vias": 0
   },
   {
    "net": "IO_PWM_NRST",
@@ -433,12 +485,12 @@
     152.175
    ],
    "to": [
-    122.33,
+    177.64,
     151.0
    ],
    "width_mm": 0.2,
    "routed": true,
-   "length_mm": 18.34,
+   "length_mm": 39.7,
    "vias": 0
   },
   {
@@ -449,12 +501,76 @@
     150.0
    ],
    "to": [
-    112.17,
+    167.48,
     151.0
    ],
    "width_mm": 0.2,
    "routed": true,
-   "length_mm": 45.98,
+   "length_mm": 11.9,
+   "vias": 0
+  },
+  {
+   "net": "DXL330_DATA",
+   "what": "to moved Dynamixel plug",
+   "frm": [
+    117.92,
+    106.0
+   ],
+   "to": [
+    110.52,
+    148.6
+   ],
+   "width_mm": 0.25,
+   "routed": true,
+   "length_mm": 53.35,
+   "vias": 2
+  },
+  {
+   "net": "DXL330_DATA",
+   "what": "plug to plug",
+   "frm": [
+    110.52,
+    148.6
+   ],
+   "to": [
+    123.52,
+    148.6
+   ],
+   "width_mm": 0.25,
+   "routed": true,
+   "length_mm": 14.49,
+   "vias": 0
+  },
+  {
+   "net": "DXL430_DATA",
+   "what": "to moved Dynamixel plug",
+   "frm": [
+    162.42,
+    106.0
+   ],
+   "to": [
+    194.42,
+    148.6
+   ],
+   "width_mm": 0.25,
+   "routed": true,
+   "length_mm": 55.85,
+   "vias": 1
+  },
+  {
+   "net": "DXL430_DATA",
+   "what": "plug to plug",
+   "frm": [
+    194.42,
+    148.6
+   ],
+   "to": [
+    207.42,
+    148.6
+   ],
+   "width_mm": 0.25,
+   "routed": true,
+   "length_mm": 14.49,
    "vias": 0
   }
  ],
@@ -463,8 +579,16 @@
   "IO_PWM2_MCU": 12,
   "IO_SERVO_ARM": 33,
   "IO_PWM1_OUT": 1,
-  "IO_PWM2_OUT": 4,
-  "IO_PWM3_OUT": 26
+  "IO_PWM2_OUT": 5,
+  "IO_PWM3_OUT": 27,
+  "DXL330_DATA": 33,
+  "DXL430_DATA": 24
+ },
+ "added_vias": {
+  "PWM_VIN": 6,
+  "GND": 13,
+  "+24V": 20,
+  "+12V_SRV": 9
  },
  "planes": [
   {
@@ -476,11 +600,35 @@
      112.6
     ],
     [
+     33.5,
+     112.6
+    ],
+    [
+     33.5,
+     149.2
+    ],
+    [
+     86.5,
+     149.2
+    ],
+    [
+     86.5,
+     112.6
+    ],
+    [
      126.47,
      112.6
     ],
     [
      126.47,
+     144.2
+    ],
+    [
+     99.5,
+     144.2
+    ],
+    [
+     99.5,
      154.4
     ],
     [
@@ -489,6 +637,29 @@
     ]
    ],
    "purpose": "servo 5 V from the buck to the buffer and the three headers"
+  },
+  {
+   "net": "GND",
+   "layer": "In2.Cu",
+   "outline": [
+    [
+     34.3,
+     112.6
+    ],
+    [
+     85.7,
+     112.6
+    ],
+    [
+     85.7,
+     148.4
+    ],
+    [
+     34.3,
+     148.4
+    ]
+   ],
+   "purpose": "ground under the servo regulator and its fused input"
   },
   {
    "net": "VIN",
@@ -573,14 +744,14 @@
    "outline": [
     [
      127.07000000000001,
-     112.6
+     116.0
     ],
     [
-     167.18,
-     112.6
+     165.98000000000002,
+     116.0
     ],
     [
-     167.18,
+     165.98000000000002,
      154.4
     ],
     [
@@ -589,6 +760,233 @@
     ]
    ],
    "purpose": "3.3 V under the servo controller"
+  },
+  {
+   "net": "PWM_VIN",
+   "layer": "F.Cu",
+   "outline": [
+    [
+     74.299998,
+     138.649999
+    ],
+    [
+     79.899998,
+     138.649999
+    ],
+    [
+     79.899998,
+     141.149999
+    ],
+    [
+     74.299998,
+     141.149999
+    ]
+   ],
+   "purpose": "D7001 pad tie with 6 added vias"
+  },
+  {
+   "net": "GND",
+   "layer": "F.Cu",
+   "outline": [
+    [
+     74.299998,
+     131.849999
+    ],
+    [
+     79.899998,
+     131.849999
+    ],
+    [
+     79.899998,
+     134.349999
+    ],
+    [
+     74.299998,
+     134.349999
+    ]
+   ],
+   "purpose": "D7001 pad tie with 6 added vias"
+  },
+  {
+   "net": "GND",
+   "layer": "F.Cu",
+   "outline": [
+    [
+     64.5,
+     135.55
+    ],
+    [
+     70.8,
+     135.55
+    ],
+    [
+     70.8,
+     138.05
+    ],
+    [
+     64.5,
+     138.05
+    ]
+   ],
+   "purpose": "C7111 pad tie with 6 added vias"
+  },
+  {
+   "net": "GND",
+   "layer": "all",
+   "purpose": "1 ground vias added beside C7101-C7103"
+  },
+  {
+   "net": "+24V",
+   "layer": "In2.Cu and B.Cu",
+   "outline": [
+    [
+     [
+      42.5,
+      66.5
+     ],
+     [
+      50.0,
+      66.5
+     ],
+     [
+      50.0,
+      86.2
+     ],
+     [
+      34.6,
+      86.2
+     ],
+     [
+      34.6,
+      79.9
+     ],
+     [
+      28.4,
+      79.9
+     ],
+     [
+      28.4,
+      86.2
+     ],
+     [
+      2.2,
+      86.2
+     ],
+     [
+      2.2,
+      76.3
+     ],
+     [
+      42.5,
+      76.3
+     ]
+    ],
+    [
+     [
+      43.0,
+      67.2
+     ],
+     [
+      49.5,
+      67.2
+     ],
+     [
+      49.5,
+      84.5
+     ],
+     [
+      22.0,
+      84.5
+     ],
+     [
+      22.0,
+      87.5
+     ],
+     [
+      2.2,
+      87.5
+     ],
+     [
+      2.2,
+      77.2
+     ],
+     [
+      43.0,
+      77.2
+     ]
+    ]
+   ],
+   "purpose": "Thor output from the regulator to J3 on the left edge; 20 vias at the old plug position"
+  },
+  {
+   "net": "+5V_SRV",
+   "layer": "B.Cu",
+   "outline": [
+    [
+     100.5,
+     103.0
+    ],
+    [
+     126.8,
+     103.0
+    ],
+    [
+     126.8,
+     154.4
+    ],
+    [
+     100.5,
+     154.4
+    ]
+   ],
+   "purpose": "XL330 5 V to J301 and J302 on the bottom edge"
+  },
+  {
+   "net": "+12V_SRV",
+   "layer": "In2.Cu",
+   "outline": [
+    [
+     150.0,
+     102.0
+    ],
+    [
+     167.9,
+     102.0
+    ],
+    [
+     167.9,
+     110.9
+    ],
+    [
+     183.3,
+     110.9
+    ],
+    [
+     183.3,
+     139.5
+    ],
+    [
+     212.0,
+     139.5
+    ],
+    [
+     212.0,
+     154.4
+    ],
+    [
+     168.9,
+     154.4
+    ],
+    [
+     168.9,
+     115.4
+    ],
+    [
+     150.0,
+     115.4
+    ]
+   ],
+   "purpose": "XL430 10.8 V to J401 and J402 on the bottom edge; 9 vias from the existing B.Cu pour"
   },
   {
    "net": "GND",
@@ -634,7 +1032,772 @@
    }
   }
  },
- "board_sha256": "1c351a03d3f0b3f11d9e3ada8f00d47ceda0ed84d05fd2d542ebe165c876a0f5",
+ "labels": {
+  "placed": [
+   {
+    "text": "ROBOT POWER BOARD v0.11  2026-11",
+    "anchor": "(157.0, 64.0)",
+    "height_mm": 1.1,
+    "at_mm": [
+     157.0,
+     64.0
+    ],
+    "search_cost": 0
+   },
+   {
+    "text": "BATTERY 27-33.6V. FUSE EACH PACK",
+    "anchor": "(157.0, 66.6)",
+    "height_mm": 1.1,
+    "at_mm": [
+     157.0,
+     66.6
+    ],
+    "search_cost": 0
+   },
+   {
+    "text": "CHECK POLARITY BEFORE POWER",
+    "anchor": "(157.0, 69.2)",
+    "height_mm": 1.1,
+    "at_mm": [
+     157.0,
+     69.2
+    ],
+    "search_cost": 0
+   },
+   {
+    "text": "JUMPER FITTED = THAT SUPPLY OFF",
+    "anchor": "(157.0, 71.8)",
+    "height_mm": 1.1,
+    "at_mm": [
+     157.0,
+     71.8
+    ],
+    "search_cost": 0
+   },
+   {
+    "text": "MOTOR OUT = RAW BATTERY VOLTAGE",
+    "anchor": "(157.0, 74.4)",
+    "height_mm": 1.1,
+    "at_mm": [
+     157.0,
+     74.4
+    ],
+    "search_cost": 0
+   },
+   {
+    "text": "STOP MOTORS BEFORE MASTER OFF",
+    "anchor": "(157.0, 77.0)",
+    "height_mm": 1.1,
+    "at_mm": [
+     157.0,
+     77.0
+    ],
+    "search_cost": 0
+   },
+   {
+    "text": "CAMERA + MIC PLUG INTO JETSON",
+    "anchor": "(157.0, 79.6)",
+    "height_mm": 1.1,
+    "at_mm": [
+     157.0,
+     79.6
+    ],
+    "search_cost": 0
+   },
+   {
+    "text": "+",
+    "anchor": "J1.2",
+    "height_mm": 2.0,
+    "at_mm": [
+     50.8,
+     102.3
+    ],
+    "search_cost": 0.0
+   },
+   {
+    "text": "+",
+    "anchor": "J4.2",
+    "height_mm": 2.0,
+    "at_mm": [
+     71.8,
+     102.3
+    ],
+    "search_cost": 0.0
+   },
+   {
+    "text": "PACK A IN",
+    "anchor": "J1",
+    "height_mm": 1.4,
+    "at_mm": [
+     54.4,
+     92.21
+    ],
+    "search_cost": 0.0
+   },
+   {
+    "text": "PACK B IN",
+    "anchor": "J4",
+    "height_mm": 1.4,
+    "at_mm": [
+     75.4,
+     92.21
+    ],
+    "search_cost": 0.0
+   },
+   {
+    "text": "THOR 24V 8A",
+    "anchor": "J3",
+    "height_mm": 1.4,
+    "at_mm": [
+     8.42,
+     75.83
+    ],
+    "search_cost": 1.5
+   },
+   {
+    "text": "GND",
+    "anchor": "J1.1",
+    "height_mm": 1.3,
+    "at_mm": [
+     58.0,
+     101.7
+    ],
+    "search_cost": 0.0
+   },
+   {
+    "text": "GND",
+    "anchor": "J4.1",
+    "height_mm": 1.3,
+    "at_mm": [
+     79.0,
+     101.7
+    ],
+    "search_cost": 0.0
+   },
+   {
+    "text": "SPARE 5V 5A",
+    "anchor": "J101",
+    "height_mm": 1.3,
+    "at_mm": [
+     100.5,
+     1.95
+    ],
+    "search_cost": 0.0
+   },
+   {
+    "text": "AUX 11.7V 5A",
+    "anchor": "J501",
+    "height_mm": 1.3,
+    "at_mm": [
+     168.5,
+     1.95
+    ],
+    "search_cost": 0.0
+   },
+   {
+    "text": "GND",
+    "anchor": "J2.1",
+    "height_mm": 1.2,
+    "at_mm": [
+     5.5,
+     5.38
+    ],
+    "search_cost": 0.0
+   },
+   {
+    "text": "BATT+",
+    "anchor": "J2.2",
+    "height_mm": 1.2,
+    "at_mm": [
+     5.5,
+     21.82
+    ],
+    "search_cost": 0.0
+   },
+   {
+    "text": "SPEAKER R",
+    "anchor": "J14",
+    "height_mm": 1.2,
+    "at_mm": [
+     222.0,
+     11.79
+    ],
+    "search_cost": 5.9
+   },
+   {
+    "text": "SPEAKER L",
+    "anchor": "J13",
+    "height_mm": 1.2,
+    "at_mm": [
+     222.0,
+     29.79
+    ],
+    "search_cost": 9.9
+   },
+   {
+    "text": "USB-C TO JETSON",
+    "anchor": "J10",
+    "height_mm": 1.2,
+    "at_mm": [
+     217.34,
+     73.01
+    ],
+    "search_cost": 13.85
+   },
+   {
+    "text": "MOTOR OUT",
+    "anchor": "J2.2",
+    "height_mm": 1.15,
+    "at_mm": [
+     6.0,
+     2.87
+    ],
+    "search_cost": 15.05
+   },
+   {
+    "text": "A+ TO SWITCH",
+    "anchor": "(17.0, 106.9)",
+    "height_mm": 1.1,
+    "at_mm": [
+     17.0,
+     103.32
+    ],
+    "search_cost": 2.25
+   },
+   {
+    "text": "A+ FROM SWITCH",
+    "anchor": "(17.0, 71.8)",
+    "height_mm": 1.1,
+    "at_mm": [
+     13.0,
+     68.22
+    ],
+    "search_cost": 4.65
+   },
+   {
+    "text": "B+ TO SWITCH",
+    "anchor": "(33.0, 106.9)",
+    "height_mm": 1.1,
+    "at_mm": [
+     33.0,
+     110.48
+    ],
+    "search_cost": 7.25
+   },
+   {
+    "text": "B+ FROM SWITCH",
+    "anchor": "(33.0, 71.8)",
+    "height_mm": 1.1,
+    "at_mm": [
+     39.0,
+     68.22
+    ],
+    "search_cost": 5.85
+   },
+   {
+    "text": "F1 MOTOR FUSE 30A",
+    "anchor": "F1.1",
+    "height_mm": 1.1,
+    "at_mm": [
+     18.0,
+     6.42
+    ],
+    "search_cost": 2.4
+   },
+   {
+    "text": "F2 ELECTRONICS FUSE 30A",
+    "anchor": "F2.2",
+    "height_mm": 1.1,
+    "at_mm": [
+     27.0,
+     4.17
+    ],
+    "search_cost": 2.25
+   },
+   {
+    "text": "F7000 SERVO FUSE 5A",
+    "anchor": "F7000",
+    "height_mm": 1.1,
+    "at_mm": [
+     77.25,
+     120.27
+    ],
+    "search_cost": 0.0
+   },
+   {
+    "text": "EDGE PINS +24V",
+    "anchor": "J3",
+    "height_mm": 1.0,
+    "at_mm": [
+     7.42,
+     89.83
+    ],
+    "search_cost": 0.9
+   },
+   {
+    "text": "XL330 A: GND 5V DATA",
+    "anchor": "J301",
+    "height_mm": 1.0,
+    "at_mm": [
+     105.06,
+     139.15
+    ],
+    "search_cost": 4.9
+   },
+   {
+    "text": "XL330 B: GND 5V DATA",
+    "anchor": "J302",
+    "height_mm": 1.0,
+    "at_mm": [
+     135.23,
+     153.15
+    ],
+    "search_cost": 12.4
+   },
+   {
+    "text": "XL430 A: GND 10V8 DATA",
+    "anchor": "J401",
+    "height_mm": 1.0,
+    "at_mm": [
+     190.46,
+     143.15
+    ],
+    "search_cost": 0.0
+   },
+   {
+    "text": "XL430 B: GND 10V8 DATA",
+    "anchor": "J402",
+    "height_mm": 1.0,
+    "at_mm": [
+     203.46,
+     141.15
+    ],
+    "search_cost": 2.0
+   },
+   {
+    "text": "R+",
+    "anchor": "J14.2",
+    "height_mm": 1.0,
+    "at_mm": [
+     218.11,
+     15.92
+    ],
+    "search_cost": 2.25
+   },
+   {
+    "text": "R-",
+    "anchor": "J14.1",
+    "height_mm": 1.0,
+    "at_mm": [
+     218.11,
+     21.0
+    ],
+    "search_cost": 2.25
+   },
+   {
+    "text": "L+",
+    "anchor": "J13.2",
+    "height_mm": 1.0,
+    "at_mm": [
+     218.2,
+     37.92
+    ],
+    "search_cost": 2.25
+   },
+   {
+    "text": "L-",
+    "anchor": "J13.1",
+    "height_mm": 1.0,
+    "at_mm": [
+     218.2,
+     43.0
+    ],
+    "search_cost": 2.25
+   },
+   {
+    "text": "THOR OFF",
+    "anchor": "J9921",
+    "height_mm": 1.0,
+    "at_mm": [
+     70.57,
+     44.4
+    ],
+    "search_cost": 0.0
+   },
+   {
+    "text": "SPARE 5V OFF",
+    "anchor": "J9922",
+    "height_mm": 1.0,
+    "at_mm": [
+     76.78,
+     55.15
+    ],
+    "search_cost": 0.0
+   },
+   {
+    "text": "USB 5V OFF",
+    "anchor": "J9923",
+    "height_mm": 1.0,
+    "at_mm": [
+     110.78,
+     55.15
+    ],
+    "search_cost": 0.0
+   },
+   {
+    "text": "XL330 OFF",
+    "anchor": "J9924",
+    "height_mm": 1.0,
+    "at_mm": [
+     99.72,
+     47.85
+    ],
+    "search_cost": 0.0
+   },
+   {
+    "text": "XL430 OFF",
+    "anchor": "J9925",
+    "height_mm": 1.0,
+    "at_mm": [
+     134.23,
+     47.85
+    ],
+    "search_cost": 0.0
+   },
+   {
+    "text": "AUX+AUDIO OFF",
+    "anchor": "J9926",
+    "height_mm": 1.0,
+    "at_mm": [
+     144.77,
+     55.15
+    ],
+    "search_cost": 0.0
+   },
+   {
+    "text": "SERVO OFF",
+    "anchor": "J9928",
+    "height_mm": 1.0,
+    "at_mm": [
+     57.27,
+     143.52
+    ],
+    "search_cost": 0.6
+   },
+   {
+    "text": "INNER PINS GND",
+    "anchor": "J3",
+    "height_mm": 0.99,
+    "at_mm": [
+     7.42,
+     91.82
+    ],
+    "search_cost": 2.9
+   },
+   {
+    "text": "SERVO 1",
+    "anchor": "J7004",
+    "height_mm": 0.9,
+    "at_mm": [
+     64.12,
+     147.61
+    ],
+    "search_cost": 0.0
+   },
+   {
+    "text": "SERVO 2",
+    "anchor": "J7005",
+    "height_mm": 0.9,
+    "at_mm": [
+     75.12,
+     147.61
+    ],
+    "search_cost": 0.0
+   },
+   {
+    "text": "SERVO 3",
+    "anchor": "J7006",
+    "height_mm": 0.9,
+    "at_mm": [
+     86.12,
+     147.61
+    ],
+    "search_cost": 0.0
+   },
+   {
+    "text": "BOOT",
+    "anchor": "JP7003",
+    "height_mm": 0.9,
+    "at_mm": [
+     142.0,
+     119.56
+    ],
+    "search_cost": 0.0
+   },
+   {
+    "text": "RESET",
+    "anchor": "JP7005",
+    "height_mm": 0.9,
+    "at_mm": [
+     130.0,
+     148.44
+    ],
+    "search_cost": 0.0
+   },
+   {
+    "text": "LED BATTERY",
+    "anchor": "D2",
+    "height_mm": 0.9,
+    "at_mm": [
+     8.0,
+     55.83
+    ],
+    "search_cost": 5.25
+   },
+   {
+    "text": "LED 24V",
+    "anchor": "D3",
+    "height_mm": 0.9,
+    "at_mm": [
+     61.0,
+     51.92
+    ],
+    "search_cost": 0.0
+   },
+   {
+    "text": "LED SPARE 5V",
+    "anchor": "D102",
+    "height_mm": 0.9,
+    "at_mm": [
+     103.1,
+     43.67
+    ],
+    "search_cost": 10.0
+   },
+   {
+    "text": "LED USB 5V",
+    "anchor": "D202",
+    "height_mm": 0.9,
+    "at_mm": [
+     142.44,
+     41.0
+    ],
+    "search_cost": 0.0
+   },
+   {
+    "text": "LED XL330",
+    "anchor": "D302",
+    "height_mm": 0.9,
+    "at_mm": [
+     72.4,
+     68.17
+    ],
+    "search_cost": 4.1
+   },
+   {
+    "text": "LED XL430",
+    "anchor": "D402",
+    "height_mm": 0.9,
+    "at_mm": [
+     107.9,
+     59.33
+    ],
+    "search_cost": 5.0
+   },
+   {
+    "text": "LED AUX",
+    "anchor": "D502",
+    "height_mm": 0.9,
+    "at_mm": [
+     175.21,
+     41.0
+    ],
+    "search_cost": 0.0
+   },
+   {
+    "text": "LED USB HUB",
+    "anchor": "D60",
+    "height_mm": 0.9,
+    "at_mm": [
+     211.5,
+     70.83
+    ],
+    "search_cost": 2.25
+   },
+   {
+    "text": "LED SERVO 5V",
+    "anchor": "D7102",
+    "height_mm": 0.9,
+    "at_mm": [
+     46.58,
+     116.2
+    ],
+    "search_cost": 0.0
+   },
+   {
+    "text": "TP BATT",
+    "anchor": "TP1",
+    "height_mm": 0.9,
+    "at_mm": [
+     9.44,
+     58.0
+    ],
+    "search_cost": 0.0
+   },
+   {
+    "text": "TP GND",
+    "anchor": "TP2",
+    "height_mm": 0.9,
+    "at_mm": [
+     12.29,
+     62.0
+    ],
+    "search_cost": 4.4
+   },
+   {
+    "text": "TP 24V",
+    "anchor": "TP4",
+    "height_mm": 0.9,
+    "at_mm": [
+     65.16,
+     50.0
+    ],
+    "search_cost": 8.6
+   },
+   {
+    "text": "TP 5V",
+    "anchor": "TP101",
+    "height_mm": 0.9,
+    "at_mm": [
+     104.83,
+     30.4
+    ],
+    "search_cost": 0.0
+   },
+   {
+    "text": "TP USB5V",
+    "anchor": "TP201",
+    "height_mm": 0.9,
+    "at_mm": [
+     140.18,
+     30.4
+    ],
+    "search_cost": 0.0
+   },
+   {
+    "text": "TP 5V",
+    "anchor": "TP301",
+    "height_mm": 0.9,
+    "at_mm": [
+     74.4,
+     70.15
+    ],
+    "search_cost": 5.6
+   },
+   {
+    "text": "TP 10V8",
+    "anchor": "TP401",
+    "height_mm": 0.9,
+    "at_mm": [
+     107.4,
+     70.15
+    ],
+    "search_cost": 6.5
+   },
+   {
+    "text": "TP 11V7",
+    "anchor": "TP501",
+    "height_mm": 0.9,
+    "at_mm": [
+     173.69,
+     30.4
+    ],
+    "search_cost": 0.0
+   },
+   {
+    "text": "TP 3V3",
+    "anchor": "TP7002",
+    "height_mm": 0.9,
+    "at_mm": [
+     156.0,
+     147.55
+    ],
+    "search_cost": 0.0
+   },
+   {
+    "text": "TP GND",
+    "anchor": "TP7004",
+    "height_mm": 0.9,
+    "at_mm": [
+     116.87,
+     139.88
+    ],
+    "search_cost": 6.4
+   },
+   {
+    "text": "TP 5V",
+    "anchor": "TP7101",
+    "height_mm": 0.9,
+    "at_mm": [
+     32.83,
+     118.2
+    ],
+    "search_cost": 0.0
+   },
+   {
+    "text": "FIT U9903 BY HAND",
+    "anchor": "U9903",
+    "height_mm": 0.9,
+    "at_mm": [
+     214.5,
+     118.39
+    ],
+    "search_cost": 3.0
+   },
+   {
+    "text": "GND 5V SIG",
+    "anchor": "J7004",
+    "height_mm": 0.8,
+    "at_mm": [
+     64.12,
+     145.67
+    ],
+    "search_cost": 7.0
+   },
+   {
+    "text": "GND 5V SIG",
+    "anchor": "J7005",
+    "height_mm": 0.8,
+    "at_mm": [
+     75.12,
+     145.67
+    ],
+    "search_cost": 7.0
+   },
+   {
+    "text": "GND 5V SIG",
+    "anchor": "J7006",
+    "height_mm": 0.8,
+    "at_mm": [
+     86.12,
+     145.67
+    ],
+    "search_cost": 7.0
+   },
+   {
+    "text": "PROG: 3V3 GND DIO CLK RST",
+    "anchor": "J7008",
+    "height_mm": 0.8,
+    "at_mm": [
+     172.56,
+     148.07
+    ],
+    "search_cost": 5.0
+   }
+  ],
+  "not_placed": []
+ },
+ "board_sha256": "1dabdd8f35dca5d13a01a024d0310674ded7bb68d099827eadc257e1fcf39a4b",
  "schematic_sha256": "5cdf018eaf3e45a5f9319f1914842c4b8be63afcc5b0805b9588d4d8761835ac",
- "generator_sha256": "cdee101f56b918355a5abbf7cc8f5e7409e815d2ac94d25a0ac2a3124cc9b5c2"
+ "generator_sha256": "143506c8c46b1c31a107cfa445d590309a3f83b4d201ade5ee37d5c14f5c6e30"
 }
