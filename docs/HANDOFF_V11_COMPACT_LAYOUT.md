@@ -8,10 +8,10 @@ inductor (+$17.12) and then asked for the six regulator inductors to be
 swapped to higher-voltage parts as well (+$13.28). Nothing is paid or approved. Payment and production approval belong
 to the owner.
 
-`Y8` supersedes every other entry in the cart. **Do not order `Y6`, `Y5`,
-`Y4`, `Y3` or `Y2`:** their placement files carry part rotations that were
-found to be wrong (see "Placement rotations" below). `Y7` is this board with
-the old 30 V regulator inductors.
+`Y8` is the only entry in the cart. The earlier entries `Y2` to `Y7` were
+removed on 10 November 2026 at the owner's request; all of them except `Y7`
+carried part rotations that were found to be wrong (see "Placement rotations"
+below), and `Y7` had the old 30 V regulator inductors.
 
 The v0.10 handoff, `docs/HANDOFF_V10_VALUE_ENGINEERED.md`, still holds for
 what v0.11 did not change: the cost-down choices, the Thor current-limit
@@ -160,9 +160,7 @@ model and could not be checked by eye.
 | Entry | What | Before shipping |
 |---|---|---:|
 | `Robot_PDB_v11_Gerbers_Y8` | Final v0.11 with 75 V regulator inductors, this document | $321.20 |
-| `Robot_PDB_v11_Gerbers_Y7` | Same board with the 30 V Sunlord inductors; superseded | $307.92 |
-| `Robot_PDB_v11_Gerbers_Y6` | First v0.11 build; superseded | $305.40 |
-| `Robot_PDB_v10_Gerbers_Y5`, `_Y4`, `_Y3` | v0.10; superseded | $294.18, $294.27, $289.41 |
-| `Robot_PDB_v09_Gerbers_Y2` | v0.9; placement file has the same rotation errors | $535.15 |
 
-Nothing has been removed from the cart; that needs the owner's say-so.
+Removed on 10 November 2026 at the owner's request: `Y7` ($307.92, same board
+with the 30 V inductors), `Y6` ($305.40, first v0.11 build), `Y5`, `Y4`, `Y3`
+(v0.10) and `Y2` (v0.9). Nothing in the cart is selected for checkout.

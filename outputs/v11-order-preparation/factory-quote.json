@@ -67,7 +67,7 @@
   "assembly": "U9903 omitted, all 304 parts top, verify orientations, do not auto-confirm"
  },
  "placement_preview": "Every oriented part type was opened individually in the factory 2D placement viewer. Thirteen rows were corrected (see export_v11.py V11_ROTATION_FIXES) and re-checked after re-upload. C20 has no factory model and could not be checked visually; it uses the same footprint and offset as the other 10 x 10 mm electrolytics, which are correct. After the inductor swap the corrected placement file was uploaded again unchanged; U2 was re-checked in the viewer. The new inductors are not polarised and use the same pads.",
- "other_cart_entries": "Robot_PDB_v11_Gerbers_Y7 ($307.92): same board with the 30 V Sunlord inductors, superseded. Robot_PDB_v11_Gerbers_Y6 ($305.40), Robot_PDB_v10_Gerbers_Y5/_Y4/_Y3 and Robot_PDB_v09_Gerbers_Y2: superseded, uncorrected rotations. Remove only on the owner's say-so.",
+ "other_cart_entries": "None. On 10 November 2026 the owner asked for the superseded entries Y2 to Y7 to be removed, and they were. Y8 is the only entry in the cart.",
  "payment_made": false,
  "purchase_approved": false,
  "hardware_tested": false,
