@@ -1,6 +1,6 @@
 # v0.9: retain the existing motors
 
-The owner chose the original motor passthrough to avoid buying replacement wheels. The replacement-wheel development is archived remotely in an archived branch that is not part of this repository; its unfinished files are not an orderable alternative.
+The owner chose the original motor passthrough to avoid buying replacement wheels. The replacement-wheel development is archived and is not part of this repository; its unfinished files are not an orderable alternative.
 
 ## Selected hardware
 
