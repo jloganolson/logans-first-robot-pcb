@@ -1,6 +1,6 @@
 # JLCPCB order recipe for v0.11
 
-This is how the quote of **$307.92 before shipping** was produced on
+This is how the quote of **$321.20 before shipping** was produced on
 10 November 2026: five boards, two of them assembled. Prices and stock move;
 treat the figures as a dated snapshot. The board has **open review questions**
 (see the top-level README), so this records how to reproduce the quote, not a
@@ -18,7 +18,7 @@ inductor) is recorded in `outputs/v10-order-preparation/`.
 | `quote-2026-11-10.png` | The charge breakdown as quoted |
 
 The same files, with checksums, are in
-`outputs/v11-order-preparation/package-1dabdd8f35dc/`.
+`outputs/v11-order-preparation/package-9e2ac58e2b29/`.
 
 Known inconsistency: the KiCad board file and the Gerber job file inside the
 zip still say ENIG finish and impedance controlled, left over from v0.9.
@@ -53,7 +53,7 @@ After upload the site should detect a 4-layer board of 155 × 228 mm.
 | Confirm parts placement | Yes, and tick "Do not confirm automatically" |
 | Parts selection | By customer |
 
-On the bill-of-materials page all 81 lines should match. **Eight through-hole
+On the bill-of-materials page all 82 lines should match. **Eight through-hole
 connectors are left unticked by default and must be ticked by hand:** J13,
 J14, J101, J501, J301, J302, J401, J402.
 
@@ -78,8 +78,8 @@ Remarks used:
 | Surface finish | 5.90 |
 | Confirm production file | 1.05 |
 | **Bare boards** | **53.75** |
-| Components (76 part numbers) | 133.04 |
-| Extended components fee | 101.97 |
+| Components (77 part numbers) | 143.23 |
+| Extended components fee | 105.06 |
 | Setup | 8.24 |
 | Hand-soldering labor | 3.61 |
 | SMT assembly | 3.44 |
@@ -87,8 +87,8 @@ Remarks used:
 | Manual assembly | 1.01 |
 | Nitrogen reflow | 0.86 |
 | Confirm parts placement | 0.45 |
-| **Assembly** | **254.17** |
-| **Total before shipping** | **307.92** |
+| **Assembly** | **267.45** |
+| **Total before shipping** | **321.20** |
 
 ## Things that cost time to find
 
@@ -117,6 +117,11 @@ Remarks used:
   others were right), so a per-footprint offset table is not enough. The
   corrections are in `export_v11.py`. In the viewer, "-" and the stripe mark
   a diode's cathode and "+" marks an electrolytic's positive.
+- **Check the voltage rating of molded inductors, and the exact series.**
+  Vishay IHLP-4040DZ-01 is rated 75 V across the winding; the similar
+  IHLP-4040DZ-11 only 50 V; the Sunlord parts first used here, 30 V. Swapping
+  six inductors to the 75 V series cost $13.28, of which $3.09 was one more
+  Extended-part fee.
 - **Prices drift within a day.** The same parts list cost $2.52 more in the
   afternoon than in the morning.
 - **A missing 3D model is not a missing part.** One electrolytic capacitor

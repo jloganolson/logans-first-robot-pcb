@@ -50,12 +50,18 @@ def main():
  # BOM: v0.9 factory-matched rows with the recorded part changes
  ch=D['part_changes'];bom=[];fitted=set()
  for r in rows(V09/'BOM_JLCPCB.csv'):
-  refs=r['Designator'].split(',');fitted|=set(refs);hit=[x for x in refs if x in ch]
-  if hit:
-   assert refs==hit and len(hit)==1,('changed part shares a BOM line',refs);c=ch[hit[0]];assert r['LCSC Part #']==c['old']['lcsc'],r
-   r=dict(r,**{'Comment':c['value'],'LCSC Part #':c['lcsc']})
-   if 'footprint' in c:r['Footprint']=c['footprint'].split(':',1)[-1]
-  bom.append([r['Comment'],r['Designator'],r['Footprint'],r['LCSC Part #']])
+  refs=r['Designator'].split(',');fitted|=set(refs);keep=[x for x in refs if x not in ch];new=collections.OrderedDict()
+  for x in refs:
+   if x in ch:
+    c=ch[x];assert r['LCSC Part #']==c['old']['lcsc'],(x,r);new.setdefault((c['value'],c['lcsc'],c.get('footprint',r['Footprint']).split(':',1)[-1]),[]).append(x)
+  if keep:bom.append([r['Comment'],','.join(keep),r['Footprint'],r['LCSC Part #']])
+  for (value,lcsc,fp_name),group in new.items():bom.append([value,','.join(group),fp_name,lcsc])
+ merged=collections.OrderedDict()                       # changed parts from different old lines may now share a part
+ for comment,des,fp_name,lcsc in bom:
+  k=(comment,fp_name,lcsc)
+  if k in merged:merged[k]+=','+des
+  else:merged[k]=des
+ bom=[[k[0],v,k[1],k[2]] for k,v in merged.items()]
  assert set(ch)<=fitted;write(pkg/'BOM_JLCPCB.csv',['Comment','Designator','Footprint','LCSC Part #'],bom)
  # placement: fresh export, v0.9 starting offsets, cross-checked against v0.9
  run(['kicad-cli','pcb','export','pos','--format','csv','--units','mm','--side','both','-o',pkg/'raw-positions.csv',BOARD],log)

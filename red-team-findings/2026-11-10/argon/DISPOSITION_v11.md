@@ -2,7 +2,7 @@
 
 Review: `argon-review-of-v11-1c351a03d3f0.md` (Gemini Argon, read-only, 10 November 2026).
 It reviewed the first v0.11 build (board `1c351a03d3f0`). The final v0.11 build
-(`1dabdd8f35dc`) includes the fixes below plus the edge-connector move and the
+(`9e2ac58e2b29`) includes the fixes below plus the edge-connector move and the
 new labels, **which Argon has not seen**: its quota ran out during a second,
 unfinished review of layout efficiency and labelling
 (`argon-v11-layout-and-labels.md` is only the first line of that run).
@@ -23,7 +23,8 @@ Every claim was checked against the board or the factory viewer before acting.
 | J7008 label too close to the board edge | Render | **Right.** All labels were re-placed by `labels_v11.py` with a 0.8 mm edge margin. |
 | Staircase segments from the grid router | Geometry dump | Right, cosmetic. Not changed. |
 | Thor current limit with R13 = 220 ohm and the Coilcraft inductor | Its own recalculation | Agrees with the handoff: minimum above 8 A, worst-case peak about 21-24 A against 26.3 A saturation. No change. |
-| Six Sunlord inductors rated 30 V; electrolytic reflow limit on the Economic line | Not re-examined | **Still open.** Owner decision. |
+| Six Sunlord inductors rated 30 V | Vishay datasheet 34193 | **Acted on at the owner's request:** L2-L6 and L7002 are now Vishay IHLP-4040DZ-01, rated 75 V. |
+| Electrolytic reflow limit on the Economic line | Not re-examined | **Still open.** A question for JLCPCB. |
 
 ## The placement-rotation finding matters beyond v0.11
 

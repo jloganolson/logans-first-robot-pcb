@@ -1030,6 +1030,66 @@
     "lcsc": "C5378597",
     "mpn": "cjiang FEXL1510A-100M"
    }
+  },
+  "L2": {
+   "value": "6.8uH 75V",
+   "lcsc": "C845080",
+   "mpn": "Vishay IHLP4040DZER6R8M01 (75V, Isat 13.5A, 21.2mOhm)",
+   "old": {
+    "value": "6.8uH",
+    "lcsc": "C408485",
+    "mpn": "Sunlord MWSA1004S-6R8MT (11x10mm, Isat 8.5A+)"
+   }
+  },
+  "L3": {
+   "value": "6.8uH 75V",
+   "lcsc": "C845080",
+   "mpn": "Vishay IHLP4040DZER6R8M01 (75V, Isat 13.5A, 21.2mOhm)",
+   "old": {
+    "value": "6.8uH",
+    "lcsc": "C408485",
+    "mpn": "Sunlord MWSA1004S-6R8MT (11x10mm, Isat 8.5A+)"
+   }
+  },
+  "L4": {
+   "value": "6.8uH 75V",
+   "lcsc": "C845080",
+   "mpn": "Vishay IHLP4040DZER6R8M01 (75V, Isat 13.5A, 21.2mOhm)",
+   "old": {
+    "value": "6.8uH",
+    "lcsc": "C408485",
+    "mpn": "Sunlord MWSA1004S-6R8MT (11x10mm, Isat 8.5A+)"
+   }
+  },
+  "L7002": {
+   "value": "6.8uH 75V",
+   "lcsc": "C845080",
+   "mpn": "Vishay IHLP4040DZER6R8M01 (75V, Isat 13.5A, 21.2mOhm)",
+   "old": {
+    "value": "6.8uH",
+    "lcsc": "C408485",
+    "mpn": "Sunlord MWSA1004S-6R8MT (11x10mm, Isat 8.5A+)"
+   }
+  },
+  "L5": {
+   "value": "10uH 75V",
+   "lcsc": "C845065",
+   "mpn": "Vishay IHLP4040DZER100M01 (75V, Isat 12A, 33.2mOhm)",
+   "old": {
+    "value": "10uH",
+    "lcsc": "C408487",
+    "mpn": "Sunlord MWSA1004S-100MT (11x10mm, Isat 8.5A+)"
+   }
+  },
+  "L6": {
+   "value": "10uH 75V",
+   "lcsc": "C845065",
+   "mpn": "Vishay IHLP4040DZER100M01 (75V, Isat 12A, 33.2mOhm)",
+   "old": {
+    "value": "10uH",
+    "lcsc": "C408487",
+    "mpn": "Sunlord MWSA1004S-100MT (11x10mm, Isat 8.5A+)"
+   }
   }
  },
  "labels": {
@@ -1797,7 +1857,7 @@
   ],
   "not_placed": []
  },
- "board_sha256": "1dabdd8f35dca5d13a01a024d0310674ded7bb68d099827eadc257e1fcf39a4b",
- "schematic_sha256": "5cdf018eaf3e45a5f9319f1914842c4b8be63afcc5b0805b9588d4d8761835ac",
- "generator_sha256": "143506c8c46b1c31a107cfa445d590309a3f83b4d201ade5ee37d5c14f5c6e30"
+ "board_sha256": "9e2ac58e2b295c252fd9d9d2044a3d4543f521787b17a18788caf1f443d97d41",
+ "schematic_sha256": "796e3c90f13551d4dbf25653e2dac8b89b01bb1197eefad7d2f325efe3bfa65f",
+ "generator_sha256": "7032013fe71484c61c79e941786e5457b607c54aa676c1ae533d7db343c075fd"
 }

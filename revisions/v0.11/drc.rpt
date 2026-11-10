@@ -1,5 +1,5 @@
 ** Drc report for revisions/v0.11/kicad/robot_pdb.kicad_pcb **
-** Created on 2026-11-10 14:25:43 **
+** Created on 2026-11-10 15:24:19 **
 
 ** Found 11 DRC violations **
 [lib_footprint_mismatch]: Footprint 'CP_Elec_10x10' does not match copy in library 'Capacitor_SMD'.

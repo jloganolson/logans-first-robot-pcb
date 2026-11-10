@@ -54,6 +54,13 @@ EDGE_PLUGS={'J3':(4.0,84.5),'J301':(102.6,148.6),'J302':(115.6,148.6),'J401':(18
 DATA_NETS={'DXL330_DATA':('J301','J302'),'DXL430_DATA':('J401','J402')}
 PART_CHANGES={'L1':dict(value='10uH 22A 60V',lcsc='C3911782',mpn='Coilcraft XAL1510-103MED',
   old=dict(value='10uH FEXL1510A-100M',lcsc='C5378597',mpn='cjiang FEXL1510A-100M'))}
+# The six battery-fed TPS54560 regulators: Sunlord MWSA1004S (30 V across the inductor) -> Vishay IHLP-4040DZ-01
+# (75 V, datasheet 34193). Same 4040 size; Vishay's land (12.07 mm over the pads, 5.82 mm between them, 3.25 mm
+# wide) lies inside the existing pads (13.6 / 5.4 / 4.1 mm), so the footprint is unchanged. The four amplifier
+# output inductors L70-L73 never see more than 11.7 V and stay as they are.
+_S68=dict(value='6.8uH',lcsc='C408485',mpn='Sunlord MWSA1004S-6R8MT (11x10mm, Isat 8.5A+)');_S10=dict(value='10uH',lcsc='C408487',mpn='Sunlord MWSA1004S-100MT (11x10mm, Isat 8.5A+)')
+for _r in ('L2','L3','L4','L7002'):PART_CHANGES[_r]=dict(value='6.8uH 75V',lcsc='C845080',mpn='Vishay IHLP4040DZER6R8M01 (75V, Isat 13.5A, 21.2mOhm)',old=_S68)
+for _r in ('L5','L6'):PART_CHANGES[_r]=dict(value='10uH 75V',lcsc='C845065',mpn='Vishay IHLP4040DZER100M01 (75V, Isat 12A, 33.2mOhm)',old=_S10)
 
 class Router(RobotIOFixer):
  """The project's maze router, generalised to start and end on either outer layer."""

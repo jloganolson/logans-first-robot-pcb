@@ -1,0 +1,35 @@
+$ kicad-cli pcb export gerbers --layers F.Cu,In1.Cu,In2.Cu,B.Cu,F.Paste,B.Paste,F.SilkS,B.SilkS,F.Mask,B.Mask,Edge.Cuts --subtract-soldermask -o outputs/v11-order-preparation/package-9e2ac58e2b29/gerbers/ revisions/v0.11/kicad/robot_pdb.kicad_pcb
+Loading board
+Plotted to 'outputs/v11-order-preparation/package-9e2ac58e2b29/gerbers/robot_pdb-F_Cu.gtl'.
+Plotted to 'outputs/v11-order-preparation/package-9e2ac58e2b29/gerbers/robot_pdb-In1_Cu.g2'.
+Plotted to 'outputs/v11-order-preparation/package-9e2ac58e2b29/gerbers/robot_pdb-In2_Cu.g3'.
+Plotted to 'outputs/v11-order-preparation/package-9e2ac58e2b29/gerbers/robot_pdb-B_Cu.gbl'.
+Plotted to 'outputs/v11-order-preparation/package-9e2ac58e2b29/gerbers/robot_pdb-F_Paste.gtp'.
+Plotted to 'outputs/v11-order-preparation/package-9e2ac58e2b29/gerbers/robot_pdb-B_Paste.gbp'.
+Plotted to 'outputs/v11-order-preparation/package-9e2ac58e2b29/gerbers/robot_pdb-F_Silkscreen.gto'.
+Plotted to 'outputs/v11-order-preparation/package-9e2ac58e2b29/gerbers/robot_pdb-B_Silkscreen.gbo'.
+Plotted to 'outputs/v11-order-preparation/package-9e2ac58e2b29/gerbers/robot_pdb-F_Mask.gts'.
+Plotted to 'outputs/v11-order-preparation/package-9e2ac58e2b29/gerbers/robot_pdb-B_Mask.gbs'.
+Plotted to 'outputs/v11-order-preparation/package-9e2ac58e2b29/gerbers/robot_pdb-Edge_Cuts.gm1'.
+
+$ kicad-cli pcb export drill --format excellon --excellon-separate-th -o outputs/v11-order-preparation/package-9e2ac58e2b29/gerbers/ revisions/v0.11/kicad/robot_pdb.kicad_pcb
+Loading board
+Created file 'outputs/v11-order-preparation/package-9e2ac58e2b29/gerbers/robot_pdb-PTH.drl'
+Created file 'outputs/v11-order-preparation/package-9e2ac58e2b29/gerbers/robot_pdb-NPTH.drl'
+Done.
+
+$ kicad-cli pcb export pos --format csv --units mm --side both -o outputs/v11-order-preparation/package-9e2ac58e2b29/raw-positions.csv revisions/v0.11/kicad/robot_pdb.kicad_pcb
+Loading board
+
+$ kicad-cli pcb export svg --layers F.Cu,F.SilkS,F.Mask,Edge.Cuts --page-size-mode 2 --exclude-drawing-sheet -o outputs/v11-order-preparation/package-9e2ac58e2b29/board-top.svg revisions/v0.11/kicad/robot_pdb.kicad_pcb
+Loading board
+Successfully created svg file
+
+$ kicad-cli pcb export svg --layers B.Cu,B.SilkS,Edge.Cuts --page-size-mode 2 --exclude-drawing-sheet -o outputs/v11-order-preparation/package-9e2ac58e2b29/board-bottom.svg revisions/v0.11/kicad/robot_pdb.kicad_pcb
+Loading board
+Successfully created svg file
+
+$ kicad-cli pcb export svg --layers F.Fab,F.SilkS,Edge.Cuts --page-size-mode 2 --exclude-drawing-sheet -o outputs/v11-order-preparation/package-9e2ac58e2b29/assembly-top.svg revisions/v0.11/kicad/robot_pdb.kicad_pcb
+Loading board
+Successfully created svg file
+

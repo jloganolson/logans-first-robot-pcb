@@ -1,27 +1,30 @@
 # v0.11 compact, edge-connector layout: handoff for independent vetting
 
 **State on 10 November 2026:** an unpaid JLCPCB cart entry
-`Robot_PDB_v11_Gerbers_Y7` holds five boards with two assembled for
-**$307.92 before shipping** ($53.75 boards + $254.17 Economic assembly).
-The owner's target was $300 and they allowed $10-20 over it for a better Thor
-inductor. Nothing is paid or approved. Payment and production approval belong
+`Robot_PDB_v11_Gerbers_Y8` holds five boards with two assembled for
+**$321.20 before shipping** ($53.75 boards + $267.45 Economic assembly).
+The owner's target was $300. They allowed $10-20 over it for a better Thor
+inductor (+$17.12) and then asked for the six regulator inductors to be
+swapped to higher-voltage parts as well (+$13.28). Nothing is paid or approved. Payment and production approval belong
 to the owner.
 
-`Y7` supersedes every other entry in the cart. **Do not order `Y6`, `Y5`,
+`Y8` supersedes every other entry in the cart. **Do not order `Y6`, `Y5`,
 `Y4`, `Y3` or `Y2`:** their placement files carry part rotations that were
-found to be wrong (see "Placement rotations" below).
+found to be wrong (see "Placement rotations" below). `Y7` is this board with
+the old 30 V regulator inductors.
 
 The v0.10 handoff, `docs/HANDOFF_V10_VALUE_ENGINEERED.md`, still holds for
 what v0.11 did not change: the cost-down choices, the Thor current-limit
 analysis, the USB pair widths and the heat model.
 
-- Board: `revisions/v0.11/kicad/robot_pdb.kicad_pcb`, SHA-256 `1dabdd8f35dca5d13a01a024d0310674ded7bb68d099827eadc257e1fcf39a4b`
+- Board: `revisions/v0.11/kicad/robot_pdb.kicad_pcb`, SHA-256 `9e2ac58e2b295c252fd9d9d2044a3d4543f521787b17a18788caf1f443d97d41`
 - Generator: `source/generator/build_v11.py` and `labels_v11.py`; change record `revisions/v0.11/derivation.json`
 - Audit: `source/fabrication/audit_v11.py`, result `outputs/v11-order-preparation/audit-v11.json` (PASS)
-- Package: `outputs/v11-order-preparation/package-1dabdd8f35dc/`
+- Package: `outputs/v11-order-preparation/package-9e2ac58e2b29/`
 - Quote record: `outputs/v11-order-preparation/factory-quote.json`, `factory-quote-charge-details.png`
 - Argon's review of the first v0.11 build and what was done about it: `red-team-findings/2026-11-10/argon/DISPOSITION_v11.md`
-- Pictures: `docs/v11-assets/before-after.png`, `board-top.png`, `board-labels.png`
+- Heat model for v0.11: `red-team-findings/2026-11-10/thermal/thermal_v11.py`, results in `thermal/v11/`
+- Pictures: `docs/v11-assets/before-after.png`, `board-top.png`, `board-labels.png`, `thermal-map.png`
 
 ## What changed from v0.10
 
@@ -69,6 +72,18 @@ analysis, the USB pair widths and the heat model.
 7. **Mounting holes:** H7002 at (95.2, 151.3), H7003 at (3.5, 151.5), H7004
    at (214.5, 151.3) mm. The other twelve are where v0.10 had them.
 8. **L1 is the Coilcraft XAL1510-103MED again** (LCSC C3911782, 60 V).
+9. **The six battery-fed TPS54560 regulators have 75 V inductors.** Sunlord
+   MWSA1004S (reported 30 V) became Vishay IHLP-4040DZ-01: `IHLP4040DZER6R8M01`
+   (C845080) at L2, L3, L4 and L7002, `IHLP4040DZER100M01` (C845065) at L5 and
+   L6. Read from Vishay datasheet 34193 (revision 02-Oct-2026): rated operating
+   voltage across the inductor 75 V; 6.8 uH is 21.2 milliohm typical, 13.5 A
+   saturation, 8.0 A heat rating; 10 uH is 33.2 milliohm, 12.0 A, 6.8 A. Same
+   inductance values, so the regulators are electrically unchanged apart from
+   resistance. Vishay's land pattern (12.07 mm over the pads, 5.82 mm between
+   them, 3.25 mm wide) lies inside the existing pads (13.6 / 5.4 / 4.1 mm), so
+   the footprint was not changed. The sister series IHLP-4040DZ-11 is only
+   50 V; do not substitute it. The four amplifier output inductors L70-L73
+   stay Sunlord: they never see more than 11.7 V.
 
 ## Placement rotations
 
@@ -99,7 +114,7 @@ model and could not be checked by eye.
   `+12V_SRV`; no new zone outside the block except on `+24V`, `+12V_SRV` and
   `+5V_SRV`; all vias 0.30 mm or larger; all copper inside the outline;
   schematic netlist matches the board.
-- **Factory:** detected 4 layers, 155 x 228 mm; 81 of 81 BOM lines matched;
+- **Factory:** detected 4 layers, 155 x 228 mm; 82 of 82 BOM lines matched;
   same options as before (JLC04161H-7628, 1 oz / 0.5 oz, lead-free HASL,
   plugged vias, Economic, top side, manual confirmation of production file and
   placement).
@@ -116,11 +131,19 @@ model and could not be checked by eye.
    drop along the strip is not corrected.
 3. **Dynamixel data lines are now about 55 mm longer** and were auto-routed
    with staircase segments. They are half-duplex TTL at up to a few Mbit/s.
-4. **Heat was not re-modelled** for the moved servo buck or the new runs.
-5. **Still open from the v0.10 hold:** the six Sunlord MWSA1004S inductors
-   (L2-L6, L7002) are reported as 30 V rated against 33.6 V packs, and the
-   electrolytic capacitors' reflow limit against the Economic line's profile
-   is unconfirmed.
+4. **Heat (re-modelled on v0.11, same simple model, about +/-30%).** With
+   Thor at 8 A and typical rail loads (12.3 W of loss) the hottest spot is
+   still the AUX regulator U7 at about +45 C above ambient on the ordered
+   copper; the moved servo buck is about +14 C and the new Thor strip region
+   about +18 C. A new case with every output at its rated current (24.8 W)
+   gives about +78 C at the spare 5 V and XL430 regulators, which is not
+   sustainable in still air. Inside an enclosure add the enclosure's own air
+   temperature rise. Not measured.
+5. **Still open from the v0.10 hold:** the electrolytic capacitors' reflow
+   limit against the Economic line's profile is unconfirmed. (The inductor
+   voltage question is closed by item 9 above.) The new inductors' heat
+   rating for the 10 uH part (6.8 A for a 40 C rise) is closer to the 5 A
+   rated load than the Sunlord part's was; their saturation current is higher.
 6. **Mechanical:** three holes and seven connectors moved. Nothing has been
    checked against the robot or an enclosure. J3's body is 1.0 mm from the
    left edge.
@@ -130,14 +153,14 @@ model and could not be checked by eye.
    main board.
 8. **Known cosmetic items:** the board file and Gerber job file still say
    ENIG and impedance controlled (left from v0.9; the order form governs).
-   The Gerber zip in the package was regenerated after upload; same board,
-   different embedded timestamps.
+   The inductor footprints are still named `L_Sunlord_MWSA1004S`.
 
 ## Cart
 
 | Entry | What | Before shipping |
 |---|---|---:|
-| `Robot_PDB_v11_Gerbers_Y7` | Final v0.11, this document | $307.92 |
+| `Robot_PDB_v11_Gerbers_Y8` | Final v0.11 with 75 V regulator inductors, this document | $321.20 |
+| `Robot_PDB_v11_Gerbers_Y7` | Same board with the 30 V Sunlord inductors; superseded | $307.92 |
 | `Robot_PDB_v11_Gerbers_Y6` | First v0.11 build; superseded | $305.40 |
 | `Robot_PDB_v10_Gerbers_Y5`, `_Y4`, `_Y3` | v0.10; superseded | $294.18, $294.27, $289.41 |
 | `Robot_PDB_v09_Gerbers_Y2` | v0.9; placement file has the same rotation errors | $535.15 |

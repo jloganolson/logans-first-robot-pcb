@@ -20,15 +20,14 @@ svg text{font:4.2px system-ui,sans-serif}
 <a href="https://github.com/jloganolson/logans-first-robot-pcb/blob/main/docs/HANDOFF_V11_COMPACT_LAYOUT.md">the v0.11 handoff</a>. Text shown like <span class="lab">THIS</span> is printed on the board.</p>
 
 <div class="notice"><strong>Where things stand.</strong> Version 0.11 of the board is saved in the JLCPCB cart, <strong>unpaid</strong>,
-as <strong>Robot_PDB_v11_Gerbers_Y7</strong> at <strong>$307.92 before shipping</strong>: five bare boards, two of them assembled.
-That is $7.92 over the $300 target, which pays for the better Thor coil you approved. Nothing has been ordered.
+as <strong>Robot_PDB_v11_Gerbers_Y8</strong> at <strong>$321.20 before shipping</strong>: five bare boards, two of them assembled.
+That is $21.20 over the $300 target: $17.12 for the better Thor coil and $13.28 for the six higher-voltage regulator coils you asked for, less what the smaller board saved. Nothing has been ordered.
 <strong>No hardware exists yet and nothing has been measured.</strong></div>
 
-<div class="stop"><strong>Before you pay, three things are still open.</strong>
+<div class="stop"><strong>Before you pay, two things are still open.</strong>
 <ol>
 <li><strong>Nobody independent has reviewed the final version.</strong> The second AI reviewer (Gemini Argon) saw an earlier v0.11 and then ran out of quota.
-Moving the plugs to the edges, the new labels and the placement corrections all came after its review.</li>
-<li><strong>Six smaller regulator coils are reported as rated 30 V</strong> while your packs reach 33.6 V. Swapping them was estimated at about $13. This is your call.</li>
+Moving the plugs to the edges, the new labels, the placement corrections and the coil swap all came after its review.</li>
 <li><strong>The big round capacitors and the cheaper assembly line's oven temperature</strong> have not been confirmed compatible. That is a question for JLCPCB.</li>
 </ol></div>
 
@@ -142,7 +141,7 @@ Leave them empty for normal use. Push a jumper cap on one and that supply switch
 <table><tr><th>Version</th><th>What changed</th><th class="n">Quote</th></tr>
 <tr><td>v0.9</td><td>The reviewed design: thick copper, special layer build, gold finish.</td><td class="n">$535.15</td></tr>
 <tr><td>v0.10</td><td>Same layout made cheaper: thinner copper, factory-default layer build, tin finish, standard hole sizes, wider USB traces to suit, the cheaper assembly line, and a few part swaps. 230 mm tall became 195 mm.</td><td class="n">$294.18</td></tr>
-<tr><td>v0.11</td><td>The empty quarter is gone (195 mm became 155 mm), every plug is at an edge, the board is labelled, and the Thor coil is the 60 V Coilcraft part again.</td><td class="n">$307.92</td></tr></table>
+<tr><td>v0.11</td><td>The empty quarter is gone (195 mm became 155 mm), every plug is at an edge, the board is labelled, and every regulator coil is rated above the battery voltage.</td><td class="n">$321.20</td></tr></table>
 <h3>What v0.11 changed, in plain words</h3>
 <table><tr><th>Change</th><th>Detail</th></tr>
 <tr><td>Hobby-servo corner laid out again</td><td>Its 5 V regulator sits in the bottom-left corner with its fuse beside it; the controller chip moved next to the USB hub. Everything else on the board stayed where it was.</td></tr>
@@ -150,14 +149,16 @@ Leave them empty for normal use. Push a jumper cap on one and that supply switch
 <tr><td>Labels</td><td>76 printed labels replace the old terse ones. Part numbers are still not printed.</td></tr>
 <tr><td>Review fixes</td><td>Sturdier connections for the surge protector and bulk capacitor on the hobby-servo supply, and a tidier 5 V plane under it.</td></tr>
 <tr><td>Factory placement corrections</td><td>Thirteen parts were turned the wrong way in the file that tells the factory how to place them, including all six regulator chips and the Thor controller. This mistake was already in the v0.9 and v0.10 files. All are corrected and re-checked in the factory's viewer.</td></tr>
+<tr><td>Coils rated for the battery</td><td>The Thor coil is the 60 V Coilcraft part again. The six smaller regulator coils changed from parts reported as 30 V to Vishay parts rated 75 V (your packs reach 33.6 V). Same values, same pads on the board.</td></tr>
 <tr><td>Three mounting holes moved</td><td>Bottom row is now 3.5, 95.2 and 214.5 mm from the left edge, about 151.4 mm from the top. The other twelve did not move.</td></tr></table></section>
 
 <section id="buy"><h2>What to buy</h2>
-<div class="ok"><strong>Not yet; see the red box at the top.</strong> When you are ready, the entry is <strong>Robot_PDB_v11_Gerbers_Y7</strong>. It has two lines that go together:
-the boards (<strong>$53.75</strong>, quantity 5) and the assembly (<strong>$254.17</strong>, quantity 2). Tick the Y7 checkbox and both are selected.</div>
-<img src="v11-assets/factory-quote.png" alt="Factory charge breakdown for the Y7 entry, total 307.92 dollars">
+<div class="ok"><strong>Not yet; see the red box at the top.</strong> When you are ready, the entry is <strong>Robot_PDB_v11_Gerbers_Y8</strong>. It has two lines that go together:
+the boards (<strong>$53.75</strong>, quantity 5) and the assembly (<strong>$267.45</strong>, quantity 2). Tick the Y8 checkbox and both are selected.</div>
+<img src="v11-assets/factory-quote.png" alt="Factory charge breakdown for the Y8 entry, total 321.20 dollars">
 <table><tr><th>Cart entry</th><th>What it is</th><th class="n">Before shipping</th><th>Do</th></tr>
-<tr><td><strong>Robot_PDB_v11_Gerbers_Y7</strong></td><td>Final v0.11</td><td class="n">$307.92</td><td>The one to buy</td></tr>
+<tr><td><strong>Robot_PDB_v11_Gerbers_Y8</strong></td><td>Final v0.11 with the 75 V coils</td><td class="n">$321.20</td><td>The one to buy</td></tr>
+<tr><td>Robot_PDB_v11_Gerbers_Y7</td><td>Same board with the old 30 V coils</td><td class="n">$307.92</td><td>Delete</td></tr>
 <tr><td>Robot_PDB_v11_Gerbers_Y6</td><td>First v0.11 build, plugs still in the middle, placement errors</td><td class="n">$305.40</td><td>Delete</td></tr>
 <tr><td>Robot_PDB_v10_Gerbers_Y5, Y4, Y3</td><td>v0.10 builds, placement errors</td><td class="n">$294.18 and below</td><td>Delete</td></tr>
 <tr><td>Robot_PDB_v09_Gerbers_Y2</td><td>The original v0.9; its placement file has the same errors</td><td class="n">$535.15</td><td>Delete, or keep only as a price reference</td></tr></table>
@@ -165,7 +166,6 @@ the boards (<strong>$53.75</strong>, quantity 5) and the assembly (<strong>$254.
 <h3>Decide before paying</h3>
 <ol>
 <li><strong>Mounting and enclosure.</strong> Check the hole pattern and plug positions against your robot. Ask if you want a dimensioned drawing.</li>
-<li><strong>The six 30 V coils.</strong> Accept them, or have them swapped (about $13).</li>
 <li><strong>Finish.</strong> The order uses lead-free tin. Gold is flatter and kinder to the tiniest chip on the board, for about $16 more.</li>
 <li><strong>Stock.</strong> Two chips were low at the factory today. If the cart flags a shortage, stop and ask rather than accepting a substitute.</li></ol>
 <h3>Also buy separately</h3>
@@ -217,28 +217,33 @@ the boards (<strong>$53.75</strong>, quantity 5) and the assembly (<strong>$254.
 <li>A battery-side charger module must be rated well above 33.6 V input (look for 40 V or more). Ordinary "12-24 V" car chargers are not safe on the battery.</li></ul></section>
 
 <section id="heat"><h2>Heat</h2>
-<p>Thinner copper is the main thing given up to hit the price. The heat model below was run on v0.10. The hot parts it covers did not move in v0.11, so the numbers still apply to them; the moved hobby-servo regulator and the new power runs were not re-modelled.</p>
-<img src="v10-assets/thermal-map.png" alt="Modelled board temperature rise for three copper options">
-<table><tr><th>Spot</th><th class="n">v0.9 thick copper</th><th class="n">As ordered</th><th class="n">With thicker inner layers (+$18)</th></tr>
-<tr><td>AUX 11.7 V regulator at 4 A (hottest)</td><td class="n">+33 °C</td><td class="n">+45 °C</td><td class="n">+40 °C</td></tr>
-<tr><td>Thor supply</td><td class="n">+25 °C</td><td class="n">+31-33 °C</td><td class="n">+28-30 °C</td></tr>
-<tr><td>XL330 regulator at 2 A</td><td class="n">+24 °C</td><td class="n">+29 °C</td><td class="n">+26 °C</td></tr>
-<tr><td>Amplifier</td><td class="n">+25 °C</td><td class="n">+30 °C</td><td class="n">+27 °C</td></tr></table>
-<p>These are rises above the surrounding air, in still air. In a 25 °C room the hottest spot would be about 70 °C; <strong>inside an enclosure it will be higher</strong>, so plan vents or a small fan.</p>
+<p><strong>Short version: for your real loads a well-vented enclosure is enough. Fit a small fan if the box is closed, or if you expect several outputs near full load at once.</strong></p>
+<p>Thinner copper is the main thing given up to hit the price. This is a model of how warm the board gets from its real copper shapes, in still open air, re-run on the final v0.11 board.</p>
+<img src="v11-assets/thermal-map.png" alt="Modelled v0.11 board temperature rise for three copper options, typical loads">
+<p class="small">Typical loads: Thor at 8 A, servo supplies at about 2 A, AUX at 4 A. Middle picture is the board as ordered.</p>
+<table><tr><th>Spot</th><th class="n">Typical loads</th><th class="n">Every output at its full rating</th></tr>
+<tr><td>AUX 11.7 V regulator (hottest in typical use)</td><td class="n">+45 °C</td><td class="n">+74 °C</td></tr>
+<tr><td>Spare 5 V and XL430 regulators</td><td class="n">+27 to +30 °C</td><td class="n">+77 to +78 °C</td></tr>
+<tr><td>Thor supply</td><td class="n">+31 to +34 °C</td><td class="n">+52 to +57 °C</td></tr>
+<tr><td>Amplifier</td><td class="n">+30 °C</td><td class="n">+42 °C</td></tr>
+<tr><td>Hobby-servo regulator (bottom-left corner)</td><td class="n">+14 °C</td><td class="n">+39 °C</td></tr>
+<tr><td>New copper run to the Thor plug</td><td class="n">+18 °C</td><td class="n">+36 °C</td></tr></table>
+<p>These are rises above the surrounding air.</p>
 <ul>
-<li>This is an estimate, good to roughly ±30%.</li>
-<li>On the bench, run each supply at its real load for 15 minutes. If something is too hot to keep a finger near, add airflow or a stick-on heatsink before trusting it.</li></ul></section>
+<li><strong>Typical use:</strong> about 70 °C at the hottest spot in a 25 °C room. Fine; the parts are rated to 125 °C.</li>
+<li><strong>Everything at full rating at once:</strong> over 100 °C in open air. Too hot to run for long. Your robot is unlikely to do this, but it is the case to avoid.</li>
+<li><strong>A closed box makes it worse.</strong> The air inside warms up and every number rises with it, commonly by 15&ndash;30 °C. Leave openings above and below the top half of the board (the row of regulators between the two XT30 plugs) so air can rise through, or fit a 40 mm fan blowing across that area.</li>
+<li>This is an estimate, good to roughly ±30%. On the bench, run each supply at its real load for 15 minutes with a thermometer. If something is too hot to keep a finger near, add airflow before trusting it.</li></ul></section>
 
 <section id="risks"><h2>Known risks, plainly</h2>
 <table><tr><th>Risk</th><th>What could happen</th><th>What to do</th></tr>
 <tr><td>Final version not independently reviewed</td><td>A mistake in the moved plugs, the new power copper or the re-drawn servo corner could have slipped past the automatic checks.</td><td>Get a review before paying. On the bench, check every plug's voltage and polarity with a meter before connecting anything to it.</td></tr>
-<tr><td>Six smaller regulator coils rated 30 V</td><td>Possible shortened life on 33.6 V packs.</td><td>Decide before paying.</td></tr>
 <tr><td>Capacitors and oven temperature</td><td>The cheaper line's oven may run hotter than the round capacitors are rated for.</td><td>Ask JLCPCB, or pay about $35 for the Standard line.</td></tr>
 <tr><td>USB to the servos and sound</td><td>Two internal USB routes were inherited from an older layout with known shortcomings.</td><td>Test with sustained traffic. Fallback is an external USB-to-Dynamixel adapter.</td></tr>
 <tr><td>Jetson USB pair</td><td>Sized for the layer build by calculation; not measured.</td><td>Test both plug orientations and unplug/replug.</td></tr>
 <tr><td>Dynamixel data wiring now longer</td><td>About 55 mm added to each data line to reach the bottom edge.</td><td>Test at your real baud rate with all servos chained.</td></tr>
 <tr><td>Tin finish on the tiniest chip</td><td>An uneven joint on the USB switch chip stops all USB.</td><td>Inspect it under magnification on arrival, or pay for the gold finish.</td></tr>
-<tr><td>Heat</td><td>Modelled, not measured, and worse in an enclosure.</td><td>See <a href="#heat">Heat</a>.</td></tr>
+<tr><td>Heat</td><td>Modelled, not measured, and worse in an enclosure. Not designed to run every output at full rating at once without airflow.</td><td>See <a href="#heat">Heat</a>.</td></tr>
 <tr><td>Mounting holes and plug positions</td><td>The pattern changed.</td><td>Confirm fit before paying.</td></tr></table>
 <p>The 30 A motor fuse is a fuse rating, not a promise that the board carries 30 A all day. The design assumes about 10 A to the motors.</p></section>
 
@@ -246,12 +251,14 @@ the boards (<strong>$53.75</strong>, quantity 5) and the assembly (<strong>$254.
 <ul>
 <li><strong>Design-rule check:</strong> zero errors and zero unconnected pads. Eleven cosmetic warnings, all inherited.</li>
 <li><strong>Difference audit:</strong> a script compares v0.11 against v0.10 and passes only if nothing changed outside the hobby-servo corner apart from the recorded plug moves and their new copper, no part or connection changed anywhere, and the schematic still matches the board.</li>
-<li><strong>Factory upload:</strong> the factory read the files as a 4-layer 155 × 228 mm board, matched all 81 lines of the parts list, and priced it.</li>
+<li><strong>Factory upload:</strong> the factory read the files as a 4-layer 155 × 228 mm board, matched all 82 lines of the parts list, and priced it.</li>
 <li><strong>Placement check:</strong> every part that has a right way round was opened on its own in the factory's viewer. Thirteen were wrong and were corrected.</li>
 <li><strong>Second opinion:</strong> Gemini Argon reviewed an earlier v0.11. Four of its findings held up and were fixed. Several did not: it said the diodes and lights were backwards (they are not) and that the regulator chips were placed correctly (they were not). <strong>It has not seen the final version.</strong></li>
+<li><strong>Coil ratings:</strong> read from Vishay's own datasheet: 75 V across the coil, and a pad pattern that fits inside the pads already on the board.</li>
+<li><strong>Heat:</strong> modelled again on the final board, including a worst case.</li>
 <li><strong>Not done:</strong> nothing has been built or measured. Heat, voltage-drop and USB figures are calculations or estimates.</li></ul>
-<p class="small">Files: board <code>revisions/v0.11/kicad/robot_pdb.kicad_pcb</code> (fingerprint starts <code>1dabdd8f35dc</code>),
-factory package <code>outputs/v11-order-preparation/package-1dabdd8f35dc/</code>, quote record <code>outputs/v11-order-preparation/factory-quote.json</code>.</p></section>
+<p class="small">Files: board <code>revisions/v0.11/kicad/robot_pdb.kicad_pcb</code> (fingerprint starts <code>9e2ac58e2b29</code>),
+factory package <code>outputs/v11-order-preparation/package-9e2ac58e2b29/</code>, quote record <code>outputs/v11-order-preparation/factory-quote.json</code>.</p></section>
 
 <section id="words"><h2>Glossary</h2>
 <table>

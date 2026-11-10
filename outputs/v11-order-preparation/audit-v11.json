@@ -1,6 +1,6 @@
 {
  "status": "PASS",
- "board_sha256": "1dabdd8f35dca5d13a01a024d0310674ded7bb68d099827eadc257e1fcf39a4b",
+ "board_sha256": "9e2ac58e2b295c252fd9d9d2044a3d4543f521787b17a18788caf1f443d97d41",
  "source_board_sha256": "1b3bcccac46a0f5773c472aa492ede3c1351764b9f63c53f64ded7864630e90c",
  "outline_mm": [
   228.0,
@@ -11,9 +11,33 @@
   "parts_not_moved": 286,
   "parts_moved": 80,
   "value_changes": {
+   "L5": [
+    "10uH",
+    "10uH 75V"
+   ],
+   "L3": [
+    "6.8uH",
+    "6.8uH 75V"
+   ],
    "L1": [
     "10uH FEXL1510A-100M",
     "10uH 22A 60V"
+   ],
+   "L4": [
+    "6.8uH",
+    "6.8uH 75V"
+   ],
+   "L2": [
+    "6.8uH",
+    "6.8uH 75V"
+   ],
+   "L7002": [
+    "6.8uH",
+    "6.8uH 75V"
+   ],
+   "L6": [
+    "10uH",
+    "10uH 75V"
    ]
   },
   "copper_items_changed_outside_block_on_extended_nets": {
@@ -173,7 +197,7 @@
   ],
   "schematic": {
    "components": 366,
-   "sha256": "5cdf018eaf3e45a5f9319f1914842c4b8be63afcc5b0805b9588d4d8761835ac"
+   "sha256": "796e3c90f13551d4dbf25653e2dac8b89b01bb1197eefad7d2f325efe3bfa65f"
   }
  },
  "findings": [],

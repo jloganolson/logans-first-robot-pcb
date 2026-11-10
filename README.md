@@ -7,10 +7,9 @@ built yet**. I'm publishing it to get it reviewed before I spend money on it.
 
 > **Status (10 November 2026): not ordered.** The current revision is
 > **v0.11**: 228 × 155 mm, every plug on a board edge, fully labelled. An
-> unpaid JLCPCB quote exists at $307.92 for five boards with two assembled.
-> The final layout has not been independently reviewed, and a question about
-> inductor voltage ratings is still open (see [Open questions](#open-questions)).
-> Nothing here has been measured on hardware.
+> unpaid JLCPCB quote exists at $321.20 for five boards with two assembled.
+> The final layout has not been independently reviewed (see
+> [Open questions](#open-questions)). Nothing here has been measured on hardware.
 
 ![Top copper and silkscreen of the v0.11 board.](renders/board-top.png)
 
@@ -47,14 +46,16 @@ Four layers, 228 × 155 mm, 1 oz outer / 0.5 oz inner copper. 366 footprints, of
 These are what I most want a second opinion on. Short answers are welcome;
 "that's fine, everyone does it" is as useful to me as "don't".
 
-1. **Inductor voltage ratings.** The molded inductors on six of the seven
-   buck converters (Sunlord MWSA1004S) are reported as rated 30 V by their
-   maker. The packs reach 33.6 V. At start-up, or into a shorted output, the
-   full input voltage sits across the inductor for each on-time. Is that a
-   real reliability problem, or a rating that only matters in steady state?
-   Would you pay about $13 more for 75 V parts? (The Thor rail had the same
-   issue in v0.10 with a 30 V Cjiang part; v0.11 went back to the 60 V
-   Coilcraft XAL1510-103.)
+1. **Inductor voltage ratings.** A reviewer pointed out that the molded
+   inductors first chosen (Sunlord MWSA1004S, and a Cjiang part on the Thor
+   rail) are rated 30 V across the winding while the packs reach 33.6 V. At
+   start-up, or into a shorted output, the full input voltage sits across a
+   buck inductor for each on-time. v0.11 therefore uses a 60 V Coilcraft
+   XAL1510-103 on the Thor rail and 75 V Vishay IHLP-4040DZ-01 parts on the
+   six TPS54560 rails, on the existing pads (about $30 in total). Was that
+   necessary, or does the rating only matter in steady state? Is fitting an
+   IHLP-4040 on a land pattern drawn for the Sunlord part acceptable
+   (Vishay's recommended land lies inside the existing pads)?
 2. **Thor buck current limit.** LM5146 with low-side RDS(on) sensing,
    R13 = 220 Ω, BSC034N06NS FETs. I calculate a typical valley limit near
    14 A (scaled from about 12 A at the earlier 180 Ω), a worst-case low near 8.5 A of load, and a worst-case inductor peak
@@ -65,9 +66,10 @@ These are what I most want a second opinion on. Short answers are welcome;
    No impedance test coupon. Two older Full-Speed routes have
    [known reference-plane compromises](docs/V09_USB_PROTOTYPE_REVIEW.md).
 4. **Heat.** A simple model from the real copper puts the hottest regulator
-   about 45 °C above ambient at 4 A in still air ([map](renders/thermal-map.png),
-   [model](red-team-findings/2026-11-10/thermal/)). Sensible, or a sign the
-   1 oz / 0.5 oz copper is too thin?
+   about 45 °C above ambient at typical loads in still air, and about 78 °C
+   with every output at its rated current ([map](renders/thermal-map.png),
+   [model](red-team-findings/2026-11-10/thermal/)). Sensible for a board that
+   will sit in a vented enclosure, or a sign the 1 oz / 0.5 oz copper is too thin?
 5. **Assembly process.** JLCPCB's Economic line reflows at a fixed
    255 ± 5 °C. A reviewer reports a 250 °C case limit for the nine 10 × 10 mm
    electrolytic capacitors. Also: lead-free HASL under a 1.5 × 2 mm UQFN-10.
