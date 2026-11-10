@@ -1,0 +1,4 @@
+{
+  "candlelight_upstream": {"url": "https://github.com/candle-usb/candleLight_fw.git", "commit": "85e5b3352db7f051aa879eeb71555dfce664c44c"},
+  "tinyusb_upstream": {"url": "https://github.com/hathach/tinyusb.git", "commit": "d543126c5ca356f6ddc52646ee5a2dee84c65c31"}
+}

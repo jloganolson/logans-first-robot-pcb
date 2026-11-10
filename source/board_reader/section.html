@@ -1,0 +1,39 @@
+<section class="br" id="trace-reader" aria-label="Schematic and PCB copper reader">
+<header><h4>Trace the circuit</h4><button type="button" data-action="expand" aria-pressed="false">Expand reader</button></header>
+<p class="intro">Start at J1 pin 2. Click a pin, wire or copper area to select its net in both drawings. Drag to pan. Use the zoom buttons or Ctrl + wheel.</p>
+<div class="br-tools">
+<form class="find"><label for="br-query">Find part, pin or net</label><span><input id="br-query" list="br-choices" placeholder="J1, F1.1, VBAT…" autocomplete="off" spellcheck="false"><datalist id="br-choices"></datalist><button>Find</button></span></form>
+<label>Follow a path<select id="br-route"><option value="motor">Wheel power and return</option><option value="logic">Logic power to VIN</option><option value="gate">Ideal-diode gate drive</option></select></label>
+<div class="steps"><button data-action="prev" aria-label="Previous step">←</button><span id="br-step"></span><button data-action="next" aria-label="Next step">→</button></div>
+</div>
+<div class="br-note" id="br-note" aria-live="polite"></div>
+<div class="br-panes">
+<div class="br-pane"><div class="panehead"><label>Schematic <select id="br-mode"><option value="wired">Wired input</option><option value="protection">Protection detail</option><option value="sheet">Original KiCad sheet</option></select></label><div class="zoom"><button data-view="left" data-action="out" aria-label="Zoom out schematic">−</button><button data-view="left" data-action="in" aria-label="Zoom in schematic">+</button><button data-view="left" data-action="fit">Fit</button></div></div>
+<svg id="br-left" aria-label="Interactive electrical schematic" viewBox="0 0 560 420" tabindex="0"></svg></div>
+<div class="br-pane"><div class="panehead"><label>PCB copper <select id="br-layer"><option>F.Cu</option><option>In1.Cu</option><option>In2.Cu</option><option>B.Cu</option></select></label><div class="zoom"><button data-view="right" data-action="out" aria-label="Zoom out PCB">−</button><button data-view="right" data-action="in" aria-label="Zoom in PCB">+</button><button data-view="right" data-action="fit" title="Fit the whole board">Fit</button></div></div>
+<svg id="br-right" aria-label="Interactive PCB copper artwork, top view" viewBox="0 1 44 79" tabindex="0"></svg></div>
+</div>
+<div class="br-lab">
+<label>Copper display <select id="br-display"><option value="selected">Highlight net</option><option value="artwork">Whole layer</option></select></label>
+<label><input type="checkbox" id="br-fills" checked> Show filled copper</label>
+<button data-action="battery">Inspect J1 battery pour</button><button data-action="gate-track">Inspect Q1 gate trace</button>
+</div>
+<div class="br-key"><span><i></i>Selected copper</span><span><i></i>Selected pad or via</span><span>All layers viewed from above</span><button data-action="input">Fit input area</button></div>
+<div class="br-inspector"><div><strong id="br-net"></strong><span id="br-value"></span></div><label>Other pins on this part<select id="br-partpins"></select></label></div>
+<div class="br-ends"><b id="br-count"></b><div id="br-ends"></div></div>
+<details class="br-lesson"><summary>Read the copper in KiCad</summary>
+<p>Choose <b>Inspect J1 battery pour</b>. Start at the ring around J1.2 and follow the uninterrupted filled area to F1.2 and F2.2. A pour is a sheet of copper cut to shape. Turn off <b>Show filled copper</b> and the sheet disappears, leaving the terminal pads visible. This changes the drawing only.</p>
+<p>Choose <b>Inspect Q1 gate trace</b>. Start at U1.5 and follow the thin line around the bends to Q1.4. These four top-layer track segments carry the gate control signal. Switch to <b>Whole layer</b> to see the surrounding copper without net highlighting. Click any pad or track to inspect its net.</p>
+<p>In the native PCB Editor, open <code>robot_pdb.kicad_pcb</code>, select <b>F.Cu</b> in Appearance and enable <b>Show zone filled areas</b>. Right-click the copper pad at J1.2 and choose <b>Net Tools → Highlight Net</b>. Repeat at Q1.4. Use <b>View → 3D Viewer</b> for the board surface and available component models. The layer view exposes copper that solder mask and component bodies cover on the assembled board. <a href="https://docs.kicad.org/9.0/en/pcbnew/pcbnew.html">KiCad PCB Editor manual</a></p></details>
+<details class="br-lesson"><summary>What are Q1, F1 and F2 doing here?</summary>
+<p><b>Q</b> identifies a transistor. Q1 is a MOSFET, an electrically controlled switch. Its source and drain carry the logic-branch supply current. U1 drives the small gate trace to turn the channel on for forward power and turns it off when current would flow backward. Q2 and Q3 switch power in the Thor voltage converter. The letter tells you the family, while the surrounding circuit tells you the job.</p>
+<p>Follow J1.2 to the fork. Motor current passes through <b>F1 (30 A)</b> on its way to J2. Converter current passes through <b>F2 (20 A)</b> on its way to Q1. The four holes at one end of F1 all grip the same blade terminal. There are two fuse elements on this board. FB1 and FB2 are ferrite beads for filtering noise. A fuse by a battery serves a different stretch of wiring: a short in a pack lead before J1 can draw current without going through either board fuse.</p></details>
+<details class="br-lesson"><summary>Would two battery inputs isolate the packs?</summary>
+<pre>Pack A (+) ── fuse ── contact A ──┐
+                                  ├── VBAT ── F1 / F2 branches
+Pack B (+) ── fuse ── contact B ──┘</pre>
+<p>This is a proposed topology with common battery negatives. One handle can open both independent contacts. With both open, the positive pack-to-pack path is broken. A switch after the join turns off the robot while leaving the packs connected to each other. When both contacts close, a higher-voltage pack can charge its lower-voltage neighbor through the join, even with the robot idle.</p>
+<p>Moving the junction onto the PCB changes connector and copper requirements. It provides isolation only if you add switching or reverse-current blocking ahead of the join. For isolation while parked, an external two-pole DC disconnect can do that job with the present J1. For isolation while running, consider a reverse-blocking input for each pack and design a separate charging and motor-regeneration path. Q1 is downstream of the join and only on the logic branch.</p>
+<p>Before choosing hardware, confirm parallel use and BMS reconnect behavior for these packs, operation when one pack drops out, and switch DC interruption and inrush ratings at 33.6 V full. Nexus specifies 30 A continuous discharge and 5 A continuous charge per pack and calls for matched states of charge. <a href="https://nexusbatterysystems.com/products/8s1p-p30b">Nexus pack specifications</a></p></details>
+<p class="br-help">On the original sheet, matching net labels continue the connection. Pick an endpoint to jump to its symbol and pad. Repeated pad numbers on a fuse holder are separate holes on the same terminal. <a href="../schematic/robot_pdb_schematic.pdf">Full schematic PDF</a></p>
+</section>

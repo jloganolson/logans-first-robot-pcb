@@ -1,0 +1,51 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 921929e..e8fa9cd 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -440,6 +440,7 @@ set(TGTF072_LIST
+ 	"RH02"
+ 	"can_module_com_classic"
+ 	"candleLight"
++	"robot_io_can"
+ )
+ set(TGTF407_LIST
+ 	"STM32F4_DevBoard"
+diff --git a/include/config.h b/include/config.h
+index e3d7cdf..1eeb235 100644
+--- a/include/config.h
++++ b/include/config.h
+@@ -334,6 +334,34 @@ THE SOFTWARE.
+ 	#define LEDTX_Mode				 GPIO_MODE_OUTPUT_PP
+ 	#define LEDTX_Active_High		 1
+ 
++#elif defined(BOARD_robot_io_can)
++	#define USBD_PRODUCT_STRING_FS	 "Robot internal CAN"
++	#define USBD_MANUFACTURER_STRING "Robot prototype"
++	#define DFU_INTERFACE_STRING_FS	 "Robot CAN firmware upgrade interface"
++
++	#define CONFIG_HSE_OSC_SPEED 8000000
++	#define TIM2_CLOCK_SPEED		 48000000
++
++	#define CAN_INTERFACE			 CAN
++	#define CAN_CLOCK_SPEED			 48000000
++	#define NUM_CAN_CHANNEL			 1
++	#define CONFIG_CAN_FILTER		 1
++
++	#define CONFIG_PHY				 1
++	#define CONFIG_PHY_SILENT		 1
++	#define CAN_S_GPIO_Port			 GPIOC
++	#define CAN_S_Pin				 GPIO_PIN_13
++
++	#define LEDRX_GPIO_Port			 GPIOA
++	#define LEDRX_Pin				 GPIO_PIN_0
++	#define LEDRX_Mode				 GPIO_MODE_OUTPUT_OD
++	#define LEDRX_Active_High		 0
++
++	#define LEDTX_GPIO_Port			 GPIOA
++	#define LEDTX_Pin				 GPIO_PIN_1
++	#define LEDTX_Mode				 GPIO_MODE_OUTPUT_OD
++	#define LEDTX_Active_High		 0
++
+ #elif defined(BOARD_candleLight)
+ 	#define USBD_PRODUCT_STRING_FS	 "candleLight USB to CAN adapter"
+ 	#define USBD_MANUFACTURER_STRING "bytewerk"

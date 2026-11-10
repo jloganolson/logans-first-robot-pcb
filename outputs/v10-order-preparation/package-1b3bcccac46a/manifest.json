@@ -1,0 +1,24 @@
+{
+ "status": "PROTOTYPE QUOTE PACKAGE; NOT A PURCHASE OR PRODUCTION APPROVAL",
+ "board_sha256": "1b3bcccac46a0f5773c472aa492ede3c1351764b9f63c53f64ded7864630e90c",
+ "schematic_sha256": "8e5a0f5aa351a442664f9236e835b878100cd6968f3ba837f53e1f2ade5c53aa",
+ "source_v09_board_sha256": "ad206a2e675dba909d7661468f507ba976eb8f9994b74af22e48c716b53a18c3",
+ "audit": "PASS",
+ "bom_lines": 81,
+ "fitted_references": 304,
+ "supplier_codes": 76,
+ "files": {
+  "BOM_JLCPCB.csv": "db2809c51f29e12173ad043b8f3363db07a84d5f750a2b78cc22b65c02ed77e6",
+  "CPL_JLCPCB.csv": "829757eb3bb1c8add6ddbfafe11b01cee595da1ffdd29202ea4d1c5b4c3bb8af",
+  "Robot_PDB_v10_Gerbers.zip": "396aa571149bf70cbaee18c8c29ba0a7aeac7ee50a4dc0286302948e4bf1c815",
+  "STACKUP_REQUIREMENTS.txt": "3860ba60f827166ec6ea6e08f75cbac4c6bd95092d54f92dd2ecb50036936000",
+  "assembly-top.svg": "1d66f5ecbe9764e0b4b6d6428ee195d23844629ed4f6c263c37d7d680d52aaac",
+  "board-bottom.svg": "9a9d4acadacb7831b23c82b699cfa329eb84bf8c3584dbd7f5286a5f56a5bb51",
+  "board-top.svg": "3807e55d364095b2239d3ce237ff95e654ca817109bdeb7f9cf64318ca2b07a8",
+  "export.log": "ced12b1eb45dcc52296ce854ed14d3882f2783c38a97899ec92b2b03213e5e53",
+  "hand-fit-and-harness.csv": "c32adb7dd3edcf1627a5cd75c4f3abdca930016c6f34004deb5ad50c2e19be76",
+  "manufacturing-requirements.json": "aa06fde2164449e0741987369101e74567949e07e9a9c8d84f1a12a84274a9a7",
+  "raw-positions.csv": "3fa7231f3eeb608e52f0a693691b7ffa6ac2fe209c830fd053ae7b22918dc644"
+ },
+ "placement_rotations": "v0.9 starting values except {\"J101\": 180, \"J501\": 180, \"U9902\": 270} degrees added after the factory preview; factory orientation review still required"
+}

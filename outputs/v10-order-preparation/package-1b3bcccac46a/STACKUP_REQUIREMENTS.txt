@@ -1,0 +1,2 @@
+Robot PDB v0.10. 4 layers, 1.6 mm, stackup JLC04161H-7628, 1 oz outer / 0.5 oz inner copper.
+USB 2.0 High-Speed pair is 0.275 mm wide / 0.19 mm gap over 0.2104 mm prepreg. Do not substitute a thinner prepreg.

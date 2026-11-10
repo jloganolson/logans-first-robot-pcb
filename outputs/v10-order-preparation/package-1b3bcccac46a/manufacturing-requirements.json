@@ -1,0 +1,22 @@
+{
+ "board_size_mm": [
+  228.0,
+  195.0
+ ],
+ "layers": 4,
+ "thickness_mm": 1.6,
+ "factory_stackup": "JLC04161H-7628 (factory default; required for Economic assembly)",
+ "specify_stackup": "Yes, JLC04161H-7628",
+ "impedance_control": "No requirement (not purchased)",
+ "outer_copper_oz": 1,
+ "inner_copper_oz": 0.5,
+ "min_via": "0.3mm/(0.4/0.45mm) tier: every via hole is 0.30 mm or larger",
+ "usb_pair": {
+  "high_speed_width_mm": 0.275,
+  "high_speed_gap_mm": 0.19,
+  "reference": "inner ground, 0.2104 mm 7628 prepreg",
+  "note": "upstream pair widened in place from v0.9 0.165/0.300; JLCPCB calculator gives 90 ohm at 0.269/0.175 on this stack; no factory test coupon; Full-Speed pairs unchanged"
+ },
+ "surface_finish": "LeadFree HASL (ENIG acceptable if budget allows)",
+ "assembly": "Economic preferred, top side, 2 of 5 assembled, confirm parts placement, do not auto-confirm production file"
+}

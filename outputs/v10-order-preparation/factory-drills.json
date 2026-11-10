@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "board": "revisions/v0.10/kicad/robot_pdb.kicad_pcb",
+  "sha256": "1b3bcccac46a0f5773c472aa492ede3c1351764b9f63c53f64ded7864630e90c",
+  "holes": 1150,
+  "issues": [],
+  "source": "https://jlcpcb.com/capabilities/pcb-capabilities",
+  "verified": "2026-11-09",
+  "coverage": [
+    "Component PTH annular width",
+    "Round and slotted hole dimensions",
+    "All drill-to-drill capsule distances including same-net holes",
+    "Via drill/land ratio"
+  ],
+  "limitations": [
+    "Via-to-component drill pairs conservatively use 0.45mm; obtain factory disposition if proposing otherwise.",
+    "Pad and hole position/size tolerances still require manufacturer engineering review.",
+    "Native copper DRC and independent signal/reference/thermal checks remain separate."
+  ]
+}

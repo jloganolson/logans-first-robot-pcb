@@ -1,0 +1,40 @@
+"""Render the existing project review documents as a local v0.8 walkthrough."""
+import hashlib,html,json,re
+from pathlib import Path
+from markdown_it import MarkdownIt
+ROOT=Path(__file__).resolve().parents[2];D=ROOT/'docs';O=ROOT/'outputs/v08-order-preparation'
+def esc(x):return html.escape(str(x))
+cost=json.loads((O/'section-cost-screen.json').read_text())
+audit=json.loads((O/'validation.json').read_text()) if (O/'validation.json').exists() else {}
+renderer=MarkdownIt('commonmark',{'html':False}).enable('table')
+style='''body{max-width:1180px;margin:24px auto;padding:0 20px 60px;font:16px/1.5 system-ui,sans-serif;color:#202b30}h1{font-size:30px;line-height:1.2}h2{font-size:23px;border-top:1px solid #bdc6ca;padding-top:20px;margin-top:32px}a{color:#135a7b}nav{display:flex;gap:16px;flex-wrap:wrap;padding:12px 0;border-bottom:1px solid #bdc6ca}table{width:100%;border-collapse:collapse;font-size:14px}td,th{text-align:left;vertical-align:top;padding:8px;border-bottom:1px solid #d1d7da}th{background:#eef2f4}.notice{border:2px solid #926326;padding:12px 16px;background:#fffaf0}summary{cursor:pointer;padding:10px;background:#eef2f4}details{margin:12px 0}img{max-width:100%;height:auto}.small{font-size:13px;color:#48575e}li{margin:7px 0}section,details{scroll-margin-top:18px}.scroll{overflow:auto}@media print{nav{display:none}tr{break-inside:avoid}}'''
+body='''<h1>Robot PDB v0.8 review</h1>
+<div class="notice"><strong>Development review — do not purchase an older factory draft.</strong> Custom USB3 is removed. Wheel braking uses an autonomous onboard clamp, external chassis resistor and thermal cutoff. Final integrated-board checks remain in progress. No payment has been made.</div>
+<nav><a href="#scope">What changed</a><a href="#functions">Connections</a><a href="#cost">Section costs</a><a href="#checks">Checks and holds</a><a href="#review-SERVICE_OFF_v08">OFF controls</a><a href="#details">Detailed evidence</a></nav>
+<section id="scope"><h2>What changed</h2><p>One USB2 connection serves audio, Dynamixel, CAN and PWM. Camera and microphone use Jetson USB3 or an external hub. The custom USB3 hub and its high-current power supply are removed. The candidate is 340 × 230 mm, four layers, nominal 1.6 mm.</p><p>Wheel drivers remain inside the wheels. The board provides CAN and a nominal 22.34 V motor supply. An autonomous 23.x V clamp switches an external 3.3 Ω / 100 W chassis resistor during braking. Its separate normally-closed thermal contact inhibits the converter when hot or disconnected. This lower motor voltage and actual braking performance require bench verification. No $93 module or bidirectional converter is selected.</p><p>The frozen USB3 design remains on <a href="#">codex/usb3-v07-checkpoint</a>; Flipsky is on <a href="#">codex/flipsky-wheels-v06</a>. Current work is on codex/usb2-v08. Remote main has not been replaced with an unfinished checkpoint.</p></section>'''
+body+='<section id="functions">'+renderer.render((D/'CURRENT_FUNCTIONALITY.md').read_text())+'</section>'
+body+='<section id="cost"><h2>Section component costs</h2>'
+body+=f'<p><strong>${cost["catalog_component_total_per_board_usd"]:.2f} per board</strong> at the saved two-board quantity tiers. These are actual catalog allocations for the saved inventory, not an assembled-order quote. Bare PCB, assembly/setup/attrition, external resistor and thermal cutoff, hand-fit parts, wiring, programming, shipping and tax are additional. The resistor listing is $18.91; a verified thermal-cutoff checkout price is still unavailable.</p>'
+body+='<div class="scroll"><table><thead><tr><th>Section</th><th>Fitted parts</th><th>Catalog cost/board</th></tr></thead><tbody>'
+for label,row in cost['functional_groups'].items():body+=f'<tr><td>{esc(label)}</td><td>{row["parts_per_board"]}</td><td>${row["catalog_component_cost_per_board_usd"]:.2f}</td></tr>'
+body+=f'</tbody></table></div><p class="small">Catalog completed {esc(cost["completed_at_utc"])}. Observed stock is not reserved; exact factory matching and attrition remain unconfirmed. Removing a section changes shared quantity tiers and is not guaranteed to save its listed allocation.</p></section>'
+body+='<section id="checks"><h2>Checks and outstanding work</h2><p>Source-cell checks and logical agreement do not establish combined-board routing or electrical qualification. The independent audit below intentionally stays on hold while routing, USB validation or motor energy handling remain unresolved.</p>'
+if audit:
+ pcb=ROOT/'revisions/v0.8/kicad/robot_pdb.kicad_pcb'
+ current=pcb.exists() and hashlib.sha256(pcb.read_bytes()).hexdigest()==audit.get('board_sha256')
+ body+='<p><strong>'+('Latest audit matches this board.' if current else 'Board changed since the last audit; these are checkpoint results and need refresh.')+'</strong></p>'
+ body+='<table><tr><th>Check</th><th>Recorded result</th></tr>'
+ for label,value in [('Overall release status',audit.get('status')),('Schematic / inventory / PCB identity',audit.get('logical_status')),('Component references',audit.get('physical_parts')),('Native physical-rule errors',audit.get('native_physical_errors')),('Unconnected items',audit.get('native_unconnected_items')),('Native warnings',audit.get('native_warnings')),('Factory drill screen',audit.get('factory_drills',{}).get('status'))]:
+  body+=f'<tr><td>{esc(label)}</td><td>{esc(value)}</td></tr>'
+ body+='</table>'
+body+='''<ol><li>Before fabrication: finish integrated routing and run fresh native DRC, schematic/pad, drill, host/local power-isolation and complete USB channel/reference checks. Match the actual assembly parts and review placement.</li><li>Before battery connection: fit the mandatory fuses and bulk capacitors; inspect the master disconnect, harness ratings and delivered cable polarity. Fit the resistor and thermal cutoff before enabling wheel power.</li><li>On the bench: start with current-limited dummy-load rail tests. Check voltages, startup, ripple, load steps, loop margins and temperature before connecting equipment.</li><li>Verify every OFF control and USB host-off/board-off behavior. Program both controllers and test arming, unplug/suspend/reset/watchdog and wheel timeout behavior.</li><li>Before motion: qualify wheel operation at 22.34 V, measured clamp thresholds/overshoot, resistor temperature and thermal inhibition with independent bench protection. The initial 20 J / at least 0.5 s / at least 2 s between stops envelope is a test proposal, not an achieved rating. Account for both wheels, repeated stops, rotation and slopes.</li></ol></section>'''
+names=['V08_SCOPE','V08_BRINGUP_CHECKLIST','MOTOR_RESISTOR_BUILD','GEMINI_v08_RECONCILIATION','USB2_CONTROL_DESIGN','USB2_POWER_BUDGET','USB_VBUS_DETECTOR_REVIEW','USB_FULL_SPEED_LEGACY_REVIEW','SERVICE_OFF_v08','V08_PART_SUBSTITUTIONS','V08_FACTORY_PREFLIGHT','THOR_POWER_CABLE','MASTER_DISCONNECT_SELECTION','DALY_USB_REVIEW']
+body+='<section id="details"><h2>Detailed review evidence</h2>'
+for name in names:
+ text=(D/(name+'.md')).read_text();title=text.splitlines()[0].lstrip('# ')
+ body+=f'<details id="review-{name}"><summary>{esc(title)}</summary>'+renderer.render(text)+'</details>'
+body+='</section><p><a href="PROTOTYPE_v0.7_WALKTHROUGH.html">Archived v0.7 walkthrough</a></p>'
+for name in names:body=body.replace('href="'+name+'.md"','href="#review-'+name+'"')
+body+='''<script>function reveal(){const d=document.getElementById(decodeURIComponent(location.hash.slice(1)));if(d&&d.tagName==='DETAILS')d.open=true;}addEventListener('hashchange',reveal);document.addEventListener('click',e=>{const a=e.target.closest('a[href^="#review-"]');if(a){const d=document.getElementById(a.hash.slice(1));if(d)d.open=true;}});reveal();</script>'''
+(D/'PROTOTYPE_v0.8_WALKTHROUGH.html').write_text('<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Robot PDB v0.8 review walkthrough</title><style>'+style+'</style><main>'+body+'</main></html>')
+print('Built v0.8 review walkthrough')

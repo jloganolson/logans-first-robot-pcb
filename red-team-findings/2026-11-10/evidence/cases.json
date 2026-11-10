@@ -1,0 +1,11 @@
+[
+{"label":"PackA+ J1->J5 switch","net":"PACK_A_POS","src":[["J1","2"]],"snk":[["J5","1"]],"I":30},
+{"label":"PackB+ J4->J5 switch","net":"PACK_B_POS","src":[["J4","2"]],"snk":[["J5","3"]],"I":30},
+{"label":"VBAT J5(both poles)->F1 motor fuse","net":"VBAT","src":[["J5","2"],["J5","4"]],"snk":[["F1","2"]],"I":30},
+{"label":"VBAT J5 pole A only->F1","net":"VBAT","src":[["J5","2"]],"snk":[["F1","2"]],"I":30},
+{"label":"VBAT J5 pole B only->F1","net":"VBAT","src":[["J5","4"]],"snk":[["F1","2"]],"I":30},
+{"label":"VMOT F1->J2","net":"VMOT","src":[["F1","1"]],"snk":[["J2","2"]],"I":30},
+{"label":"GND J2->J1 (one pack A)","net":"GND","src":[["J2","1"]],"snk":[["J1","1"]],"I":30},
+{"label":"GND J2->J4 (one pack B)","net":"GND","src":[["J2","1"]],"snk":[["J4","1"]],"I":30},
+{"label":"GND J2->J1+J4","net":"GND","src":[["J2","1"]],"snk":[["J1","1"],["J4","1"]],"I":30}
+]

@@ -1,0 +1,8 @@
+(footprint "Power_WirePort_P7.2mm" (version 20221018) (generator pcbnew) (layer "F.Cu")
+ (descr "Two 3.0mm finished holes for hand-soldered 12AWG pigtails; external strain relief mandatory; no connector fitted")
+ (attr through_hole)
+ (fp_text reference "J" (at 3.6 -4.5) (layer "F.SilkS") (effects (font (size 1 1) (thickness 0.15))))
+ (fp_text value "12AWG PIGTAIL" (at 3.6 4.5) (layer "F.Fab") (effects (font (size 1 1) (thickness 0.15))))
+ (pad "1" thru_hole circle (at 0 0) (size 6.4 6.4) (drill 3) (layers "*.Cu" "*.Mask") (zone_connect 2))
+ (pad "2" thru_hole circle (at 7.2 0) (size 6.4 6.4) (drill 3) (layers "*.Cu" "*.Mask") (zone_connect 2))
+)

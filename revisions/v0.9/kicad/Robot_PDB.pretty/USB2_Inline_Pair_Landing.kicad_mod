@@ -1,0 +1,7 @@
+(footprint "USB2_Inline_Pair_Landing" (version 20221018) (generator robot_pdb)
+ (layer "F.Cu") (attr smd exclude_from_pos_files exclude_from_bom)
+ (descr "Internal PCB integration pair landing, not a fitted connector; pin1 D+, pin2 D-")
+ (fp_text reference "REF**" (at 0 -1.3) (layer "F.Fab") (effects (font (size .6 .6) (thickness .1))))
+ (fp_text value "USB2 LINK" (at 0 1.3) (layer "F.Fab") (effects (font (size .6 .6) (thickness .1))))
+ (pad "1" smd rect (at 0 -.25) (size .6 .3) (layers "F.Cu" "F.Mask"))
+ (pad "2" smd rect (at 0 .25) (size .6 .3) (layers "F.Cu" "F.Mask")))

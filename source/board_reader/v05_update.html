@@ -1,0 +1,43 @@
+<section id="v05-update" aria-labelledby="v05-update-title" style="margin:28px 0 48px;padding:clamp(16px,3vw,28px);border:2px solid #225b59;border-radius:8px;background:#f4f8f6">
+<p style="font-size:14px;margin-top:0"><strong>Current project update · November 9, 2026</strong></p>
+<h2 id="v05-update-title" style="margin:8px 0 18px;padding:0;border:0;font-size:32px">Start here: v0.5 and the automated review</h2>
+<p>The illustrated course below teaches the <strong>v0.4.1 board</strong>. The current hardware review is <strong>v0.5</strong>. This update brings the newer changes and the fabrication workflow into the same reading guide. The prototype order remains on hold while the switch, inductor and power-path questions are resolved.</p>
+<p><strong>For your first read:</strong> read this update, then <a href="#lesson-2">Wade</a> and <a href="#lesson-5">Swim</a> for the overview. Visit the <a href="#lesson-39">assembly chapter</a> to understand how a correct circuit can still order the wrong physical part. The interactive board reader and older board pictures continue to show v0.4.1; use the differences below when thinking about v0.5.</p>
+
+<h3 style="font-size:25px">What changed on the board?</h3>
+<div class="table-scroll"><table>
+<thead><tr><th>Area</th><th>Current v0.5 arrangement</th><th>What it means</th></tr></thead>
+<tbody>
+<tr><td>Battery inputs and switch</td><td>J1 accepts pack A and J4 accepts pack B. SW1 has one handle operating two contacts, one for each pack positive.</td><td>Each positive is opened before the feeds meet at VBAT. The grounds stay connected. Turning ON directly parallels the packs; this circuit does not manage unequal pack voltages.</td></tr>
+<tr><td>Fuses</td><td>After the switch, F1 feeds the wheel branch and F2 feeds the converter branch.</td><td>These branch fuses protect different downstream paths. Pack-side leads still need their own protection. The blade fuse elements are separate from the board-mounted holders.</td></tr>
+<tr><td>Servo connections</td><td>J301/J302 are the two XL330 chain sockets at about 5 V; J401 is the XL430 chain socket at 10.8 V.</td><td>There are three sockets, replacing the older seven-socket layout. A chain's first connector and cable carry the combined downstream current. The two XL330 sockets share one converter's current budget.</td></tr>
+<tr><td>Physical fit</td><td>The outline is 228 × 108 mm. The switch and battery connectors change the lower-left layout.</td><td>The old pictures cannot confirm the new switch, cable exits or enclosure clearance.</td></tr>
+</tbody></table></div>
+
+<h3 style="font-size:25px">What the automation now does</h3>
+<p>KiCad is the design program. Its <strong>command-line tools</strong> let a script ask it to export files without clicking through menus. For this project, the script uses the existing KiCad 7.0.11 runtime, checks which source files it is reading, makes a working copy, refills the copper zones and runs a fresh design-rule check through KiCad's Python interface.</p>
+<div class="table-scroll"><table>
+<thead><tr><th>Output</th><th>What you learn from it</th><th>Limit of that evidence</th></tr></thead>
+<tbody>
+<tr><td>Source hashes and parts audit</td><td>The input board and schematic match the handoff. The review inventory flags FB1, FB2 and SW1.</td><td>A hash identifies a file; it does not establish electrical correctness. The review inventory masks the bead's wrong code and is not an assembly BOM.</td></tr>
+<tr><td>Fresh DRC report</td><td>The tested run reproduced <strong>zero reported errors, zero unconnected pads and 208 warnings</strong>, including one copper sliver.</td><td>DRC checks CAD rules and connectivity. It does not qualify component ratings, loaded temperature, switch operation or physical fit. Warnings still need review.</td></tr>
+<tr><td>Gerbers and drills</td><td>The four copper layers, mask, paste, silkscreen, outline and hole files can be regenerated from the same working copy.</td><td>These describe what the factory would fabricate. The plots and drills still need to be inspected together.</td></tr>
+<tr><td>Raw placements and schematic netlist</td><td>There is a fresh list of component positions and a machine-readable schematic connection list.</td><td>The placements have not been corrected and approved for JLC assembly. Exporting a netlist is not a schematic-to-PCB comparison.</td></tr>
+</tbody></table></div>
+<p>The workflow is set up and has run successfully. <strong>ERC (the schematic electrical-rule check), a fresh independent net comparison, an approved assembly BOM, corrected placements and a new JLC quote remain outstanding.</strong> The earlier v0.5 validation reported agreement across 126 multi-pin nets; this export run did not repeat that comparison.</p>
+
+<h3 style="font-size:25px">What still stands between this and an order?</h3>
+<ol>
+<li><strong>Choose the actual switch, SW1.</strong> Its eight-hole footprint is provisional. We need an orderable part whose terminals and panel mounting fit, and whose DC switching rating covers the 33.6 V packs, load current and charging of the board's capacitors. A family datasheet alone does not settle the exact configuration.</li>
+<li><strong>Resolve the Thor inductor, L1.</strong> The proposed ZE part has an open 30 V family-limit question during startup and a recommended land pattern that differs from the board. This needs a qualified part or manufacturer evidence plus a matching footprint.</li>
+<li><strong>Check one-pack operation and correct the bead selection.</strong> If one BMS opens, the other pack and its entire path must carry the robot. Review copper, returns, connectors, switch contacts and fuses against that load. FB1/FB2 still contain the wrong C1015 supplier code in the generator; the candidate replacement has not been selected or qualified.</li>
+<li><strong>Prepare and inspect a fresh assembly quote.</strong> Once the design changes are settled, regenerate from the reviewed sources, reconcile the BOM and placements, and inspect the actual Gerbers and JLC placement preview. The existing cart and older Gerber ZIP describe earlier hardware.</li>
+</ol>
+<p><strong>Why a clean check does not settle everything:</strong> the design can connect every pad correctly while specifying an inductor with the wrong land pattern or a bead with the wrong supplier code. Those are different questions. The useful learning goal is to distinguish “the drawing connects correctly,” “the selected part fits and is rated for this job,” and “the built board behaves correctly under load.”</p>
+<details><summary><strong>If you want to rerun the review</strong></summary>
+<p>From the project folder, choose a new output directory:</p>
+<pre><code>bash source/fabrication/run_v05_review.sh review-export --output /tmp/robot-pdb-next-review</code></pre>
+<p>The detailed instructions are in <code>docs/FAB_AUTOMATION.md</code>. The tested project outputs are in <code>outputs/fabrication-v05-review/</code>. The script keeps the design sources unchanged and refuses an output folder that already contains files.</p>
+</details>
+<p style="font-size:14px;margin-bottom:0">Evidence: v0.5 fabrication handoff and revision notes; source-hash audit; the tested KiCad 7.0.11 command log and DRC report. This update summarizes that review and does not qualify the hardware.</p>
+</section>

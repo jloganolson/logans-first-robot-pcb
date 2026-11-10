@@ -1,0 +1,81 @@
+{
+ "status": "SAVED_UNPAID_CART_OWNER_PURCHASE_AND_MANUFACTURING_APPROVAL_PENDING",
+ "observed": "2026-11-10",
+ "cart_item_name": "Robot_PDB_v10_Gerbers_Y5",
+ "cart_url": "https://cart.jlcpcb.com/shopcart/cart",
+ "board_sha256": "1b3bcccac46a0f5773c472aa492ede3c1351764b9f63c53f64ded7864630e90c",
+ "package_directory": "outputs/v10-order-preparation/package-1b3bcccac46a",
+ "pcb_quantity": 5,
+ "assembled_quantity": 2,
+ "assembly_type": "Economic",
+ "assembly_side": "Top",
+ "factory_detected": "4 layer board of 195x228 mm",
+ "pcb_options": {
+  "stackup": "JLC04161H-7628 (specified)",
+  "impedance_control": "No requirement",
+  "outer_copper": "1 oz",
+  "inner_copper": "0.5 oz",
+  "surface_finish": "LeadFree HASL",
+  "min_via_tier": "0.3mm/(0.4/0.45mm), auto-selected by the factory; smallest drill in the files is 0.30 mm",
+  "via_covering": "Plugged",
+  "confirm_production_file": "Yes, do not confirm automatically"
+ },
+ "pcb_usd": {
+  "engineering_fee": 25.0,
+  "via_covering": 0.0,
+  "surface_finish": 6.1,
+  "board": 27.5,
+  "confirm_production_file": 1.05,
+  "total": 59.65
+ },
+ "assembly_usd": {
+  "setup": 8.24,
+  "stencil": 1.55,
+  "panel": 0.0,
+  "large_size": 0.0,
+  "components_76_items": 113.4,
+  "extended_components_fee": 101.97,
+  "smt_assembly": 3.44,
+  "confirm_parts_placement": 0.45,
+  "hand_soldering_labor": 3.61,
+  "manual_assembly": 1.01,
+  "nitrogen_reflow": 0.86,
+  "total": 234.53
+ },
+ "merchandise_usd": 294.18,
+ "target_usd": 300.0,
+ "margin_usd": 5.82,
+ "shipping_estimate_usd_pcb_only_screen": 31.69,
+ "bom": {
+  "rows_detected": 81,
+  "rows_confirmed": 81,
+  "through_hole_connectors_selected_manually": [
+   "J13",
+   "J14",
+   "J101",
+   "J501",
+   "J301",
+   "J302",
+   "J401",
+   "J402"
+  ]
+ },
+ "confirm_parts_placement": "Yes, do not confirm automatically",
+ "product_description": "Research/Education/DIY/Entertainment - DIY Hobby Circuit Board",
+ "options_priced_but_not_taken_usd": {
+  "ENIG_instead_of_LeadFree_HASL": 15.6,
+  "JLC04161H-3313_stackup": "no PCB surcharge but the order flow states it does not support Economic assembly"
+ },
+ "v09_cart_entry": "Robot_PDB_v09_Gerbers_Y2 left untouched ($234.00 + $301.15)",
+ "payment_made": false,
+ "purchase_approved": false,
+ "hardware_tested": false,
+ "placement_rotation_review_complete": false,
+ "superseded_cart_entry": "Robot_PDB_v10_Gerbers_Y4 ($294.27) and Robot_PDB_v10_Gerbers_Y3 ($289.41) are superseded and still in the cart; remove on the owner's say-so",
+ "placement_corrections_after_preview": {
+  "J101": 180,
+  "J501": 180,
+  "U9902": 270
+ },
+ "note_extended_fee": "R13 moved from an Extended to a Basic part but the Extended components fee stayed $101.97, so the 180 ohm part was evidently not being charged a feeder fee"
+}

@@ -1,0 +1,28 @@
+IMPORTANT TOOL RESTRICTION: you are running headless. Do NOT run shell or terminal commands of any kind; they will be denied and the whole review will be lost. Use only your file reading, directory listing and text search tools. The .kicad_pcb file is about 6 MB of text: search it for specific references rather than reading it whole. Do all calculations yourself in your reasoning.
+
+You are an independent hardware reviewer. This is a READ-ONLY review: do not modify, create or delete any file, do not run anything that writes into the repository, and do not touch any website or shopping cart.
+
+Subject: a value-engineered PCB candidate "v0.10" of a robot power distribution board, derived by script from a reviewed "v0.9" board in order to hit a $300 JLCPCB order (5 boards, 2 assembled). An unpaid factory cart entry at $289.41 already exists. Your job is to find reasons NOT to order it, before the owner pays.
+
+Start with docs/HANDOFF_V10_VALUE_ENGINEERED.md. It lists every change and a ranked "Where to push hardest" list. Then read whatever you need, in particular:
+- source/generator/build_v10.py (the derivation script, including the embedded L1 footprint and the USB widening loop)
+- revisions/v0.10/derivation.json (recorded changes)
+- source/fabrication/audit_v10.py and outputs/v10-order-preparation/audit-v10.json (the delta/identity audit)
+- source/fabrication/export_v10.py and outputs/v10-order-preparation/package-1c92e0044935/ (BOM_JLCPCB.csv, CPL_JLCPCB.csv, manufacturing-requirements.json)
+- outputs/v10-order-preparation/factory-quote.json
+- red-team-findings/2026-11-10/FINDINGS.md (earlier analysis; note its "superseded" banner)
+- revisions/v0.10/kicad/robot_pdb.kicad_sch and robot_pdb.kicad_pcb for circuit facts (for example the LM5146 Thor buck around U2, Q2, Q3, L1, R13, C20-C27; the USB path J10 -> U11 -> U9902 -> U10)
+- docs/CURRENT_FUNCTIONALITY.md and docs/V09_USB_PROTOTYPE_REVIEW.md for the locked interfaces and inherited USB risks
+
+Please examine, with your own reasoning and calculations where you can, and say clearly when you could not verify something:
+1. Thor 24.33 V / 8 A buck: is Bourns SRP1265A-100M (10 uH, Irms 10 A, Isat 15.5 A, DCR 13.2 mOhm typ / 16.5 max) an acceptable replacement for Coilcraft XAL1510-103 (22 A / 26.3 A, 9 mOhm)? Work out ripple, peak current, the LM5146 current-limit point implied by R13 and the low-side MOSFET on-resistance over temperature, and inductor loss. Is the non-automotive LM5146RGYR a true drop-in for LM5146QRGYRQ1?
+2. The L1 footprint: SRP1265A on retained XAL1510 copper lands extended 0.25 mm outward, with 3.1 x 5.0 mm mask/paste openings centred at +/-5.55 mm. Does it match the Bourns recommended layout (14.2 mm overall, 8.0 mm gap, 5.0 mm pad width)? Any assembly risk from mask-defined joints on large copper?
+3. USB 2.0 High-Speed upstream pair widened in place from 0.165 mm to 0.29 mm at constant 0.465 mm pitch (gap 0.175 mm) for JLC04161H-7628 (1 oz outer, 0.2104 mm 7628 prepreg, Er about 4.4). Is about 85-92 ohm differential a fair estimate? Is the remaining ~7 mm of narrow, unequal-width segments a real concern at 480 Mbit/s over roughly 135 mm total?
+4. The claim that 0.20 mm via holes with 0.45 mm lands fall in JLCPCB's no-surcharge tier for 4-layer boards, and whether a 0.125 mm annular ring and 0.15 mm copper clearance are safe for 1 oz JLCPCB production.
+5. Moving from 2 oz / 1 oz to 1 oz / 0.5 oz copper: thermal consequences for the six TPS54560 regulators, the LM5146 stage and the TPA3118 amplifier, given about 10 A motor passthrough and about 8 A Thor load.
+6. FB2 change to GZ1608D601TF (600 ohm, 200 mA, 450 mOhm) on the CM108B analog supply.
+7. Lead-free HASL and JLCPCB Economic assembly (fixed 255 C reflow, no solder paste inspection) for the 0.5 mm pitch QFN/UQFN/LQFP parts and the USB-C connector on this board.
+8. Weaknesses in the audit method itself: what could audit_v10.py miss that would still produce a bad board (for example zone fill differences, removed stitching vias, the lowered clearance rule, silkscreen near the new edge, mounting holes)?
+9. Anything in the BOM/CPL or the factory options that looks wrong or inconsistent with the documents.
+
+Report format: a short verdict (order / order with named changes / do not order), then findings ordered by severity. For each finding give: severity (blocker / should fix / note), the evidence with file paths or part numbers, your calculation or reasoning, and a concrete recommended action. Separate what you verified from what you inferred. Be specific and concise; do not restate the handoff.

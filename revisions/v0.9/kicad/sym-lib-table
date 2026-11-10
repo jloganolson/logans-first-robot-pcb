@@ -1,0 +1,3 @@
+(sym_lib_table
+  (lib (name "pdb")(type "KiCad")(uri "${KIPRJMOD}/pdb.kicad_sym")(options "")(descr "Robot PDB custom symbols"))
+)

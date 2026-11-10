@@ -1,0 +1,180 @@
+{
+  "schema_version": 1,
+  "status": "Checked candidate reservation; actual CAM_TX routing and full-board replay remain required. This candidate was found after temporarily removing old CAM_TX B main routes in memory. No source-cell copper was changed.",
+  "coordinate_frame": {
+    "type": "USB3 cell local millimetres",
+    "main_board_translation_mm": [
+      115,
+      160
+    ],
+    "cell_size_mm": [
+      140,
+      100
+    ]
+  },
+  "source_cell_board_sha256": "8be273596d9f673942c530841cc58ac1a2c7b26a8c93c64fd8de5be1928366f6",
+  "source_candidate_sha256": "cf2d645bfaeb2004eeceb8ffc0888b038641ba36dc5fcc12cab81e243e9723aa",
+  "signal": "USB2 HighSpeed480Mb/s child hub link",
+  "leg_width_mm": 0.204,
+  "nominal_pair_gap_mm": 0.16,
+  "ordinary_signal_or_positive_power_keepout_mm": 0.762,
+  "construction_margin_mm": 0.005,
+  "bounded_package_exception": {
+    "reference": "U500",
+    "body_box_mm": [
+      61.5,
+      53.5,
+      68.5,
+      60.5
+    ],
+    "body_expansion_mm": 3,
+    "box_mm": [
+      58.5,
+      50.5,
+      71.5,
+      63.5
+    ],
+    "ordinary_clearance_mm": 0.2,
+    "pair_mate_clearance_mm": 0.16,
+    "applies_only_when": "Both closest copper points lie inside this physical box and both nets are actually connected to U500. GND uses native manufacturing clearance.",
+    "qualification": "Explicit prototype package-escape SI/EMI bench qualification; exact actual lengths/gaps must be reported after final replay."
+  },
+  "legs": [
+    {
+      "net": "HUB_CHILD_DP",
+      "layer": "B.Cu",
+      "width_mm": 0.204,
+      "points_mm": [
+        [
+          81.35,
+          30
+        ],
+        [
+          81.182,
+          31.0
+        ],
+        [
+          81.182,
+          49.575387
+        ],
+        [
+          77.325387,
+          53.432
+        ],
+        [
+          76.325387,
+          53.432
+        ],
+        [
+          74.182,
+          55.575387
+        ],
+        [
+          74.182,
+          58.325387
+        ],
+        [
+          72.825387,
+          59.682
+        ],
+        [
+          70.941675,
+          59.682
+        ],
+        [
+          70.801675,
+          59.582
+        ],
+        [
+          70.61,
+          59.582
+        ],
+        [
+          69.75,
+          59.6
+        ]
+      ],
+      "drawn_length_mm": 36.85084454115048
+    },
+    {
+      "net": "HUB_CHILD_DM",
+      "layer": "B.Cu",
+      "width_mm": 0.204,
+      "points_mm": [
+        [
+          80.65,
+          30
+        ],
+        [
+          80.818,
+          31.0
+        ],
+        [
+          80.818,
+          49.424613
+        ],
+        [
+          77.174613,
+          53.068
+        ],
+        [
+          76.174613,
+          53.068
+        ],
+        [
+          73.818,
+          55.424613
+        ],
+        [
+          73.818,
+          58.174613
+        ],
+        [
+          72.674613,
+          59.318
+        ],
+        [
+          71.058325,
+          59.318
+        ],
+        [
+          70.918325,
+          59.218
+        ],
+        [
+          70.61,
+          59.218
+        ],
+        [
+          69.87,
+          59.2
+        ]
+      ],
+      "drawn_length_mm": 36.12777997517902
+    }
+  ],
+  "existing_fine_via_landings": [
+    {
+      "net": "HUB_CHILD_DP",
+      "position_mm": [
+        69.75,
+        59.6
+      ],
+      "diameter_mm": 0.25,
+      "drill_mm": 0.15,
+      "pin": "U500.1"
+    },
+    {
+      "net": "HUB_CHILD_DM",
+      "position_mm": [
+        69.87,
+        59.2
+      ],
+      "diameter_mm": 0.25,
+      "drill_mm": 0.15,
+      "pin": "U500.2"
+    }
+  ],
+  "new_vias_added_by_candidate": 0,
+  "limits": "Reservation is geometry, not fabrication approval. Final main-board native DRC, exact source inventory,30/30+8/8 connectivity, complete-channel length/skew/reference/stub and isolation gates remain required."
+}
