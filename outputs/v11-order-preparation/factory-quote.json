@@ -1,5 +1,8 @@
 {
- "status": "SAVED_UNPAID_CART_OWNER_PURCHASE_AND_MANUFACTURING_APPROVAL_PENDING",
+ "status": "CART_ENTRY_SUPERSEDED_DO_NOT_ORDER_CORRECTED_PACKAGE_NOT_UPLOADED",
+ "superseded_note": "Everything below describes cart entry Robot_PDB_v11_Gerbers_Y8, made from board 9e2ac58e2b29. A fabrication review on 2026-11-10 found a 0.37 mm neck in the +5V_SRV copper feeding J301 and J302 in that build. The corrected board is 494e931955b1 (package outputs/v11-order-preparation/package-494e931955b1). Its BOM, placement file and hand-fit list are byte-identical to the Y8 package; only copper and drill files differ (16 added vias, one added In2 zone). It has not been uploaded or quoted. The Y8 package directory was removed from the working tree; it is in git at commit d5d6725.",
+ "current_board_sha256": "494e931955b16b8dfd104733f677654027731623739dc754a6e77bf2939baaf2",
+ "current_package_directory": "outputs/v11-order-preparation/package-494e931955b1",
  "observed": "2026-11-10",
  "cart_item_name": "Robot_PDB_v11_Gerbers_Y8",
  "cart_url": "https://cart.jlcpcb.com/shopcart/cart",

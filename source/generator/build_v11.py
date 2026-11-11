@@ -349,7 +349,7 @@ def main(stage='all'):
   v=p.PCB_VIA(b);v.SetPosition(V(x,y));v.SetWidth(MM(size[0]));v.SetDrill(MM(size[1]));v.SetNet(b.FindNet(net));b.Add(v);rt._index=None;added_vias[net]+=1;return True
  # servo 5 V: under the buck output, along the bottom edge to the three headers, and under the buffer. It no longer
  # lies under the fused-input copper or the regulator's feedback parts.
- z5=[(6.0,112.6),(33.5,112.6),(33.5,149.2),(86.5,149.2),(86.5,112.6),(Bb[0]-1.2,112.6),(Bb[0]-1.2,144.2),(99.5,144.2),(99.5,H-.6),(6.0,H-.6)]
+ z5=[(6.0,112.6),(33.5,112.6),(33.5,149.2),(86.5,149.2),(86.5,112.6),(Bb[0]-1.2,112.6),(Bb[0]-1.2,140.8),(99.5,140.8),(99.5,H-.6),(6.0,H-.6)]
  zone('PWM_5V',p.In2_Cu,z5,3);planes.append(dict(net='PWM_5V',layer='In2.Cu',outline=z5,purpose='servo 5 V from the buck to the buffer and the three headers'))
  zs=[(34.3,112.6),(85.7,112.6),(85.7,148.4),(34.3,148.4)]
  zone('GND',p.In2_Cu,zs,2);planes.append(dict(net='GND',layer='In2.Cu',outline=zs,purpose='ground under the servo regulator and its fused input'))
@@ -382,6 +382,14 @@ def main(stage='all'):
  # XL330 5 V down to the bottom-edge plugs on B.Cu; XL430 10.8 V around the servo controller on In2
  z5s=[(100.5,103.0),(126.8,103.0),(126.8,H-.6),(100.5,H-.6)]
  zone('+5V_SRV',p.B_Cu,z5s,6);planes.append(dict(net='+5V_SRV',layer='B.Cu',outline=z5s,purpose='XL330 5 V to J301 and J302 on the bottom edge'))
+ # The B.Cu pour alone is not enough: IO_PWM3_OUT crosses it completely on B.Cu on its way to J7006 (and IO_SERVO_ARM
+ # most of it), which left one 0.37 mm neck feeding both plugs (found by the fabrication review of 9e2ac58e2b29).
+ # A second 5 V plane on In2 under the plugs reaches both plug pins directly (they are through-hole), and a via
+ # field joins it to the B.Cu pour above the crossing track. PWM_5V on In2 was pulled back to y = 140.8 to make room.
+ z5i=[(100.5,141.4),(126.5,141.4),(126.5,H-.6),(100.5,H-.6)]
+ zone('+5V_SRV',p.In2_Cu,z5i,6);n=sum(via('+5V_SRV',101.3+1.2*i,y) for i in range(15) for y in (142.3,143.3))
+ planes.append(dict(net='+5V_SRV',layer='In2.Cu',outline=z5i,purpose='second XL330 5 V path under the plugs, bypassing the signal tracks that cross the B.Cu pour; %d vias join it to the B.Cu pour'%n))
+ assert n>=10,'too few 5 V bypass vias: %d'%n
  n=sum(via('+12V_SRV',152.0+1.5*i,y) for i in range(9) for y in (103.2,108.6))
  z12=[(150.0,102.0),(167.9,102.0),(167.9,110.9),(183.3,110.9),(183.3,139.5),(212.0,139.5),(212.0,H-.6),(168.9,H-.6),(168.9,115.4),(150.0,115.4)]
  zone('+12V_SRV',p.In2_Cu,z12,6);planes.append(dict(net='+12V_SRV',layer='In2.Cu',outline=z12,purpose='XL430 10.8 V to J401 and J402 on the bottom edge; %d vias from the existing B.Cu pour'%n))

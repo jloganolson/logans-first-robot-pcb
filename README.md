@@ -7,8 +7,10 @@ built yet**. I'm publishing it to get it reviewed before I spend money on it.
 
 > **Status (10 November 2026): not ordered.** The current revision is
 > **v0.11**: 228 × 155 mm, every plug on a board edge, fully labelled. An
-> unpaid JLCPCB quote exists at $321.20 for five boards with two assembled.
-> The final layout has not been independently reviewed (see
+> unpaid JLCPCB quote exists at $321.20 for five boards with two assembled,
+> but it was made from a build in which a review found a copper fault (a
+> 0.37 mm neck feeding the XL330 plugs). The files here hold the corrected
+> build, which has not been uploaded, quoted or independently reviewed (see
 > [Open questions](#open-questions)). Nothing here has been measured on hardware.
 
 ![Top copper and silkscreen of the v0.11 board.](renders/board-top.png)

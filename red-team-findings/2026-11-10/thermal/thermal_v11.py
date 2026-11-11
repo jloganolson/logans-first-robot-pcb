@@ -38,6 +38,11 @@ def copper(layer):
 CU={l:copper(l) for l in LAY}
 def buck(I,vout,dcr,vin=30.0,fsw=500e3):
     D=vout/vin;return dict(ic=I*I*.092*1.3*D+.5*vin*I*20e-9*fsw+vin*.00015,diode=.55*I*(1-D),ind=I*I*dcr*1.2)
+def q1_loss(thor_a,rails,vin=30.0):
+    # Q1 carries the whole electronics branch: Thor plus every regulator's input power (90% efficiency assumed).
+    # Until the fabrication review of 9e2ac58e2b29 this used a fixed 45 W for the regulators in every case.
+    amps=(24.33*thor_a/.95+sum(I*vo for I,vo in rails)/.90)/vin
+    return amps**2*.004*1.3
 def sources(thor_a=8.0,vin=30.0):
     s={}
     D=24.33/vin
@@ -45,15 +50,14 @@ def sources(thor_a=8.0,vin=30.0):
     s['Q3']=thor_a**2*.0034*1.3*(1-D)+.9*thor_a*2*30e-9*200e3+.15
     s['L1']=(thor_a**2+.9)*.0086*1.3+.2
     s['U2']=vin*.015
-    total_in=(24.33*thor_a/.95+45)/vin
-    s['Q1']=total_in**2*.004*1.3
     # rail, IC, diode, inductor, load A, Vout, inductor DCR
     for name,(u,dd,l,I,vo,dcr) in dict(pi_spare_5V=('U3','D101','L2',1.0,5.0,.0212),usb_5V=('U4','D201','L3',.6,5.0,.0212),xl330_5V=('U5','D301','L4',2.0,5.0,.0212),
         xl430_10V8=('U6','D401','L5',2.0,10.8,.0332),aux_11V7=('U7','D501','L6',4.0,11.7,.0332),mg90s_5V=('U7003','D7101','L7002',1.0,5.0,.0212)).items():
         b=buck(I,vo,dcr,vin);s[u]=b['ic'];s[dd]=b['diode'];s[l]=b['ind']
+    s['Q1']=q1_loss(thor_a,[(1.0,5.0),(.6,5.0),(2.0,5.0),(2.0,10.8),(4.0,11.7),(1.0,5.0)],vin)
     s['U13']=1.0;s['U12']=.25;s['U10']=.15;s['U7002']=.1
     # copper loss in the new runs to the edge plugs (hand-estimated resistance x load current squared)
-    s['RUN_THOR']=thor_a**2*.002;s['RUN_XL430']=2.0**2*.0065;s['RUN_XL330']=2.0**2*.001
+    s['RUN_THOR']=thor_a**2*.002;s['RUN_XL430']=2.0**2*.0065;s['RUN_XL330']=2.0**2*.002
     return s
 def solve(th,h_side,src):
     g=sum(CU[l]*KCU*th[l] for l in LAY)+KFR4*TFR4         # W/K per square
@@ -75,7 +79,8 @@ def full_load():
     s=sources(8.0)
     for l,(I,vo,dcr,u,dd) in FULL.items():
         b=buck(I,vo,dcr);s[u]=b['ic'];s[dd]=b['diode'];s[l]=b['ind']
-    s['RUN_XL430']=5.0**2*.0065;s['RUN_XL330']=5.0**2*.001
+    s['Q1']=q1_loss(8.0,[(I,vo) for I,vo,*_ in FULL.values()]+[(.6,5.0)])
+    s['RUN_XL430']=5.0**2*.0065;s['RUN_XL330']=5.0**2*.002
     return s
 for case,thor in (('Thor 8 A',8.0),('Thor 5.4 A (130 W)',5.4),('Every output at its rated current',-1)):
     src=sources(thor) if thor>0 else full_load();thor=abs(thor) if thor>0 else 8.0001

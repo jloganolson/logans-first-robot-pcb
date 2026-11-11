@@ -122,6 +122,11 @@ for f in new.GetFootprints():
    if q.GetAttribute()!=p.PAD_ATTRIB_NPTH and f.GetReference()!='J10' and not(mm(b.GetLeft())>=.2 and mm(b.GetTop())>=.2 and mm(b.GetRight())<=W-.2 and mm(b.GetBottom())<=H-.2):outside.append((f.GetReference(),q.GetNumber()))
 check(not outside,'copper inside outline',items=outside[:20])
 
+# power pours: no hair-width neck between a regulator and its plug (DRC cannot see this)
+sys.path.insert(0,str(Path(__file__).parent));import pour_width
+necks=pour_width.check_board(new);facts['power_pour_min_width']=necks
+check(all(n['ok'] for n in necks),'every power run has a path at least its minimum width',failed=[n for n in necks if not n['ok']])
+
 # native DRC produced by build_v11
 rpt=(ROOT/'revisions/v0.11/drc.rpt').read_text();kinds=collections.Counter(re.findall(r'^\[(\w+)\]',rpt,re.M))
 base=collections.Counter(re.findall(r'^\[(\w+)\]',(ROOT/'revisions/v0.10/drc.rpt').read_text(),re.M))

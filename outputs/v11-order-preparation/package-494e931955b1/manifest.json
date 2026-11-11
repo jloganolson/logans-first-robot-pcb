@@ -1,6 +1,6 @@
 {
  "status": "PROTOTYPE QUOTE PACKAGE; NOT A PURCHASE OR PRODUCTION APPROVAL",
- "board_sha256": "9e2ac58e2b295c252fd9d9d2044a3d4543f521787b17a18788caf1f443d97d41",
+ "board_sha256": "494e931955b16b8dfd104733f677654027731623739dc754a6e77bf2939baaf2",
  "schematic_sha256": "796e3c90f13551d4dbf25653e2dac8b89b01bb1197eefad7d2f325efe3bfa65f",
  "source_v10_board_sha256": "1b3bcccac46a0f5773c472aa492ede3c1351764b9f63c53f64ded7864630e90c",
  "audit": "PASS",
@@ -10,12 +10,12 @@
  "files": {
   "BOM_JLCPCB.csv": "b3b4eb51b2721b4b44424afcd6de7f828c3bd71336c9d195bc1825052057041e",
   "CPL_JLCPCB.csv": "b6f25d68fe5f373fef4df9bf65dc6da9f249eb6e6c2237445731f50e4a760150",
-  "Robot_PDB_v11_Gerbers.zip": "5acf3fa4cb0dfa197535fcb859254eb6fd5f5ce2c9171ce0c930c7a1b1e468e2",
+  "Robot_PDB_v11_Gerbers.zip": "56d338e3145991e4104a636a7f839b584c7343a0a8f5157b7b6976fb40034ab3",
   "STACKUP_REQUIREMENTS.txt": "0b8bdbfd483ad540654f02e396789d0f09c0f943e252e47ae0065f822e02f7fd",
-  "assembly-top.svg": "fb0a89db6bdc81de581b1a82ff9b91951cbb30dc1653f3b73a266b737d73e548",
-  "board-bottom.svg": "31ba50fc5bfba517292f3754123414382848b2b049256bd4c5a26885025561c8",
-  "board-top.svg": "b3a166791ea92eb407ca3101db9bd9de205d1fb9bc95d441d0cce2e3b8d4dda7",
-  "export.log": "b994720b081360450d658219b8db49bd9e81e24aae01adf44ca2e68ea6b28b24",
+  "assembly-top.svg": "a53513f239fba62d2d42a89c30a91292eb4f73e0f508e26662a1731607c4a5a1",
+  "board-bottom.svg": "0a69da61bd5a8fefaa8b9ade16cc5b7046598233ad146f8a6bfbc46ce400b345",
+  "board-top.svg": "aeefea32523be0c6dc04c5a806988e32446f019358c912865f698f37747af691",
+  "export.log": "d1084560c50617cf99fef83efe63450a74c5780ddb579cc31826c5972a7365b0",
   "hand-fit-and-harness.csv": "c32adb7dd3edcf1627a5cd75c4f3abdca930016c6f34004deb5ad50c2e19be76",
   "manufacturing-requirements.json": "9a1620c990d8d248181e0625c087147b3527aadf1cfc318c241d0931ce8a1964",
   "raw-positions.csv": "e1d560ab474d6971f6698b311198173c3600d36b5e158d1d38358dfff59b1675"

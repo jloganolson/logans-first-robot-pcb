@@ -1,6 +1,6 @@
 {
  "status": "PASS",
- "board_sha256": "9e2ac58e2b295c252fd9d9d2044a3d4543f521787b17a18788caf1f443d97d41",
+ "board_sha256": "494e931955b16b8dfd104733f677654027731623739dc754a6e77bf2939baaf2",
  "source_board_sha256": "1b3bcccac46a0f5773c472aa492ede3c1351764b9f63c53f64ded7864630e90c",
  "outline_mm": [
   228.0,
@@ -63,9 +63,9 @@
   },
   "zones": {
    "v10": 80,
-   "v11": 85,
+   "v11": 86,
    "removed": 15,
-   "added": 20
+   "added": 21
   },
   "smallest_hole_to_edge_wall_mm": [
    [
@@ -90,6 +90,52 @@
    -0.05,
    228.1,
    155.1
+  ],
+  "power_pour_min_width": [
+   {
+    "net": "+5V_SRV",
+    "source": "L4",
+    "loads": [
+     "J301",
+     "J302"
+    ],
+    "min_width_mm": 2.0,
+    "ok": true,
+    "not_reached": []
+   },
+   {
+    "net": "+12V_SRV",
+    "source": "L5",
+    "loads": [
+     "J401",
+     "J402"
+    ],
+    "min_width_mm": 2.0,
+    "ok": true,
+    "not_reached": []
+   },
+   {
+    "net": "+24V",
+    "source": "L1",
+    "loads": [
+     "J3"
+    ],
+    "min_width_mm": 1.5,
+    "ok": true,
+    "not_reached": []
+   },
+   {
+    "net": "PWM_5V",
+    "source": "L7002",
+    "loads": [
+     "J7004",
+     "J7005",
+     "J7006"
+    ],
+    "min_width_mm": 1.5,
+    "ok": true,
+    "not_reached": []
+   }
   ],
   "native_drc": {
    "categories": {

@@ -1,27 +1,35 @@
 # v0.11 compact, edge-connector layout: handoff for independent vetting
 
-**State on 10 November 2026:** an unpaid JLCPCB cart entry
-`Robot_PDB_v11_Gerbers_Y8` holds five boards with two assembled for
-**$321.20 before shipping** ($53.75 boards + $267.45 Economic assembly).
-The owner's target was $300. They allowed $10-20 over it for a better Thor
-inductor (+$17.12) and then asked for the six regulator inductors to be
-swapped to higher-voltage parts as well (+$13.28). Nothing is paid or approved. Payment and production approval belong
-to the owner.
+**State on 10 November 2026 (second build):** the design files hold a
+corrected v0.11 board, `494e931955b1`. It has **not** been uploaded or quoted.
+
+The unpaid JLCPCB cart entry `Robot_PDB_v11_Gerbers_Y8` ($321.20 before
+shipping: $53.75 boards + $267.45 Economic assembly, five boards with two
+assembled) was made from the previous build, `9e2ac58e2b29`. **Do not order
+Y8.** A fabrication review of that build
+(`V11_COMPACT_LAYOUT_FEEDBACK.md`, kept in the reviewer's own `robot-pdb-review` project)
+found that both XL330 plugs were fed through a 0.37 mm copper neck. What was
+done about each of its points is in
+`red-team-findings/2026-11-10/fabrication-review/DISPOSITION.md`.
+
+The corrected build has the same parts list and placement file as Y8, byte for
+byte, so the price should not change. The owner's target was $300; they
+allowed $10-20 over it for a better Thor inductor (+$17.12) and then asked for
+the six regulator inductors to be swapped as well (+$13.28). Nothing is paid
+or approved. Payment and production approval belong to the owner.
 
 `Y8` is the only entry in the cart. The earlier entries `Y2` to `Y7` were
-removed on 10 November 2026 at the owner's request; all of them except `Y7`
-carried part rotations that were found to be wrong (see "Placement rotations"
-below), and `Y7` had the old 30 V regulator inductors.
+removed on 10 November 2026 at the owner's request.
 
 The v0.10 handoff, `docs/HANDOFF_V10_VALUE_ENGINEERED.md`, still holds for
 what v0.11 did not change: the cost-down choices, the Thor current-limit
 analysis, the USB pair widths and the heat model.
 
-- Board: `revisions/v0.11/kicad/robot_pdb.kicad_pcb`, SHA-256 `9e2ac58e2b295c252fd9d9d2044a3d4543f521787b17a18788caf1f443d97d41`
+- Board: `revisions/v0.11/kicad/robot_pdb.kicad_pcb`, SHA-256 `494e931955b16b8dfd104733f677654027731623739dc754a6e77bf2939baaf2`
 - Generator: `source/generator/build_v11.py` and `labels_v11.py`; change record `revisions/v0.11/derivation.json`
-- Audit: `source/fabrication/audit_v11.py`, result `outputs/v11-order-preparation/audit-v11.json` (PASS)
-- Package: `outputs/v11-order-preparation/package-9e2ac58e2b29/`
-- Quote record: `outputs/v11-order-preparation/factory-quote.json`, `factory-quote-charge-details.png`
+- Audit: `source/fabrication/audit_v11.py` (now also runs `pour_width.py`), result `outputs/v11-order-preparation/audit-v11.json` (PASS)
+- Package: `outputs/v11-order-preparation/package-494e931955b1/`
+- Quote record (for the superseded Y8 entry): `outputs/v11-order-preparation/factory-quote.json`, `factory-quote-charge-details.png`
 - Argon's review of the first v0.11 build and what was done about it: `red-team-findings/2026-11-10/argon/DISPOSITION_v11.md`
 - Heat model for v0.11: `red-team-findings/2026-11-10/thermal/thermal_v11.py`, results in `thermal/v11/`
 - Pictures: `docs/v11-assets/before-after.png`, `board-top.png`, `board-labels.png`, `thermal-map.png`
@@ -49,11 +57,14 @@ analysis, the USB pair widths and the heat model.
    |---|---|---|---|---|
    | Thor +24 V to J3 | In2 strip about 10 mm wide and B.Cu strip about 7 mm wide in parallel, 20 vias at the old plug position | about 45 mm | about 2 milliohm | 16 mV, 0.13 W at 8 A |
    | XL430 10.8 V to J401/J402 | In2, about 14 mm wide, one 4.5 mm neck; 9 vias from the existing B.Cu pour | about 78 mm | about 6.5 milliohm | 33 mV, 0.17 W at 5 A |
-   | XL330 5 V to J301/J302 | B.Cu, about 24 mm wide | about 45 mm | about 1 milliohm | 5 mV at 5 A |
+   | XL330 5 V to J301/J302 | B.Cu pour (at least 12 mm of copper at every cross-section, in pieces) to y = 143, then B.Cu and a second In2 plane joined by 16 vias | about 45 mm | about 2 milliohm | 10 mV at 5 A |
 
    The Thor strip on In2 is notched around the three vias of bulk capacitor
    C3 so that C3 stays on the battery plane. Ground returns use the solid In1
-   plane.
+   plane. Beside J3 itself the 24 V copper has to pass the plug's own ground
+   pins and pegs: about 4.8 mm on In2 plus 4.6 mm on B.Cu, in gaps of 0.9 to
+   4 mm, over about 2 mm of length. The reviewer's field model of the Thor and
+   XL430 runs agreed with these hand estimates (18 mV and 33 mV added).
 4. **Fifteen signal links were rebuilt** by the project's grid maze router:
    the eleven servo-block links, plus `DXL330_DATA` and `DXL430_DATA` from
    where the old copper ended to the moved plugs (about 53 and 56 mm, then
@@ -85,6 +96,21 @@ analysis, the USB pair widths and the heat model.
    50 V; do not substitute it. The four amplifier output inductors L70-L73
    stay Sunlord: they never see more than 11.7 V.
 
+10. **XL330 5 V neck fixed (second build).** In build `9e2ac58e2b29` the
+   auto-routed `IO_PWM3_OUT` crossed the whole B.Cu 5 V pour on its way to
+   J7006, and `IO_SERVO_ARM` crossed half of it, leaving one 0.37 mm neck at
+   (123.5, 138.4) mm for all current to J301 and J302. The first version of
+   this document called that pour "about 24 mm wide"; that was the zone
+   outline, not the filled copper. Fix: a second `+5V_SRV` plane on In2 from
+   y = 141.4 to the bottom edge (it reaches both plugs' through-hole pins
+   directly), 16 vias at y = 142.3 and 143.3 joining it to the B.Cu pour
+   above the crossing track, and the hobby-servo `PWM_5V` plane on In2 pulled
+   back from y = 144.2 to 140.8 to make room (it only feeds the buffer's
+   supply vias at y <= 128.4 in that area). Compared item by item with the
+   previous build, the only differences are those 16 vias, the new zone, the
+   smaller `PWM_5V` fill and ground refilling around the vias. No part, text
+   or signal track moved.
+
 ## Placement rotations
 
 Opening each oriented part alone in the factory's 2D placement viewer showed
@@ -96,7 +122,8 @@ rows were wrong in the v0.9 and v0.10 files, which had only been spot-checked.
 - 180 degrees: J3.
 
 All thirteen are corrected in `export_v11.py` (`V11_ROTATION_FIXES`) and were
-looked at again after re-upload. Checked and already correct: every
+looked at again after re-upload (as `Y8`; the corrected build's placement
+file is byte-identical to that one). Checked and already correct: every
 electrolytic with a factory model, both crystals, the LEDs, the SS1060 diodes,
 the FETs, U1, U10, U11, U12, U13, U15, U16, U17, U7002, U7006, U7009, U9902,
 C9902, the USB-C socket, both XT30s and the JST VH headers. C20 has no factory
@@ -114,16 +141,25 @@ model and could not be checked by eye.
   `+12V_SRV`; no new zone outside the block except on `+24V`, `+12V_SRV` and
   `+5V_SRV`; all vias 0.30 mm or larger; all copper inside the outline;
   schematic netlist matches the board.
-- **Factory:** detected 4 layers, 155 x 228 mm; 82 of 82 BOM lines matched;
+- **`pour_width.py` (new, run by the audit):** removes all power copper
+  narrower than a set width and confirms each regulator still reaches its
+  plug through what is left, changing layer at vias and through-hole pads.
+  `+5V_SRV` L4 to J301/J302 and `+12V_SRV` L5 to J401/J402 pass at 2.0 mm;
+  `+24V` L1 to J3 and `PWM_5V` L7002 to J7004-J7006 pass at 1.5 mm. On the
+  previous build the same check fails for `+5V_SRV`. It proves a minimum
+  width exists, not a resistance: the XL330 run fails at 4 mm, because its
+  copper between y = 125 and 131 is split into strips of 2 to 7 mm by signal
+  tracks under the buffer.
+- **Factory (for the `Y8` build only):** detected 4 layers, 155 x 228 mm; 82 of 82 BOM lines matched;
   same options as before (JLC04161H-7628, 1 oz / 0.5 oz, lead-free HASL,
   plugged vias, Economic, top side, manual confirmation of production file and
   placement).
 
 ## Where to push hardest
 
-1. **Nothing in the final build has had an independent review.** Argon saw
-   only the first v0.11 build. The edge-connector move, the new power runs,
-   the labels and the rotation corrections were all made afterwards.
+1. **The fix has had no independent review.** The fabrication review covered
+   build `9e2ac58e2b29`. Re-check the bottom and In2 copper of the new Gerbers
+   around (123.5, 138.4) and along y = 141 to 147, and the 16-via field.
 2. **The new power runs are sized by hand estimate.** Check the Thor strip in
    particular: its width past the J5 pads, the notch around C3, the 20-via
    field, and whether carving it out of the battery plane on In2 hurts the
@@ -132,26 +168,41 @@ model and could not be checked by eye.
 3. **Dynamixel data lines are now about 55 mm longer** and were auto-routed
    with staircase segments. They are half-duplex TTL at up to a few Mbit/s.
 4. **Heat (re-modelled on v0.11, same simple model, about +/-30%).** With
-   Thor at 8 A and typical rail loads (12.3 W of loss) the hottest spot is
+   Thor at 8 A and typical rail loads (12.5 W of loss) the hottest spot is
    still the AUX regulator U7 at about +45 C above ambient on the ordered
    copper; the moved servo buck is about +14 C and the new Thor strip region
-   about +18 C. A new case with every output at its rated current (24.8 W)
-   gives about +78 C at the spare 5 V and XL430 regulators, which is not
-   sustainable in still air. Inside an enclosure add the enclosure's own air
+   about +18 C. A case with every output at its rated current (25.5 W)
+   gives about +79 C at the spare 5 V and XL430 regulators, which is not
+   sustainable in still air. Q1's current is now computed from the loads in
+   each case (10.2 A typical, 13.5 A at full rating, at 30 V and 90%
+   regulator efficiency); the review found it had been held at 8.3 A. Inside an enclosure add the enclosure's own air
    temperature rise. Not measured.
 5. **Still open from the v0.10 hold:** the electrolytic capacitors' reflow
-   limit against the Economic line's profile is unconfirmed. (The inductor
+   limit against the Economic line's profile is unconfirmed. The reviewer's
+   figures: Lelon allows a 250 C peak; JLCPCB lists Economic at 255 +/-5 C.
+   C20 had no model in the placement preview, so confirm its polarity in the
+   factory's production placement drawing. (The inductor
    voltage question is closed by item 9 above.) The new inductors' heat
    rating for the 10 uH part (6.8 A for a 40 C rise) is closer to the 5 A
    rated load than the Sunlord part's was; their saturation current is higher.
-6. **Mechanical:** three holes and seven connectors moved. Nothing has been
+6. **Thor overload (from the review, not re-derived here).** R10 = 49.9 k
+   sets the LM5146 near 200 kHz. Adding the full peak-to-peak ripple to the
+   valley current limit gives an overload peak near 26 A against Coilcraft's
+   26.3 A typical saturation figure. Test regulation at 8 A and overload
+   recovery with a dummy load before connecting the Thor.
+7. **Pack matching.** The master switch parallels the two packs upstream of
+   F1 and F2. The walkthrough now tells the owner to match pack voltages
+   before closing it and to fuse each pack lead.
+8. **Mechanical:** J3, the four Dynamixel headers, the three servo headers
+   and J7008 mate vertically, so an enclosure needs access from above.
+   Three holes and seven connectors moved. Nothing has been
    checked against the robot or an enclosure. J3's body is 1.0 mm from the
    left edge.
-7. **Space:** the area the Dynamixel plugs vacated (about x 130-178, y 82-112
+9. **Space:** the area the Dynamixel plugs vacated (about x 130-178, y 82-112
    mm) is now empty. The strip height is set by the servo buck's 33 mm
    sub-layout, so shrinking further means re-laying that regulator or the
    main board.
-8. **Known cosmetic items:** the board file and Gerber job file still say
+10. **Known cosmetic items:** the board file and Gerber job file still say
    ENIG and impedance controlled (left from v0.9; the order form governs).
    The inductor footprints are still named `L_Sunlord_MWSA1004S`.
 
@@ -159,7 +210,11 @@ model and could not be checked by eye.
 
 | Entry | What | Before shipping |
 |---|---|---:|
-| `Robot_PDB_v11_Gerbers_Y8` | Final v0.11 with 75 V regulator inductors, this document | $321.20 |
+| `Robot_PDB_v11_Gerbers_Y8` | Build `9e2ac58e2b29`, with the 0.37 mm XL330 neck. **Superseded; do not order.** | $321.20 |
+
+The corrected build `494e931955b1` is not in the cart. Uploading it means a
+new entry on the shared account, the same order options as before, and a
+fresh look at the placement preview.
 
 Removed on 10 November 2026 at the owner's request: `Y7` ($307.92, same board
 with the 30 V inductors), `Y6` ($305.40, first v0.11 build), `Y5`, `Y4`, `Y3`

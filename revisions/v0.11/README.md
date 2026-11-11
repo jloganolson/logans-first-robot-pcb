@@ -10,10 +10,12 @@ Same circuit and parts list otherwise.
 - Start here as a reviewer: [handoff](../../docs/HANDOFF_V11_COMPACT_LAYOUT.md)
 - Every change, machine-readable: [derivation.json](derivation.json)
 
-Board SHA-256 `9e2ac58e2b295c252fd9d9d2044a3d4543f521787b17a18788caf1f443d97d41`.
-Unpaid cart entry `Robot_PDB_v11_Gerbers_Y8`, $321.20 before shipping. No
-purchase made; no hardware built or measured; the final build has not been
-independently reviewed.
+Board SHA-256 `494e931955b16b8dfd104733f677654027731623739dc754a6e77bf2939baaf2`.
+This build fixes a 0.37 mm neck in the XL330 5 V copper that a fabrication
+review found in build `9e2ac58e2b29`. The unpaid cart entry
+`Robot_PDB_v11_Gerbers_Y8` ($321.20) still holds that earlier build and must
+not be ordered; the corrected package has not been uploaded. No purchase made;
+no hardware built or measured; the fix has not been independently reviewed.
 
 ```sh
 export PDB_KICAD_STATE=/tmp/pdb-kicad-red-team

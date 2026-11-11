@@ -15,20 +15,23 @@ svg text{font:4.2px system-ui,sans-serif}
 @media print{nav{display:none}tr{break-inside:avoid}}
 </style><main>
 <h1>Robot power board v0.11: plain-language walkthrough</h1>
-<div class="notice"><strong>Reading this as a visitor?</strong> This page was written for the board's owner, so "you" means Logan, and the buying and bench instructions are his notes to himself. The board <strong>has not been ordered</strong>; please do not order it from these files. The public summary and the questions open for review are in the <a href="https://github.com/jloganolson/logans-first-robot-pcb#readme">README</a>.</div>
 <p class="small">Written 10 November 2026 for the owner. Engineering detail and evidence are in
-<a href="https://github.com/jloganolson/logans-first-robot-pcb/blob/main/docs/HANDOFF_V11_COMPACT_LAYOUT.md">the v0.11 handoff</a>. Text shown like <span class="lab">THIS</span> is printed on the board.</p>
+<a href="HANDOFF_V11_COMPACT_LAYOUT.md">the v0.11 handoff</a>. Text shown like <span class="lab">THIS</span> is printed on the board.</p>
 
-<div class="notice"><strong>Where things stand.</strong> Version 0.11 of the board is saved in the JLCPCB cart, <strong>unpaid</strong>,
+<div class="notice"><strong>Where things stand.</strong> Version 0.11 was priced in the JLCPCB cart, <strong>unpaid</strong>,
 as <strong>Robot_PDB_v11_Gerbers_Y8</strong> at <strong>$321.20 before shipping</strong>: five bare boards, two of them assembled.
-That is $21.20 over the $300 target: $17.12 for the better Thor coil and $13.28 for the six higher-voltage regulator coils you asked for, less what the smaller board saved. Nothing has been ordered.
+An independent review then found a real copper fault in that build, and it has been fixed in the design files.
+<strong>The Y8 entry still holds the faulty build. Do not order Y8.</strong> The corrected files are ready but not yet uploaded; the price should be the same because no part changed.
 <strong>No hardware exists yet and nothing has been measured.</strong></div>
 
-<div class="stop"><strong>Before you pay, two things are still open.</strong>
+<div class="stop"><strong>Before you pay, three things are still open.</strong>
 <ol>
-<li><strong>Nobody independent has reviewed the final version.</strong> The second AI reviewer (Gemini Argon) saw an earlier v0.11 and then ran out of quota.
-Moving the plugs to the edges, the new labels, the placement corrections and the coil swap all came after its review.</li>
-<li><strong>The big round capacitors and the cheaper assembly line's oven temperature</strong> have not been confirmed compatible. That is a question for JLCPCB.</li>
+<li><strong>The corrected build has to replace Y8 in the cart.</strong> A second agent reviewed the Y8 build and found that both XL330 plugs got their 5 V through a sliver of copper 0.37 mm wide
+(two signal tracks had been routed across the power copper). That is now fixed with a second layer of 5 V copper and 16 connecting holes, and a new automatic check looks for this kind of fault.
+Nobody independent has looked at the fix itself yet.</li>
+<li><strong>The big round capacitors and the cheaper assembly line's oven temperature</strong> have not been confirmed compatible. The capacitor maker (Lelon) allows a 250 °C peak;
+JLCPCB lists its Economic line at 255 ±5 °C. Ask JLCPCB whether these nine parts stay inside Lelon's limits on that line. If not, pay for the Standard line or have those nine left off and solder them yourself.</li>
+<li><strong>One capacitor (C20) had no picture in the factory's placement viewer</strong>, so its direction could not be checked by eye. Ask JLCPCB to confirm it against the placement drawing they send for approval.</li>
 </ol></div>
 
 <nav><a href="#does">What it does</a><a href="#plugs">What plugs in where</a><a href="#read">Reading the board</a><a href="#history">How it got here</a>
@@ -150,13 +153,15 @@ Leave them empty for normal use. Push a jumper cap on one and that supply switch
 <tr><td>Review fixes</td><td>Sturdier connections for the surge protector and bulk capacitor on the hobby-servo supply, and a tidier 5 V plane under it.</td></tr>
 <tr><td>Factory placement corrections</td><td>Thirteen parts were turned the wrong way in the file that tells the factory how to place them, including all six regulator chips and the Thor controller. This mistake was already in the v0.9 and v0.10 files. All are corrected and re-checked in the factory's viewer.</td></tr>
 <tr><td>Coils rated for the battery</td><td>The Thor coil is the 60 V Coilcraft part again. The six smaller regulator coils changed from parts reported as 30 V to Vishay parts rated 75 V (your packs reach 33.6 V). Same values, same pads on the board.</td></tr>
+<tr><td>Fix after the fabrication review</td><td>The 5 V copper to the XL330 plugs was nearly cut through by two signal tracks. A second 5 V layer under the plugs now carries the current around them. No part moved and the parts list is unchanged.</td></tr>
 <tr><td>Three mounting holes moved</td><td>Bottom row is now 3.5, 95.2 and 214.5 mm from the left edge, about 151.4 mm from the top. The other twelve did not move.</td></tr></table></section>
 
 <section id="buy"><h2>What to buy</h2>
-<div class="ok"><strong>Not yet; see the red box at the top.</strong> When you are ready, the entry is <strong>Robot_PDB_v11_Gerbers_Y8</strong>. It has two lines that go together:
-the boards (<strong>$53.75</strong>, quantity 5) and the assembly (<strong>$267.45</strong>, quantity 2). Tick the Y8 checkbox and both are selected.</div>
+<div class="stop"><strong>Nothing yet. Do not order Y8.</strong> The entry in the cart, <strong>Robot_PDB_v11_Gerbers_Y8</strong>, was made from the build with the copper fault described at the top.
+The corrected files have to be uploaded as a new entry first. Expect the same two lines at about the same price:
+the boards (<strong>$53.75</strong>, quantity 5) and the assembly (<strong>$267.45</strong>, quantity 2).</div>
 <img src="v11-assets/factory-quote.png" alt="Factory charge breakdown for the Y8 entry, total 321.20 dollars">
-<p>It is the only entry in the cart. The older entries (Y2 to Y7) were removed on 10 November 2026 because none of them should be ordered.</p>
+<p>The picture is the Y8 quote. Y8 is the only entry in the cart; the older entries (Y2 to Y7) were removed on 10 November 2026.</p>
 <p>Shipping, tax and any coupon are added at checkout. The factory's estimate for shipping was about $32. Prices move: the same parts list cost $2.52 more in the afternoon than in the morning.</p>
 <h3>Decide before paying</h3>
 <ol>
@@ -189,7 +194,7 @@ the boards (<strong>$53.75</strong>, quantity 5) and the assembly (<strong>$267.
 <h3>Programming</h3>
 <p>The chip that drives the three hobby servos arrives blank. It needs its firmware loaded once through <span class="lab">PROG</span> before those servos will do anything. Everything else works without programming.</p>
 <h3>First power-up, in order</h3>
-<p>The full procedure is the <a href="https://github.com/jloganolson/logans-first-robot-pcb/blob/main/docs/V09_BRINGUP_CHECKLIST.md">bring-up checklist</a>, written for v0.9; the steps are the same. The short version:</p>
+<p>The full procedure is the <a href="V09_BRINGUP_CHECKLIST.md">bring-up checklist</a>, written for v0.9; the steps are the same. The short version:</p>
 <ol>
 <li>Look over the board for solder bridges, then check with a meter that no output is shorted to ground.</li>
 <li>Fit jumper caps on all seven OFF headers. Nothing plugged into the outputs.</li>
@@ -198,7 +203,11 @@ the boards (<strong>$53.75</strong>, quantity 5) and the assembly (<strong>$267.
 <li>Load the Thor supply with a dummy load up to 8 A <strong>before</strong> connecting the Jetson. Meter the Thor cable's polarity at the far end first.</li>
 <li>Run each supply at its real load for 15 minutes and check for heat (see <a href="#heat">Heat</a>).</li>
 <li>Then USB: plug into the Jetson and confirm the sound card, both serial ports and the servo controller appear. Try the USB-C plug both ways up.</li>
-<li>Only then batteries, then servos, then motors.</li></ol></section>
+<li>Load the Thor supply past 8 A briefly with the dummy load and check that it limits and recovers cleanly. In a hard overload the coil current can come close to the coil's limit (about 26 A peak against a 26.3 A rating), so this is worth seeing on the bench before the Jetson depends on it.</li>
+<li>Only then batteries, then servos, then motors.</li></ol>
+<div class="stop"><strong>Before connecting batteries: both packs must be at the same voltage.</strong> The master switch joins the two packs directly, before either board fuse.
+If one pack is fuller than the other, the fuller one dumps current into the emptier one the moment the switch closes, and nothing on the board limits it.
+Charge both packs fully, or measure both and make sure they read the same, before closing the switch, every time. Follow the pack maker's own limit for joining packs in parallel. This is also why each pack needs its own fuse in its lead.</div></section>
 
 <section id="power"><h2>Powering your own gear</h2>
 <p>"AUX" is just the name of the 11.7 V output. Both spare outputs use the small yellow XT30 plug, so each lead you plug in needs an XT30 on the end.</p>
@@ -218,42 +227,47 @@ the boards (<strong>$53.75</strong>, quantity 5) and the assembly (<strong>$267.
 <p class="small">Typical loads: Thor at 8 A, servo supplies at about 2 A, AUX at 4 A. Middle picture is the board as ordered.</p>
 <table><tr><th>Spot</th><th class="n">Typical loads</th><th class="n">Every output at its full rating</th></tr>
 <tr><td>AUX 11.7 V regulator (hottest in typical use)</td><td class="n">+45 °C</td><td class="n">+74 °C</td></tr>
-<tr><td>Spare 5 V and XL430 regulators</td><td class="n">+27 to +30 °C</td><td class="n">+77 to +78 °C</td></tr>
-<tr><td>Thor supply</td><td class="n">+31 to +34 °C</td><td class="n">+52 to +57 °C</td></tr>
+<tr><td>Spare 5 V and XL430 regulators</td><td class="n">+27 to +31 °C</td><td class="n">+78 °C</td></tr>
+<tr><td>Thor supply</td><td class="n">+32 to +34 °C</td><td class="n">+54 to +59 °C</td></tr>
 <tr><td>Amplifier</td><td class="n">+30 °C</td><td class="n">+42 °C</td></tr>
-<tr><td>Hobby-servo regulator (bottom-left corner)</td><td class="n">+14 °C</td><td class="n">+39 °C</td></tr>
-<tr><td>New copper run to the Thor plug</td><td class="n">+18 °C</td><td class="n">+36 °C</td></tr></table>
+<tr><td>Hobby-servo regulator (bottom-left corner)</td><td class="n">+14 °C</td><td class="n">+40 °C</td></tr>
+<tr><td>New copper run to the Thor plug</td><td class="n">+18 °C</td><td class="n">+38 °C</td></tr></table>
 <p>These are rises above the surrounding air.</p>
 <ul>
 <li><strong>Typical use:</strong> about 70 °C at the hottest spot in a 25 °C room. Fine; the parts are rated to 125 °C.</li>
 <li><strong>Everything at full rating at once:</strong> over 100 °C in open air. Too hot to run for long. Your robot is unlikely to do this, but it is the case to avoid.</li>
 <li><strong>A closed box makes it worse.</strong> The air inside warms up and every number rises with it, commonly by 15&ndash;30 °C. Leave openings above and below the top half of the board (the row of regulators between the two XT30 plugs) so air can rise through, or fit a 40 mm fan blowing across that area.</li>
+<li><strong>Plugs go in from above.</strong> The Thor plug, the four Dynamixel plugs, the three servo headers and the programming header all point straight up. A slot in the side wall lets their wires out, but you need to reach in from above to push a plug in or unlatch it. Plan a removable lid, or leave room over those plugs for the mating plug and your fingers, and try it with real cables before fixing the cut-outs.</li>
 <li>This is an estimate, good to roughly ±30%. On the bench, run each supply at its real load for 15 minutes with a thermometer. If something is too hot to keep a finger near, add airflow before trusting it.</li></ul></section>
 
 <section id="risks"><h2>Known risks, plainly</h2>
 <table><tr><th>Risk</th><th>What could happen</th><th>What to do</th></tr>
-<tr><td>Final version not independently reviewed</td><td>A mistake in the moved plugs, the new power copper or the re-drawn servo corner could have slipped past the automatic checks.</td><td>Get a review before paying. On the bench, check every plug's voltage and polarity with a meter before connecting anything to it.</td></tr>
-<tr><td>Capacitors and oven temperature</td><td>The cheaper line's oven may run hotter than the round capacitors are rated for.</td><td>Ask JLCPCB, or pay about $35 for the Standard line.</td></tr>
+<tr><td>The copper fix has not been independently reviewed</td><td>The review of the previous build found one serious copper fault that the automatic checks had missed. It is fixed and a check for it now exists, but the fix itself has had no second look.</td><td>Have the reviewer look at the corrected files before paying. On the bench, check every plug's voltage and polarity with a meter before connecting anything to it.</td></tr>
+<tr><td>Capacitors and oven temperature</td><td>The cheaper line's oven may run hotter than the round capacitors are rated for.</td><td>Ask JLCPCB (250 °C part limit against a 255 ±5 °C oven), or pay about $35 for the Standard line.</td></tr>
 <tr><td>USB to the servos and sound</td><td>Two internal USB routes were inherited from an older layout with known shortcomings.</td><td>Test with sustained traffic. Fallback is an external USB-to-Dynamixel adapter.</td></tr>
 <tr><td>Jetson USB pair</td><td>Sized for the layer build by calculation; not measured.</td><td>Test both plug orientations and unplug/replug.</td></tr>
 <tr><td>Dynamixel data wiring now longer</td><td>About 55 mm added to each data line to reach the bottom edge.</td><td>Test at your real baud rate with all servos chained.</td></tr>
 <tr><td>Tin finish on the tiniest chip</td><td>An uneven joint on the USB switch chip stops all USB.</td><td>Inspect it under magnification on arrival, or pay for the gold finish.</td></tr>
 <tr><td>Heat</td><td>Modelled, not measured, and worse in an enclosure. Not designed to run every output at full rating at once without airflow.</td><td>See <a href="#heat">Heat</a>.</td></tr>
-<tr><td>Mounting holes and plug positions</td><td>The pattern changed.</td><td>Confirm fit before paying.</td></tr></table>
+<tr><td>Mounting holes and plug positions</td><td>The pattern changed, and most plugs point upward.</td><td>Confirm fit, and access from above, before paying.</td></tr>
+<tr><td>Two packs joined by the switch</td><td>Packs at different voltages push a large current into each other that no board fuse sees.</td><td>Match pack voltages before closing the switch. Fuse each pack lead.</td></tr>
+<tr><td>Thor supply in overload</td><td>Calculated peak coil current in a hard overload is close to the coil's limit.</td><td>Test overload and recovery with a dummy load first.</td></tr></table>
 <p>The 30 A motor fuse is a fuse rating, not a promise that the board carries 30 A all day. The design assumes about 10 A to the motors.</p></section>
 
 <section id="checked"><h2>How it was checked</h2>
 <ul>
 <li><strong>Design-rule check:</strong> zero errors and zero unconnected pads. Eleven cosmetic warnings, all inherited.</li>
 <li><strong>Difference audit:</strong> a script compares v0.11 against v0.10 and passes only if nothing changed outside the hobby-servo corner apart from the recorded plug moves and their new copper, no part or connection changed anywhere, and the schematic still matches the board.</li>
-<li><strong>Factory upload:</strong> the factory read the files as a 4-layer 155 × 228 mm board, matched all 82 lines of the parts list, and priced it.</li>
+<li><strong>Power-copper width check (new):</strong> a script strips away every piece of power copper narrower than 2 mm (1.5 mm at two plugs) and confirms each regulator still reaches its plug. The ordinary design-rule check cannot see a too-thin connection; this is the fault the reviewer found.</li>
+<li><strong>Factory upload:</strong> for the Y8 build, the factory read the files as a 4-layer 155 × 228 mm board, matched all 82 lines of the parts list, and priced it. The corrected build has the identical parts list and placement file and has not been uploaded yet.</li>
 <li><strong>Placement check:</strong> every part that has a right way round was opened on its own in the factory's viewer. Thirteen were wrong and were corrected.</li>
 <li><strong>Second opinion:</strong> Gemini Argon reviewed an earlier v0.11. Four of its findings held up and were fixed. Several did not: it said the diodes and lights were backwards (they are not) and that the regulator chips were placed correctly (they were not). <strong>It has not seen the final version.</strong></li>
 <li><strong>Coil ratings:</strong> read from Vishay's own datasheet: 75 V across the coil, and a pad pattern that fits inside the pads already on the board.</li>
-<li><strong>Heat:</strong> modelled again on the final board, including a worst case.</li>
+<li><strong>Independent fabrication review:</strong> a second agent re-ran the checks on the Y8 build, modelled the new power copper from the factory files, and found the 0.37 mm sliver. Its other points (pack matching, plug access, Thor overload, a too-low current in the heat model) are worked into this page.</li>
+<li><strong>Heat:</strong> modelled again on the corrected board, including a worst case, with the main switch transistor's current now worked out from the loads in each case.</li>
 <li><strong>Not done:</strong> nothing has been built or measured. Heat, voltage-drop and USB figures are calculations or estimates.</li></ul>
-<p class="small">Files: board <code>revisions/v0.11/kicad/robot_pdb.kicad_pcb</code> (fingerprint starts <code>9e2ac58e2b29</code>),
-factory package <code>outputs/v11-order-preparation/package-9e2ac58e2b29/</code>, quote record <code>outputs/v11-order-preparation/factory-quote.json</code>.</p></section>
+<p class="small">Files: board <code>revisions/v0.11/kicad/robot_pdb.kicad_pcb</code> (fingerprint starts <code>494e931955b1</code>),
+factory package <code>outputs/v11-order-preparation/package-494e931955b1/</code>, quote record <code>outputs/v11-order-preparation/factory-quote.json</code>.</p></section>
 
 <section id="words"><h2>Glossary</h2>
 <table>

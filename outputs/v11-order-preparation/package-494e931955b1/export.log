@@ -1,0 +1,35 @@
+$ kicad-cli pcb export gerbers --layers F.Cu,In1.Cu,In2.Cu,B.Cu,F.Paste,B.Paste,F.SilkS,B.SilkS,F.Mask,B.Mask,Edge.Cuts --subtract-soldermask -o /home/logan-olson/Projects/pcb-red-team/outputs/v11-order-preparation/package-494e931955b1/gerbers/ /home/logan-olson/Projects/pcb-red-team/revisions/v0.11/kicad/robot_pdb.kicad_pcb
+Loading board
+Plotted to '/home/logan-olson/Projects/pcb-red-team/outputs/v11-order-preparation/package-494e931955b1/gerbers/robot_pdb-F_Cu.gtl'.
+Plotted to '/home/logan-olson/Projects/pcb-red-team/outputs/v11-order-preparation/package-494e931955b1/gerbers/robot_pdb-In1_Cu.g2'.
+Plotted to '/home/logan-olson/Projects/pcb-red-team/outputs/v11-order-preparation/package-494e931955b1/gerbers/robot_pdb-In2_Cu.g3'.
+Plotted to '/home/logan-olson/Projects/pcb-red-team/outputs/v11-order-preparation/package-494e931955b1/gerbers/robot_pdb-B_Cu.gbl'.
+Plotted to '/home/logan-olson/Projects/pcb-red-team/outputs/v11-order-preparation/package-494e931955b1/gerbers/robot_pdb-F_Paste.gtp'.
+Plotted to '/home/logan-olson/Projects/pcb-red-team/outputs/v11-order-preparation/package-494e931955b1/gerbers/robot_pdb-B_Paste.gbp'.
+Plotted to '/home/logan-olson/Projects/pcb-red-team/outputs/v11-order-preparation/package-494e931955b1/gerbers/robot_pdb-F_Silkscreen.gto'.
+Plotted to '/home/logan-olson/Projects/pcb-red-team/outputs/v11-order-preparation/package-494e931955b1/gerbers/robot_pdb-B_Silkscreen.gbo'.
+Plotted to '/home/logan-olson/Projects/pcb-red-team/outputs/v11-order-preparation/package-494e931955b1/gerbers/robot_pdb-F_Mask.gts'.
+Plotted to '/home/logan-olson/Projects/pcb-red-team/outputs/v11-order-preparation/package-494e931955b1/gerbers/robot_pdb-B_Mask.gbs'.
+Plotted to '/home/logan-olson/Projects/pcb-red-team/outputs/v11-order-preparation/package-494e931955b1/gerbers/robot_pdb-Edge_Cuts.gm1'.
+
+$ kicad-cli pcb export drill --format excellon --excellon-separate-th -o /home/logan-olson/Projects/pcb-red-team/outputs/v11-order-preparation/package-494e931955b1/gerbers/ /home/logan-olson/Projects/pcb-red-team/revisions/v0.11/kicad/robot_pdb.kicad_pcb
+Loading board
+Created file '/home/logan-olson/Projects/pcb-red-team/outputs/v11-order-preparation/package-494e931955b1/gerbers/robot_pdb-PTH.drl'
+Created file '/home/logan-olson/Projects/pcb-red-team/outputs/v11-order-preparation/package-494e931955b1/gerbers/robot_pdb-NPTH.drl'
+Done.
+
+$ kicad-cli pcb export pos --format csv --units mm --side both -o /home/logan-olson/Projects/pcb-red-team/outputs/v11-order-preparation/package-494e931955b1/raw-positions.csv /home/logan-olson/Projects/pcb-red-team/revisions/v0.11/kicad/robot_pdb.kicad_pcb
+Loading board
+
+$ kicad-cli pcb export svg --layers F.Cu,F.SilkS,F.Mask,Edge.Cuts --page-size-mode 2 --exclude-drawing-sheet -o /home/logan-olson/Projects/pcb-red-team/outputs/v11-order-preparation/package-494e931955b1/board-top.svg /home/logan-olson/Projects/pcb-red-team/revisions/v0.11/kicad/robot_pdb.kicad_pcb
+Loading board
+Successfully created svg file
+
+$ kicad-cli pcb export svg --layers B.Cu,B.SilkS,Edge.Cuts --page-size-mode 2 --exclude-drawing-sheet -o /home/logan-olson/Projects/pcb-red-team/outputs/v11-order-preparation/package-494e931955b1/board-bottom.svg /home/logan-olson/Projects/pcb-red-team/revisions/v0.11/kicad/robot_pdb.kicad_pcb
+Loading board
+Successfully created svg file
+
+$ kicad-cli pcb export svg --layers F.Fab,F.SilkS,Edge.Cuts --page-size-mode 2 --exclude-drawing-sheet -o /home/logan-olson/Projects/pcb-red-team/outputs/v11-order-preparation/package-494e931955b1/assembly-top.svg /home/logan-olson/Projects/pcb-red-team/revisions/v0.11/kicad/robot_pdb.kicad_pcb
+Loading board
+Successfully created svg file
+

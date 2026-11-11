@@ -588,6 +588,7 @@
   "PWM_VIN": 6,
   "GND": 13,
   "+24V": 20,
+  "+5V_SRV": 16,
   "+12V_SRV": 9
  },
  "planes": [
@@ -621,11 +622,11 @@
     ],
     [
      126.47,
-     144.2
+     140.8
     ],
     [
      99.5,
-     144.2
+     140.8
     ],
     [
      99.5,
@@ -940,6 +941,29 @@
     ]
    ],
    "purpose": "XL330 5 V to J301 and J302 on the bottom edge"
+  },
+  {
+   "net": "+5V_SRV",
+   "layer": "In2.Cu",
+   "outline": [
+    [
+     100.5,
+     141.4
+    ],
+    [
+     126.5,
+     141.4
+    ],
+    [
+     126.5,
+     154.4
+    ],
+    [
+     100.5,
+     154.4
+    ]
+   ],
+   "purpose": "second XL330 5 V path under the plugs, bypassing the signal tracks that cross the B.Cu pour; 16 vias join it to the B.Cu pour"
   },
   {
    "net": "+12V_SRV",
@@ -1857,7 +1881,7 @@
   ],
   "not_placed": []
  },
- "board_sha256": "9e2ac58e2b295c252fd9d9d2044a3d4543f521787b17a18788caf1f443d97d41",
+ "board_sha256": "494e931955b16b8dfd104733f677654027731623739dc754a6e77bf2939baaf2",
  "schematic_sha256": "796e3c90f13551d4dbf25653e2dac8b89b01bb1197eefad7d2f325efe3bfa65f",
- "generator_sha256": "7032013fe71484c61c79e941786e5457b607c54aa676c1ae533d7db343c075fd"
+ "generator_sha256": "bec322a43b1952a56c534e54d76048e083cc2e048dbed3a8583b28678845ca81"
 }
